@@ -73,6 +73,8 @@ public class ConnectionListener extends BPVPListener<Core> {
 
 				}
 
+				Bukkit.getPluginManager().callEvent(new ClientLoginEvent(client));
+
 
 			}
 		}
