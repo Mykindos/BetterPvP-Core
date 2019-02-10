@@ -1,6 +1,7 @@
 package net.betterpvp.core.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -16,25 +17,24 @@ public class CommandManager {
 
 
 
-	public static Command getCommand(String commandLable) {
-		for (Command command : commands) {
-			if (command.getCommandLable().equalsIgnoreCase(commandLable)) {
-				return command;
-			}
+	public static Command getCommand(String commandLabel) {
 
-			for (String allias : command.getAliases()) {
-				if (commandLable.equalsIgnoreCase(allias)) {
-					return command;
-				}
-			}
-		}
-		return null;
+
+		return commands.stream().filter(c -> c.getCommandLable().equalsIgnoreCase(commandLabel)
+				|| Arrays.stream(c.getAliases()).filter(a -> a.equalsIgnoreCase(commandLabel)).findAny().isPresent())
+				.findFirst().orElse(null);
+
 	}
 
 	public static void addCommand(Command command) {
 		commands.add(command);
 	}
 
+	/**
+	 * Register all commands within a specific package
+	 * @param packageName
+	 * @param instance
+	 */
 	public static void registerCommands(String packageName, Plugin instance) {
 		int count = 0;
 		Reflections reflections = new Reflections(packageName);
