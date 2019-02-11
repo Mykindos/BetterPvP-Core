@@ -70,12 +70,6 @@ public class UtilTime {
     }
 
 
-    long milli = 5000L;
-    String.format("%dh%dm%ds", TimeUnit.MILLISECONDS.toHours(milli),
-            TimeUnit.MILLISECONDS.toMinutes(milli),
-            TimeUnit.MILLISECONDS.toSeconds(milli));
-
-
     public static String getTimeUnit(String unit) {
     	switch(unit){
     	case "s":

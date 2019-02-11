@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.utility.UtilMessage;
-import net.betterpvp.mah.mah.MAHManager;
+
 import net.md_5.bungee.api.ChatColor;
 
 public class ListCommand extends Command{
@@ -29,7 +29,7 @@ public class ListCommand extends Command{
 			
 			if(OfflineCommand.offline.contains(p.getUniqueId())) continue;
 			
-			boolean mah = MAHManager.isAuthenticated(p);
+			boolean mah = false;//MAHManager.isAuthenticated(p);
 			if(mah){
 				authed++;
 			}

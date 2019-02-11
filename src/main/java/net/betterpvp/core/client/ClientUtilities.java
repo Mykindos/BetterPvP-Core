@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import net.betterpvp.core.utility.fancymessage.FancyMessage;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.UtilMessage;
-import net.betterpvp.mah.mah.MAHManager;
+
 
 public class ClientUtilities {
 
@@ -248,7 +248,7 @@ public class ClientUtilities {
 				//  String name = PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED
 				alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
 				.append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
-					MAHManager.isForced(clients.getUUID()) ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
+					true/*MAHManager.isForced(clients.getUUID())*/ ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
 			}
 		}
 		return alias.toString();
@@ -265,7 +265,7 @@ public class ClientUtilities {
 				//  String name = PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED
 				alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
 				.append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
-					MAHManager.isForced(clients.getUUID()) ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName())
+					/*MAHManager.isForced(clients.getUUID())*/true ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName())
 				.append(clients.isDiscordLinked() ? ChatColor.WHITE + " (L)" : "");
 			}
 		}

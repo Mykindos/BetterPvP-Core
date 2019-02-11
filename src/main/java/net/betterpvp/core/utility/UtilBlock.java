@@ -62,7 +62,7 @@ public class UtilBlock {
 
 	/**
 	 * Get the Block a player is looking at
-	 * @param player The player
+	 * @param p The player
 	 * @param range Max distance the block can be from a player
 	 * @return The block the player is looking at
 	 */
@@ -227,7 +227,7 @@ public class UtilBlock {
 
 	/**
 	 * Gets a Map of All blocks and their distance from the location provided
-	 * @param loc The location to check
+	 * @param block The location to check
 	 * @param dR The max radius to check for blocks
 	 * @return A HashMap of <Block, Double> containing all blocks and their distance from a location
 	 */

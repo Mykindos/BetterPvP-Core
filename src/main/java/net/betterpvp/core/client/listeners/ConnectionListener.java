@@ -34,8 +34,7 @@ import net.betterpvp.core.framework.UpdateEvent;
 import net.betterpvp.core.framework.UpdateEvent.UpdateType;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.Titles;
-import net.betterpvp.mah.mah.MAHManager;
-import net.betterpvp.mah.networking.events.NetworkMessageEvent;
+
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class ConnectionListener extends BPVPListener<Core> {
@@ -95,6 +94,8 @@ public class ConnectionListener extends BPVPListener<Core> {
 	}
 
 	private List<UUID> allowed = new ArrayList<>();
+
+	/*
 	@EventHandler
 	public void onReceiveWhitelist(NetworkMessageEvent e) {
 		if(e.getChannel().equalsIgnoreCase("Whitelist-Allow")) {
@@ -105,6 +106,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 			}
 		}
 	}
+	*/
 
 
 	@EventHandler
@@ -156,6 +158,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 			addOnlineClient(player);
 			
 
+			/*
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -174,6 +177,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 					}
 				}
 			}.runTaskAsynchronously(getInstance());
+			*/
 
 
 		}else{
@@ -228,9 +232,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 	}
 
 	public void updateTab(Player p){
-		double tps = MinecraftServer.getServer().recentTps[0];
-		DecimalFormat df = new DecimalFormat("#.##");
-		tps = Double.valueOf(df.format(tps));
+
 		PacketContainer pc = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
 
 		pc.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.RED + "" + ChatColor.BOLD + "Welcome to BetterPvP Clans!\n" 
