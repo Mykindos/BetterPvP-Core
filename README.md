@@ -1,5 +1,5 @@
 # BetterPvP-Core
-Core plugin for BetterPvP
+Core plugin for BetterPvP, created using the [Spigot API](https://www.spigotmc.org/) for Minecraft servers.
 
 # Child plugins
 - [BetterPvP-Clans](https://github.com/Tomhoogstra/BetterPvP-Clans)
