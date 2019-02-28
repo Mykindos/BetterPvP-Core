@@ -1,8 +1,5 @@
 package net.betterpvp.core.client.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
@@ -13,6 +10,8 @@ import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.UtilFormat;
 import net.betterpvp.core.utility.UtilMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 
 public class ClientCommand extends Command {
@@ -79,17 +78,17 @@ public class ClientCommand extends Command {
         }
 
         UtilMessage.message(player, "Client", ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " Client Details:");
-        UtilMessage.message(player, ChatColor.YELLOW + "IP Address: " 
-        + (ClientUtilities.getOnlineClient(player).hasRank(Rank.ADMIN, false) ? ChatColor.GRAY + target.getIP() : ChatColor.RED + "N/A"));
+        UtilMessage.message(player, ChatColor.YELLOW + "IP Address: "
+                + (ClientUtilities.getOnlineClient(player).hasRank(Rank.ADMIN, false) ? ChatColor.GRAY + target.getIP() : ChatColor.RED + "N/A"));
         UtilMessage.message(player, ChatColor.YELLOW + "Previous Name: " + ChatColor.GRAY + target.getOldName());
         UtilMessage.message(player, ChatColor.YELLOW + "IP Alias: " + ChatColor.GRAY + ClientUtilities.getDetailedIPAlias(target));
         UtilMessage.message(player, ChatColor.YELLOW + "Rank: " + ChatColor.GRAY + UtilFormat.cleanString(target.getRank().toString()));
         //UtilMessage.message(player, ChatColor.YELLOW + "Coins: " + ChatColor.GRAY + target.getGamer().getCoins());
-       // UtilMessage.message(player, ChatColor.YELLOW + "MAH Forced: " + ChatColor.GRAY + (MAHManager.isForced(target.getUUID()) ? "True" : "False"));
+        // UtilMessage.message(player, ChatColor.YELLOW + "MAH Forced: " + ChatColor.GRAY + (MAHManager.isForced(target.getUUID()) ? "True" : "False"));
         UtilMessage.message(player, ChatColor.YELLOW + "Discord Linked: " + ChatColor.GRAY + (target.getDiscordID().equals("") ? "False" : "True"));
         String punishments = "";
-        for(Punish punish : PunishManager.getPunishments(target.getUUID())) {
-        	punishments += punish.getPunishType().name() + " (" + punish.getRemaining() + ")" + ChatColor.WHITE + ", " + ChatColor.GRAY;
+        for (Punish punish : PunishManager.getPunishments(target.getUUID())) {
+            punishments += punish.getPunishType().name() + " (" + punish.getRemaining() + ")" + ChatColor.WHITE + ", " + ChatColor.GRAY;
         }
         UtilMessage.message(player, ChatColor.YELLOW + "Punishments: " + ChatColor.GRAY + punishments);
     }
@@ -115,7 +114,7 @@ public class ClientCommand extends Command {
             UtilMessage.message(player, "Client", ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " cannot be promoted any further.");
             return;
         }
-        
+
 
         target.setRank(Rank.getRank(target.getRank().toInt() + 1));
         ClientUtilities.messageStaff("Client", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " promoted " + ChatColor.YELLOW + target.getName()
@@ -137,7 +136,7 @@ public class ClientCommand extends Command {
             ClientUtilities.searchClient(player, args[1], true);
             return;
         }
-        
+
         Client c = ClientUtilities.getClient(player);
 
         if (player == target) {
@@ -149,9 +148,9 @@ public class ClientCommand extends Command {
             UtilMessage.message(player, "Client", ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " cannot be demoted any further.");
             return;
         }
-        
-        if(c.getRank().toInt() < target.getRank().toInt()){
-        	return;
+
+        if (c.getRank().toInt() < target.getRank().toInt()) {
+            return;
         }
 
         target.setRank(Rank.getRank(target.getRank().toInt() - 1));

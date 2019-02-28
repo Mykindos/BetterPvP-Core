@@ -1,12 +1,11 @@
 package net.betterpvp.core.utility.fancymessage;
 
+import com.google.gson.stream.JsonWriter;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-
-import com.google.gson.stream.JsonWriter;
 
 /**
  * Represents a JSON string value. Writes by this object will not write name

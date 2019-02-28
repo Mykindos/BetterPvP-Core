@@ -1,20 +1,18 @@
 package net.betterpvp.core.utility;
 
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-
-
 
 public class UtilParticle {
 
-	/*
-	 * Players a particle at the location specified
-	 */
+    /*
+     * Players a particle at the location specified
+     */
     public final static void playParticle(EnumParticle type, Location location, float locX, float locY, float locZ, float offsetX, float offsetY, float offsetZ, float speed, int count) {
         PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
                 type, true, locX, locY, locZ, offsetX, offsetY, offsetZ, speed, count);

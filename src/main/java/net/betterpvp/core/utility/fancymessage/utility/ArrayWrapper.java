@@ -1,10 +1,10 @@
 package net.betterpvp.core.utility.fancymessage.utility;
 
+import org.apache.commons.lang.Validate;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * Represents a wrapper around an array class of an arbitrary reference type,
@@ -13,8 +13,8 @@ import org.apache.commons.lang.Validate;
  * This class is intended for use as a key to a map.
  * </p>
  *
- * @author Glen Husman
  * @param <E> The type of elements in the array.
+ * @author Glen Husman
  * @see Arrays
  */
 public final class ArrayWrapper<E> {
@@ -25,7 +25,7 @@ public final class ArrayWrapper<E> {
      * @param elements The elements of the array.
      */
     @SafeVarargs
-	public ArrayWrapper(E... elements) {
+    public ArrayWrapper(E... elements) {
         setArray(elements);
     }
 
@@ -67,8 +67,8 @@ public final class ArrayWrapper<E> {
     /**
      * Gets the hash code represented by this objects value.
      *
-     * @see Arrays#hashCode(Object[])
      * @return This object's hash code.
+     * @see Arrays#hashCode(Object[])
      */
     @Override
     public int hashCode() {
@@ -81,7 +81,7 @@ public final class ArrayWrapper<E> {
      * order.
      *
      * @param list The iterable of objects which will be converted to an array.
-     * @param c The type of the elements of the array.
+     * @param c    The type of the elements of the array.
      * @return An array of elements in the specified iterable.
      */
     @SuppressWarnings("unchecked")

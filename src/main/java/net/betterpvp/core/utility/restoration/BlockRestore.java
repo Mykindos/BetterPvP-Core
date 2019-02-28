@@ -1,35 +1,29 @@
 package net.betterpvp.core.utility.restoration;
 
 
-import java.util.Iterator;
-
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockFadeEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-
 import net.betterpvp.core.Core;
 import net.betterpvp.core.framework.BPVPListener;
 import net.betterpvp.core.framework.UpdateEvent;
 import net.betterpvp.core.framework.UpdateEvent.UpdateType;
+import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.*;
+
+import java.util.Iterator;
 
 public class BlockRestore extends BPVPListener<Core> {
 
     public BlockRestore(Core i) {
-		super(i);
-		// TODO Auto-generated constructor stub
-	}
+        super(i);
+        // TODO Auto-generated constructor stub
+    }
 
-	@EventHandler
+    @EventHandler
     public void restoreBlockData(UpdateEvent event) {
         if (event.getType() == UpdateType.TICK) {
-        	if(BlockRestoreData.restoreData.isEmpty()) return;
+            if (BlockRestoreData.restoreData.isEmpty()) return;
             Iterator<BlockRestoreData> iterator = BlockRestoreData.restoreData.iterator();
             while (iterator.hasNext()) {
                 BlockRestoreData data = iterator.next();
@@ -48,20 +42,21 @@ public class BlockRestore extends BPVPListener<Core> {
             event.setCancelled(true);
         }
     }
+
     @EventHandler
-    public void onMelt2(BlockFadeEvent e){
-    	if(BlockRestoreData.isRestoredBlock(e.getBlock())){
-    		e.setCancelled(true);
-    	}
+    public void onMelt2(BlockFadeEvent e) {
+        if (BlockRestoreData.isRestoredBlock(e.getBlock())) {
+            e.setCancelled(true);
+        }
     }
-    
+
     @EventHandler
-    public void onMelt(BlockFromToEvent e){
-    	if(e.getToBlock().getType() == Material.WATER){
-    		if(BlockRestoreData.isRestoredBlock(e.getBlock())){
-    			e.setCancelled(true);
-    		}
-    	}
+    public void onMelt(BlockFromToEvent e) {
+        if (e.getToBlock().getType() == Material.WATER) {
+            if (BlockRestoreData.isRestoredBlock(e.getBlock())) {
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
@@ -72,7 +67,7 @@ public class BlockRestore extends BPVPListener<Core> {
     }
 
     @SuppressWarnings("deprecation")
-	@EventHandler
+    @EventHandler
     public void Piston(BlockPistonExtendEvent event) {
         Block push = event.getBlock();
         for (int i = 0; i < 13; i++) {
@@ -87,18 +82,18 @@ public class BlockRestore extends BPVPListener<Core> {
             }
         }
     }
-    
-    @EventHandler
-    public void Piston2(BlockPistonRetractEvent e){
-    	Block retract = e.getBlock();
-    	retract = retract.getRelative(e.getDirection());
-         if (retract.getType() == Material.AIR) {
-             return;
-         }
 
-         if (BlockRestoreData.isRestoredBlock(retract)) {
-        	 retract.getWorld().playEffect(retract.getLocation(), Effect.STEP_SOUND, retract.getTypeId());
-             e.setCancelled(true);
-         }
+    @EventHandler
+    public void Piston2(BlockPistonRetractEvent e) {
+        Block retract = e.getBlock();
+        retract = retract.getRelative(e.getDirection());
+        if (retract.getType() == Material.AIR) {
+            return;
+        }
+
+        if (BlockRestoreData.isRestoredBlock(retract)) {
+            retract.getWorld().playEffect(retract.getLocation(), Effect.STEP_SOUND, retract.getTypeId());
+            e.setCancelled(true);
+        }
     }
 }

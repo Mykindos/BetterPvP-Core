@@ -1,7 +1,6 @@
 package net.betterpvp.core.client.listeners;
 
 import net.betterpvp.core.client.Client;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -20,7 +19,7 @@ public class ClientLoginEvent extends Event {
         this.client = client;
     }
 
-    public Client getClient(){
+    public Client getClient() {
         return client;
     }
 

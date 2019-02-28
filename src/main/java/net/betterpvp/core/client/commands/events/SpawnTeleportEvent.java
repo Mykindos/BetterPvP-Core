@@ -7,34 +7,34 @@ import org.bukkit.event.HandlerList;
 
 public class SpawnTeleportEvent extends Event {
 
-	private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-	private Player player;
-	private boolean cancelled;
+    private Player player;
+    private boolean cancelled;
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-	public SpawnTeleportEvent(Player p) {
-		this.player = p;
-	}
-	
-	public void setCancelled(boolean b) {
-		this.cancelled = b;
-	}
-	
-	public boolean isCancelled() {
-		return cancelled;
-	}
+    public SpawnTeleportEvent(Player p) {
+        this.player = p;
+    }
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+    public void setCancelled(boolean b) {
+        this.cancelled = b;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
 
-	public Player getPlayer() {
-		return player;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 }

@@ -1,37 +1,36 @@
 package net.betterpvp.core.client.commands;
 
+import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.command.Command;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import net.betterpvp.core.Core;
-import net.betterpvp.core.client.Rank;
-import net.betterpvp.core.command.Command;
+public class PlayerCountCommand extends Command implements Listener {
 
-public class PlayerCountCommand extends Command implements Listener{
+    public PlayerCountCommand() {
+        super("playercount", new String[]{}, Rank.ADMIN);
 
-	public PlayerCountCommand() {
-		super("playercount", new String[] {}, Rank.ADMIN);
-	
-	}
+    }
 
-	private int count = 0;
-	@Override
-	public void execute(Player player, String[] args) {
-		player.sendMessage(count + "");
-	
-	}
+    private int count = 0;
 
-	@Override
-	public void help(Player player) {
-	}
+    @Override
+    public void execute(Player player, String[] args) {
+        player.sendMessage(count + "");
 
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
-		if(Bukkit.getOnlinePlayers().size() > count) {
-			count = Bukkit.getOnlinePlayers().size();
-		}
-	}
+    }
+
+    @Override
+    public void help(Player player) {
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        if (Bukkit.getOnlinePlayers().size() > count) {
+            count = Bukkit.getOnlinePlayers().size();
+        }
+    }
 }

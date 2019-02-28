@@ -1,13 +1,11 @@
 package net.betterpvp.core.punish;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
+import net.betterpvp.core.Core;
+import net.betterpvp.core.framework.BPVPListener;
+import net.betterpvp.core.punish.Punish.PunishType;
+import net.betterpvp.core.punish.mysql.PunishRepository;
+import net.betterpvp.core.utility.UtilMessage;
+import net.betterpvp.core.utility.UtilPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,16 +13,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-
-import net.betterpvp.core.Core;
-import net.betterpvp.core.framework.BPVPListener;
-
-import net.betterpvp.core.punish.Punish.PunishType;
-import net.betterpvp.core.punish.mysql.PunishRepository;
-import net.betterpvp.core.utility.UtilMessage;
-import net.betterpvp.core.utility.UtilPlayer;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PunishManager extends BPVPListener<Core> {
 
@@ -34,8 +25,6 @@ public class PunishManager extends BPVPListener<Core> {
     }
 
     private static Set<Punish> punishments = new HashSet<>();
-
-
 
 
     public static void addPunishment(Punish p) {
@@ -54,18 +43,20 @@ public class PunishManager extends BPVPListener<Core> {
 
     /**
      * Get a list of punishments associated with the provided UUID
+     *
      * @param uuid Player UUID
      * @return List of punishments
      */
     public static List<Punish> getPunishments(UUID uuid) {
 
-       return punishments.stream().filter(p -> p.getPunished().toString().equalsIgnoreCase(uuid.toString()))
+        return punishments.stream().filter(p -> p.getPunished().toString().equalsIgnoreCase(uuid.toString()))
                 .collect(Collectors.toList());
 
     }
 
     /**
      * Get punishment of a specific type belonging to the provided UUID
+     *
      * @param uuid Player UUID
      * @param type Type of punishment
      * @return Punish of matching type and UUID
@@ -88,7 +79,6 @@ public class PunishManager extends BPVPListener<Core> {
     public static boolean isBuildLocked(UUID uuid) {
         return getPunish(uuid, PunishType.BuildLock) != null;
     }
-
 
 
     public static void handlePunishments() {
@@ -134,7 +124,6 @@ public class PunishManager extends BPVPListener<Core> {
 
         }
     }
-
 
 
     @EventHandler

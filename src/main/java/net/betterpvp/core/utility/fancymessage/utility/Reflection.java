@@ -1,12 +1,12 @@
 package net.betterpvp.core.utility.fancymessage.utility;
 
+import org.bukkit.Bukkit;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.bukkit.Bukkit;
 
 /**
  * A class containing static utility methods and caches which are intended as
@@ -59,7 +59,7 @@ public final class Reflection {
      * twice (unless multiple threads are accessing this method simultaneously).
      *
      * @param className The name of the class, excluding the package, within
-     * NMS.
+     *                  NMS.
      * @return The class instance representing the specified NMS class, or
      * {@code null} if it could not be loaded.
      */
@@ -88,8 +88,8 @@ public final class Reflection {
      * twice (unless multiple threads are accessing this method simultaneously).
      *
      * @param className The name of the class, excluding the package, within
-     * OBC. This name may contain a subpackage name, such as
-     * {@code inventory.CraftItemStack}.
+     *                  OBC. This name may contain a subpackage name, such as
+     *                  {@code inventory.CraftItemStack}.
      * @return The class instance representing the specified OBC class, or
      * {@code null} if it could not be loaded.
      */
@@ -153,7 +153,7 @@ public final class Reflection {
      * </p>
      *
      * @param clazz The class which contains the field to retrieve.
-     * @param name The declared name of the field in the class.
+     * @param name  The declared name of the field in the class.
      * @return A field object with the specified name declared by the specified
      * class.
      * @see Class#getDeclaredField(String)
@@ -213,13 +213,13 @@ public final class Reflection {
      * should use {@link Class#getDeclaredMethod(String, Class...)}.
      *
      * @param clazz The class which contains the method to retrieve.
-     * @param name The declared name of the method in the class.
-     * @param args The formal argument types of the method.
+     * @param name  The declared name of the method in the class.
+     * @param args  The formal argument types of the method.
      * @return A method object with the specified name declared by the specified
      * class.
      */
     public synchronized static Method getMethod(Class<?> clazz, String name,
-            Class<?>... args) {
+                                                Class<?>... args) {
         if (!_loadedMethods.containsKey(clazz)) {
             _loadedMethods.put(clazz, new HashMap<String, Map<ArrayWrapper<Class<?>>, Method>>());
         }

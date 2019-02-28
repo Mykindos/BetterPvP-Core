@@ -1,15 +1,14 @@
 package net.betterpvp.core.client.commands;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.utility.UtilMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class StaffChatCommand extends Command {
 
@@ -22,7 +21,7 @@ public class StaffChatCommand extends Command {
     @Override
     public void execute(Player player, String[] args) {
         if (args == null || args.length == 0) {
-         
+
 
             if (!enabled.contains(player.getName())) {
                 UtilMessage.message(player, "Staff Chat", "Staff Chat: " + ChatColor.GREEN + "Enabled");
@@ -32,17 +31,16 @@ public class StaffChatCommand extends Command {
                 enabled.remove(player.getName());
             }
 
-         
-            
+
             return;
         }
 
         if (args.length >= 1) {
-           
-          
+
+
             String msg = UtilMessage.getFinalArg(args, 0);
             ClientUtilities.messageStaff(ChatColor.RED + player.getName() + "> " + ChatColor.WHITE + msg, Rank.MODERATOR);
-          
+
         }
     }
 

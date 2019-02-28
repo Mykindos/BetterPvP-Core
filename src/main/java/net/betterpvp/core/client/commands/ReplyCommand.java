@@ -1,14 +1,13 @@
 package net.betterpvp.core.client.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.UtilMessage;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class ReplyCommand extends Command {
 
@@ -27,10 +26,10 @@ public class ReplyCommand extends Command {
             UtilMessage.message(player, "Message", "You have no one to reply to.");
             return;
         }
-        
-        if(PunishManager.isMuted(player.getUniqueId())){
-        	UtilMessage.message(player, "Punish", "You cannot private message while muted!");
-        	return;
+
+        if (PunishManager.isMuted(player.getUniqueId())) {
+            UtilMessage.message(player, "Punish", "You cannot private message while muted!");
+            return;
         }
 
         Player target = Bukkit.getPlayer(MessageCommand.messages.get(player.getName()));

@@ -1,23 +1,22 @@
 package net.betterpvp.core.utility;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.UUID;
-
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.UUID;
+
 public class UtilFormat {
 
     public static DecimalFormat formatter = new DecimalFormat("#,###");
 
-    
+
     /**
-     * 
      * @param uuid UUID of a Player
      * @return Returns a ChatColor of Green if the player is online, or Red if the player is offline
      */
@@ -30,17 +29,17 @@ public class UtilFormat {
 
     /**
      * Replaces Underscores with Spaces and appropriately capitalizes letters
+     *
      * @param string String to clean
      * @return A new String without underscores and bad capital usage
      */
     public static String cleanString(String string) {
-    	
+
         String modifyed = string.replace("_", " ");
         return WordUtils.capitalizeFully(modifyed).replace("_", " ");
     }
 
     /**
-     * 
      * @param num Number to format
      * @return Returns a formatted number as String
      */
@@ -49,10 +48,9 @@ public class UtilFormat {
     }
 
 
-    
-
     /**
      * Converts a List of objects to a clean String
+     *
      * @param list List to convert
      * @return A String containing string values of all objects in a List
      */
@@ -63,6 +61,7 @@ public class UtilFormat {
 
     /**
      * Converts boolean to TinyInt for SQL usage
+     *
      * @param value Boolean value to convert
      * @return Returns 1 if true, 0 if false
      */
@@ -72,32 +71,35 @@ public class UtilFormat {
         }
         return 0;
     }
-    
+
     /**
      * Converts a TinyInt to boolean
+     *
      * @param value int to convert
      * @return Returns true if the value provided is 1, 0 if it is false
      */
     public static boolean fromTinyInt(int value) {
         return value == 1;
     }
-    
+
     /**
      * Adds commas and stuff to numbers
+     *
      * @param i
      * @return Returns a formatted string
      */
-    public static String numberFormat(int i){
-    	return NumberFormat.getInstance().format(i);
+    public static String numberFormat(int i) {
+        return NumberFormat.getInstance().format(i);
     }
-    
-    public static boolean isNumeric(String s) {  
-        return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
-    }  
+
+    public static boolean isNumeric(String s) {
+        return s != null && s.matches("[-+]?\\d*\\.?\\d+");
+    }
 
 
     /**
      * Converts a Location into a readable String
+     *
      * @param loc Location to convert
      * @return Returns A string containing the world name, and coordinates
      */
@@ -110,6 +112,7 @@ public class UtilFormat {
 
     /**
      * Converts a chunk to a readable String
+     *
      * @param chunk Chunk to convert
      * @return Returns a String containing world name and chunk location
      */
@@ -119,6 +122,7 @@ public class UtilFormat {
 
     /**
      * Converts a String into a World Chunk
+     *
      * @param string String to convert
      * @return Returns a World Chunk from String provided
      */

@@ -1,22 +1,19 @@
 package net.betterpvp.core.client.commands;
 
-import java.util.Arrays;
-
+import com.google.common.base.Joiner;
+import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.command.Command;
+import net.betterpvp.core.utility.UtilFormat;
+import net.betterpvp.core.utility.UtilMath;
+import net.betterpvp.core.utility.UtilMessage;
+import net.betterpvp.core.utility.UtilPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.google.common.base.Joiner;
-
-import net.betterpvp.core.client.Rank;
-import net.betterpvp.core.command.Command;
-import net.betterpvp.core.utility.UtilFormat;
-import net.betterpvp.core.utility.UtilItem;
-import net.betterpvp.core.utility.UtilMath;
-import net.betterpvp.core.utility.UtilMessage;
-import net.betterpvp.core.utility.UtilPlayer;
+import java.util.Arrays;
 
 public class GiveCommand extends Command {
 
@@ -25,7 +22,7 @@ public class GiveCommand extends Command {
     }
 
     @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public void execute(Player player, String[] args) {
         if (args == null || args.length == 0) {
             UtilMessage.message(player, "Give", "You did not input a Player.");

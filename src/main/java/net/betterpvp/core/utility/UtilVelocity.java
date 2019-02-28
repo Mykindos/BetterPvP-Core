@@ -9,30 +9,26 @@ public class UtilVelocity {
     public static void velocity(Entity ent, double str, double yAdd, double yMax, boolean groundBoost) {
         velocity(ent, ent.getLocation().getDirection(), str, false, 0.0D, yAdd, yMax, groundBoost);
     }
-    
- 
-    public static Vector getTrajectory2d(Entity from, Entity to)
-    {
-      return getTrajectory2d(from.getLocation().toVector(), to.getLocation().toVector());
-    }
-    
-    public static Vector getTrajectory2d(Location from, Location to)
-    {
 
-      return getTrajectory2d(from.toVector(), to.toVector());
-    }
-    
-    public static Vector getTrajectory2d(Vector from, Vector to)
-    {
-      return to.subtract(from).setY(0).normalize();
+
+    public static Vector getTrajectory2d(Entity from, Entity to) {
+        return getTrajectory2d(from.getLocation().toVector(), to.getLocation().toVector());
     }
 
-    
+    public static Vector getTrajectory2d(Location from, Location to) {
+
+        return getTrajectory2d(from.toVector(), to.toVector());
+    }
+
+    public static Vector getTrajectory2d(Vector from, Vector to) {
+        return to.subtract(from).setY(0).normalize();
+    }
+
+
     /**
-     * 
-     * @param ent Entity to apply velocity to
-     * @param vec Vector of velocity
-     * @param str Strength of velocity
+     * @param ent         Entity to apply velocity to
+     * @param vec         Vector of velocity
+     * @param str         Strength of velocity
      * @param ySet
      * @param yBase
      * @param yAdd

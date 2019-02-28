@@ -37,10 +37,9 @@ public enum Rank {
         }
         return this.color + fixColors(tag);
     }
-    
-    private String fixColors(String s)
-    {
-      return ChatColor.translateAlternateColorCodes('&', s);
+
+    private String fixColors(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     public String getColor() {

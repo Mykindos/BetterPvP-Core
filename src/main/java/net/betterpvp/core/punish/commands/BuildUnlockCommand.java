@@ -1,8 +1,5 @@
 package net.betterpvp.core.punish.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
@@ -13,6 +10,8 @@ import net.betterpvp.core.punish.Punish.PunishType;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.mysql.PunishRepository;
 import net.betterpvp.core.utility.UtilMessage;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class BuildUnlockCommand extends Command {
 
@@ -49,9 +48,9 @@ public class BuildUnlockCommand extends Command {
             PunishManager.removePunishment(punish);
             UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " unlocked " + ChatColor.YELLOW + target.getName()
                     + ChatColor.GRAY + ".");
-            
-        	Log.write("Punish", player.getName() + " unlocked " +
-					 target.getName());
+
+            Log.write("Punish", player.getName() + " unlocked " +
+                    target.getName());
 
         }
     }

@@ -9,7 +9,7 @@ public enum DonationRank {
     DIVINE("Divine", ChatColor.DARK_AQUA, 2),
     GUARDIAN("Guardian", ChatColor.AQUA, 3);
 
-	
+
     private final String name;
     private final ChatColor color;
     private final int id;
@@ -27,19 +27,18 @@ public enum DonationRank {
     public String getTag(boolean bold) {
         String tag = this.name;
         if (bold) {
-        	
+
             return this.color.toString() + ChatColor.BOLD + fixColors(tag);
         }
         return this.color + fixColors(tag);
     }
-    
-    public int getId(){
-    	return id;
+
+    public int getId() {
+        return id;
     }
-    
-    private String fixColors(String s)
-    {
-      return ChatColor.translateAlternateColorCodes('&', s);
+
+    private String fixColors(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     public String getColor() {

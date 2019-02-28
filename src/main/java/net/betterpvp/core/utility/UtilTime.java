@@ -4,12 +4,13 @@ import java.text.DecimalFormat;
 
 public class UtilTime {
 
-	/**
-	 * Check if a specified amount of time has elapsed from a certain point
-	 * @param from Time you are checking from
-	 * @param required Amount of time elapsed
-	 * @return Returns true if the amount of time has elapsed since the defined point
-	 */
+    /**
+     * Check if a specified amount of time has elapsed from a certain point
+     *
+     * @param from     Time you are checking from
+     * @param required Amount of time elapsed
+     * @return Returns true if the amount of time has elapsed since the defined point
+     */
     public static boolean elapsed(long from, long required) {
         return System.currentTimeMillis() - from > required;
     }
@@ -32,10 +33,10 @@ public class UtilTime {
                 unit = TimeUnit.MINUTES;
             } else if (d < 86400000L) {
                 unit = TimeUnit.HOURS;
-            } else if (d < 31536000000L){
+            } else if (d < 31536000000L) {
                 unit = TimeUnit.DAYS;
-            }else{
-            	unit = TimeUnit.YEARS;
+            } else {
+                unit = TimeUnit.YEARS;
             }
         }
         if (unit == TimeUnit.SECONDS) {
@@ -50,8 +51,8 @@ public class UtilTime {
         if (unit == TimeUnit.DAYS) {
             return trim(d / 86400000, decPoint);
         }
-        if (unit == TimeUnit.YEARS){
-        	return trim(d / 31536000000.0D, decPoint);
+        if (unit == TimeUnit.YEARS) {
+            return trim(d / 31536000000.0D, decPoint);
         }
         return trim(d, decPoint);
     }
@@ -71,41 +72,41 @@ public class UtilTime {
 
 
     public static String getTimeUnit(String unit) {
-    	switch(unit){
-    	case "s":
-    		return "Seconds";
-    	case "m":
-    		return "Minutes";
-    	case "h":
-    		return "Hours";
-    	case "d":
-    		return "Days";
-    	case "y":
-    		return "Years";
-    	
-    	}
-    	
-    	return "";
+        switch (unit) {
+            case "s":
+                return "Seconds";
+            case "m":
+                return "Minutes";
+            case "h":
+                return "Hours";
+            case "d":
+                return "Days";
+            case "y":
+                return "Years";
+
+        }
+
+        return "";
     }
-    
+
     public static String getTimeUnit(TimeUnit unit) {
-    	switch(unit){
-    	case SECONDS:
-    		return "Seconds";
-    	case MINUTES:
-    		return "Minutes";
-    	case HOURS:
-    		return "Hours";
-    	case DAYS:
-    		return "Days";
-    	case YEARS:
-    		return "Years";
-    	
-    	}
-    	
-    	return "";
+        switch (unit) {
+            case SECONDS:
+                return "Seconds";
+            case MINUTES:
+                return "Minutes";
+            case HOURS:
+                return "Hours";
+            case DAYS:
+                return "Days";
+            case YEARS:
+                return "Years";
+
+        }
+
+        return "";
     }
-    
+
     public static String getTime(double d, TimeUnit unit, int decPoint) {
         return UtilTime.convert(d, TimeUnit.BEST, decPoint) + " "
                 + UtilTime.getTimeUnit2(d);

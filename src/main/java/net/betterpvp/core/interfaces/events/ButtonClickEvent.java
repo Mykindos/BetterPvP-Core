@@ -1,11 +1,11 @@
 package net.betterpvp.core.interfaces.events;
+
+import net.betterpvp.core.interfaces.Button;
+import net.betterpvp.core.interfaces.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.ClickType;
-
-import net.betterpvp.core.interfaces.Button;
-import net.betterpvp.core.interfaces.Menu;
 
 
 public class ButtonClickEvent extends Event {

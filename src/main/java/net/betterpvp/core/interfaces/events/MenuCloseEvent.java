@@ -1,10 +1,9 @@
 package net.betterpvp.core.interfaces.events;
 
+import net.betterpvp.core.interfaces.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import net.betterpvp.core.interfaces.Menu;
 
 
 public class MenuCloseEvent extends Event {

@@ -1,13 +1,10 @@
 package net.betterpvp.core.database;
 
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import net.betterpvp.core.Core;
 
 public class Log implements Repository<Core> {
 
-	public static final String TABLE_NAME = "kitmap_log";
+    public static final String TABLE_NAME = "kitmap_log";
     public static String CREATE_LOG_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " "
             + "(Time DATETIME, "
             + "Type VARCHAR(24), "
@@ -30,28 +27,21 @@ public class Log implements Repository<Core> {
 
     @Override
     public void initialize() {
-    	QueryFactory.runQuery(CREATE_LOG_TABLE);
-  
+        QueryFactory.runQuery(CREATE_LOG_TABLE);
+
     }
 
-	@Override
-	public LoadPriority getLoadPriority() {
-		
-		return LoadPriority.HIGHEST;
-	}
+    @Override
+    public LoadPriority getLoadPriority() {
 
-	@Override
-	public void load(Core plugin) {
-	
-		
-	}
+        return LoadPriority.HIGHEST;
+    }
 
-	
-	
+    @Override
+    public void load(Core plugin) {
 
 
-
-
+    }
 
 
 }

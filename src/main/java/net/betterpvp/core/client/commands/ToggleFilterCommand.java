@@ -1,19 +1,18 @@
 package net.betterpvp.core.client.commands;
 
-import org.bukkit.entity.Player;
-
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
+import org.bukkit.entity.Player;
 
-public class ToggleFilterCommand extends Command{
+public class ToggleFilterCommand extends Command {
 
-	public ToggleFilterCommand() {
-		super("togglefilter", new String[]{}, Rank.PLAYER);
-		// TODO Auto-generated constructor stub
-	}
+    public ToggleFilterCommand() {
+        super("togglefilter", new String[]{}, Rank.PLAYER);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public void execute(Player player, String[] args) {
+    @Override
+    public void execute(Player player, String[] args) {
 	/*	Client c = ClientUtilities.getOnlineClient(player);
 		if(c.getGamer().isFiltering()){
 			c.getGamer().setFilter(false);
@@ -25,10 +24,10 @@ public class ToggleFilterCommand extends Command{
 			UtilMessage.message(player, "Options", "Filter is now enabled");
 		}
 		*/
-	}
+    }
 
-	@Override
-	public void help(Player player) {
-	}
+    @Override
+    public void help(Player player) {
+    }
 
 }
