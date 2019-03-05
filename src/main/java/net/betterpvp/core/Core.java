@@ -1,5 +1,6 @@
 package net.betterpvp.core;
 
+import net.betterpvp.core.command.CommandCenter;
 import net.betterpvp.core.command.CommandManager;
 import net.betterpvp.core.configs.ConfigManager;
 import net.betterpvp.core.database.QueryFactory;
@@ -18,12 +19,15 @@ public class Core extends JavaPlugin {
     public void onEnable() {
         config = new ConfigManager(this);
         updater = new Updater("Updater");
-        new QueryFactory(this);
+
+        QueryFactory.runQueryFactory(this);
+        new CommandCenter(this);
 
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
 
 
+        new PunishManager(this);
         new BukkitRunnable() {
 
             @Override

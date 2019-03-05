@@ -32,13 +32,13 @@ public class PunishRepository implements Repository<Core> {
                 + "'" + punish.getTime() + "', "
                 + "'" + punish.getReason() + "')";
         Log.write("Clans", "Saved Punishment [" + ClientUtilities.getClient(punish.getPunished()).getName() + "]");
-        new Query(query);
+        QueryFactory.runQuery(query);
     }
 
 
     public static void removePunishment(Punish punish) {
         String query = "DELETE FROM punishments WHERE Punished='" + punish.getPunished().toString() + "'";
-        new Query(query);
+        QueryFactory.runQuery(query);
     }
 
 

@@ -1,4 +1,4 @@
-package net.betterpvp.core.client.commands;
+package net.betterpvp.core.client.commands.admin;
 
 import com.google.common.base.Joiner;
 import net.betterpvp.core.client.Rank;

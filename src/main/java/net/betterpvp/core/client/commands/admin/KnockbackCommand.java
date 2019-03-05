@@ -1,4 +1,4 @@
-package net.betterpvp.core.client.commands;
+package net.betterpvp.core.client.commands.admin;
 
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
@@ -6,9 +6,9 @@ import net.betterpvp.core.utility.UtilVelocity;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class KnockbackTestCommand extends Command {
+public class KnockbackCommand extends Command {
 
-    public KnockbackTestCommand() {
+    public KnockbackCommand() {
         super("knockback", new String[]{}, Rank.ADMIN);
         // TODO Auto-generated constructor stub
     }

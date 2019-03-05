@@ -1,4 +1,4 @@
-package net.betterpvp.core.client.commands;
+package net.betterpvp.core.client.commands.admin;
 
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;

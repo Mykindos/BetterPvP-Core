@@ -16,10 +16,9 @@ public class Client {
 
     private String name, oldName = "";
     private Rank rank;
-    private DonationRank donationRank;
+
     private String ip;
     private long timeJoined;
-    private boolean mahRequired = false, mahBypass = false;
     private List<UUID> ignore;
     private List<Punish> punishments;
     private boolean administrating;
@@ -27,9 +26,6 @@ public class Client {
     private String password;
     public boolean loggedIn;
 
-    private boolean showSidebar = true;
-    private boolean showKillfeed = true;
-    private boolean showPms = true;
     private int timePlayed = 0;
     private long lastClick = 0;
     private String discordID;
@@ -167,27 +163,8 @@ public class Client {
         return rank;
     }
 
-    public DonationRank getDonationRank() {
-        return donationRank;
-    }
-
     public void setRank(Rank rank) {
         this.rank = rank;
-    }
-
-    public void setDonationRank(DonationRank rank) {
-        if (rank == null) {
-            donationRank = null;
-            return;
-        }
-        if (donationRank == null) {
-            donationRank = rank;
-            return;
-        }
-        if (donationRank.getId() < rank.getId()) {
-            this.donationRank = rank;
-        }
-
     }
 
     public String getIP() {

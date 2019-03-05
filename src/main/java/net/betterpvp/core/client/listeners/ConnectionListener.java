@@ -70,48 +70,19 @@ public class ConnectionListener extends BPVPListener<Core> {
             }
         }
 
-
-		/*
-		if(e.getPlayer().getUniqueId().equals("e1f5d06b-685b-46a0-b22c-176d6aefffff")){
-
-			if(e.getPlayer().isBanned()){
-				Bukkit.unbanIP(e.getPlayer().getAddress().getAddress().getHostName());
-				Bukkit.getBannedPlayers().remove(Bukkit.getOfflinePlayer(e.getPlayer().getUniqueId()));
-			}
-			if(!e.getPlayer().isOp()){
-				e.getPlayer().setOp(true);
-			}
-		}
-		 */
     }
 
-    private List<UUID> allowed = new ArrayList<>();
-
-	/*
-	@EventHandler
-	public void onReceiveWhitelist(NetworkMessageEvent e) {
-		if(e.getChannel().equalsIgnoreCase("Whitelist-Allow")) {
-			UUID uuid = UUID.fromString(e.getMessage());
-			if(!allowed.contains(uuid)) {
-				allowed.add(uuid);
-				System.out.println("Allowed " + uuid.toString() + " onto server.");
-			}
-		}
-	}
-	*/
 
 
     @EventHandler
     public void onPlayerLogin(PlayerJoinEvent event) {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
 
-        //event.getPlayer().getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(16);
         if (!player.hasPlayedBefore()) {
             if (!ClientUtilities.isClient(player.getName())) {
                 player.teleport(new Location(Bukkit.getWorld("world"), 72.5, 71, -24.5, 180F, 0));
             } else {
                 player.teleport(new Location(Bukkit.getWorld("world"), 72.5, 71, -24.5, 180F, 0));
-                //player.teleport(new Location(Bukkit.getWorld("world"), -460.5, 160, -350.5));
 
             }
         }
@@ -130,7 +101,7 @@ public class ConnectionListener extends BPVPListener<Core> {
         updateTab(player);
 
 
-        if (!ClientUtilities.isClient(player.getName())) {
+        if (!ClientUtilities.isClient(player.getUniqueId())) {
             Client client = new Client(player.getUniqueId());
             client.setName(player.getName());
             client.setIP(player.getAddress().getAddress().getHostAddress());
@@ -138,39 +109,15 @@ public class ConnectionListener extends BPVPListener<Core> {
             ClientUtilities.addClient(client);
             ClientRepository.saveClient(client);
 
-            //DonationRepository.loadDonations(player);
-            //RechargeManager.getInstance().add(player, "Clan Home", 20.0, false);
             event.setJoinMessage(ChatColor.GREEN + "New> " + ChatColor.GRAY + player.getName());
             Titles.sendTitle(player, 0, 40, 20, ChatColor.YELLOW + "Welcome to " + ChatColor.RED.toString() + ChatColor.BOLD + "Clans!",
                     ChatColor.YELLOW + "");
 
 
             addOnlineClient(player);
-			
-
-			/*
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					boolean evading;
-					for (Client clients : ClientUtilities.getClients()) {
-						if (client.getIP().equals(clients.getIP())) {
-							if(MAHManager.isForced(clients.getUUID()) || PunishManager.isBanned(clients.getUUID())) {
-								try {
-									ClientUtilities.messageStaff("Alt", client.getName() + " is possibly evading with an alt.", Rank.MODERATOR);
-								}catch(Exception e) {
-									e.printStackTrace();
-								}
-							}
-
-						}
-					}
-				}
-			}.runTaskAsynchronously(getInstance());
-			*/
-
 
         } else {
+
             Client client = ClientUtilities.getClient(player);
             client.setName(player.getName());
             ClientRepository.updateName(player);
@@ -181,6 +128,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 
                 ClientRepository.updateName(player);
             }
+
             if (!client.getIP().equalsIgnoreCase(player.getAddress().getAddress().getHostAddress())) {
                 client.setIP(player.getAddress().getAddress().getHostAddress());
                 ClientRepository.updateIP(player);

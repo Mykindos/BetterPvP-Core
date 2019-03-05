@@ -22,7 +22,7 @@ public class Log implements Repository<Core> {
                 + "'" + message + "', "
                 + "'" + System.currentTimeMillis() + "') ";
         debug("Log", message);
-        new Query(query);
+        QueryFactory.runQuery(query);
     }
 
     @Override

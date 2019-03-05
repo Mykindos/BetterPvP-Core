@@ -23,6 +23,7 @@ public class QueryFactory extends BPVPListener<Core> {
         super(i);
 
 
+
         new BukkitRunnable() {
 
             @Override
@@ -41,7 +42,7 @@ public class QueryFactory extends BPVPListener<Core> {
 
 
     public static void runQuery(String query) {
-        queries.add(new Query(query));
+        queries.add(QueryFactory.runQuery(query));
     }
 
     public static void addRepository(Repository r) {
@@ -70,9 +71,7 @@ public class QueryFactory extends BPVPListener<Core> {
             }
         }
 
-        temp.sort((r1, r2) -> {
-            return r1.getLoadPriority().getPriority() - r2.getLoadPriority().getPriority();
-        });
+        temp.sort(Comparator.comparingInt(r2 -> r2.getLoadPriority().getPriority()));
 
         temp.forEach(r -> {
 

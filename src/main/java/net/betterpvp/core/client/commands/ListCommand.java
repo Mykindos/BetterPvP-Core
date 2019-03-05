@@ -1,6 +1,7 @@
 package net.betterpvp.core.client.commands;
 
 import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.client.commands.admin.OfflineCommand;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.utility.UtilMessage;
 import net.md_5.bungee.api.ChatColor;
