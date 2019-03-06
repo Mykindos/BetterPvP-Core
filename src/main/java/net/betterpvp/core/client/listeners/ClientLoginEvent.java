@@ -10,6 +10,7 @@ public class ClientLoginEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     private Client client;
+    private boolean newClient;
 
     public static HandlerList getHandlerList() {
         return handlers;
@@ -28,4 +29,11 @@ public class ClientLoginEvent extends Event {
         return handlers;
     }
 
+    public boolean isNewClient() {
+        return newClient;
+    }
+
+    public void setNewClient(boolean newClient) {
+        this.newClient = newClient;
+    }
 }

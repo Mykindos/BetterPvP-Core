@@ -16,7 +16,6 @@ public class Client {
 
     private String name, oldName = "";
     private Rank rank;
-
     private String ip;
     private long timeJoined;
     private List<UUID> ignore;
@@ -25,16 +24,13 @@ public class Client {
     private long lastLogin;
     private String password;
     public boolean loggedIn;
-
     private int timePlayed = 0;
     private long lastClick = 0;
-    private String discordID;
-    private boolean kitRedeemed;
-    private boolean showWarnings;
+
 
     public Client(UUID uuid) {
-        this.uuid = uuid;
 
+        this.uuid = uuid;
         this.rank = Rank.PLAYER;
         this.ignore = new ArrayList<>();
         this.punishments = new ArrayList<>();
@@ -42,43 +38,14 @@ public class Client {
         this.lastLogin = 0;
         this.password = "";
 
-        this.discordID = "";
-        this.kitRedeemed = false;
-        this.showWarnings = false;
-    }
 
-    public void setKitRedeemed(boolean b) {
-        this.kitRedeemed = b;
     }
-
-    public boolean isKitRedeemed() {
-        return kitRedeemed;
-    }
-
-    public void setShowWarnings(boolean b) {
-        this.showWarnings = b;
-    }
-
-    public boolean isShowingWarnings() {
-        return showWarnings;
-    }
-
 
     public void setTimePlayed(int played) {
         this.timePlayed = played;
     }
 
-    public void setDiscordID(String id) {
-        this.discordID = id;
-    }
 
-    public boolean isDiscordLinked() {
-        return !discordID.equalsIgnoreCase("");
-    }
-
-    public String getDiscordID() {
-        return discordID;
-    }
 
     public int getTimePlayed() {
         return timePlayed;
@@ -126,13 +93,6 @@ public class Client {
         this.uuid = uuid;
     }
 
-    public long getLastClick() {
-        return lastClick;
-    }
-
-    public void setLastClick(long a) {
-        lastClick = a;
-    }
 
     public void setOldName(String str) {
         this.oldName = str;

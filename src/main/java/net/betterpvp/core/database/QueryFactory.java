@@ -42,7 +42,7 @@ public class QueryFactory extends BPVPListener<Core> {
 
 
     public static void runQuery(String query) {
-        queries.add(QueryFactory.runQuery(query));
+        queries.add(new Query(query));
     }
 
     public static void addRepository(Repository r) {

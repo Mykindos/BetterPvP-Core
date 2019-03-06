@@ -27,7 +27,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ConnectionListener extends BPVPListener<Core> {
 
@@ -73,7 +72,6 @@ public class ConnectionListener extends BPVPListener<Core> {
     }
 
 
-
     @EventHandler
     public void onPlayerLogin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -101,7 +99,10 @@ public class ConnectionListener extends BPVPListener<Core> {
         updateTab(player);
 
 
+        boolean isNew = false;
         if (!ClientUtilities.isClient(player.getUniqueId())) {
+            isNew = true;
+
             Client client = new Client(player.getUniqueId());
             client.setName(player.getName());
             client.setIP(player.getAddress().getAddress().getHostAddress());
@@ -143,6 +144,18 @@ public class ConnectionListener extends BPVPListener<Core> {
 
         }
 
+        ClientLoginEvent cle = new ClientLoginEvent(ClientUtilities.getOnlineClient(player));
+        cle.setNewClient(isNew);
+
+        Bukkit.getPluginManager().callEvent(cle);
+    }
+
+    @EventHandler
+    public void onClientLogin(ClientLoginEvent e) {
+        Player p = Bukkit.getPlayer(e.getClient().getUUID());
+        if (p != null) {
+
+        }
 
     }
 
@@ -151,7 +164,6 @@ public class ConnectionListener extends BPVPListener<Core> {
         try {
 
             Method getHandleMethod = player.getClass().getDeclaredMethod("getHandle");
-            getHandleMethod.setAccessible(true);
             Object entityPlayer = getHandleMethod.invoke(player);
             Field pingField = entityPlayer.getClass().getDeclaredField("ping");
             pingField.setAccessible(true);
