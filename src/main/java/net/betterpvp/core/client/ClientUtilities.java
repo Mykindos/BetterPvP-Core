@@ -112,8 +112,9 @@ public class ClientUtilities {
             return true;
         }
 
-        if (Bukkit.getPlayer(string) != null) {
-            return getClient(Bukkit.getPlayer(string)) != null;
+        Player p = Bukkit.getPlayer(string);
+        if (p != null) {
+            return getClient(p.getUniqueId()) != null;
         }
 
         return false;
@@ -261,11 +262,9 @@ public class ClientUtilities {
                 if (clients.getUUID().equals(client.getUUID())) {
                     continue;
                 }
-                //  String name = PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED
                 alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
                         .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
-                                /*MAHManager.isForced(clients.getUUID())*/true ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName())
-                        .append(clients.isDiscordLinked() ? ChatColor.WHITE + " (L)" : "");
+                               true ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
             }
         }
         return alias.toString();

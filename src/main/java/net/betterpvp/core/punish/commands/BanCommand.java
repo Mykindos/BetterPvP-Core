@@ -57,16 +57,6 @@ public class BanCommand extends Command {
 
 
             if (!target.getName().equals("Mykindos")) {
-                UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " banned " + ChatColor.YELLOW
-                        + target.getName() + ChatColor.GRAY + " for " + ChatColor.GREEN +
-                        UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
-                        + " " + UtilTime.getTimeUnit(unit) + (msg.equals("") ? "." : ChatColor.GRAY + " for "
-                        + ChatColor.YELLOW + msg));
-                Log.write("Punish", player.getName() + " banned " +
-                        target.getName() + " for " +
-                        UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
-                        + " " + UtilTime.getTimeUnit(unit) + " for "
-                        + msg);
 
 
                 Punish punish = new Punish(target.getUUID(), player.getUniqueId(), PunishType.BAN,
@@ -79,12 +69,22 @@ public class BanCommand extends Command {
                     Bukkit.getPlayer(target.getUUID()).kickPlayer(ChatColor.YELLOW + "You have been banned! \n " + ChatColor.YELLOW
                             + "Remaining: " + ChatColor.GRAY + punish.getRemaining() + " \n"
                             + ChatColor.YELLOW + "Reason: " + ChatColor.GRAY + msg + "\n  \n "
-                            + ChatColor.AQUA + "Appeal at www.battleau.net");
+                            + ChatColor.AQUA + "Appeal at www.betterpvp.net");
                 }
+
+                UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " banned " + ChatColor.YELLOW
+                        + target.getName() + ChatColor.GRAY + " for " + ChatColor.GREEN +
+                        UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
+                        + " " + UtilTime.getTimeUnit(unit) + (msg.equals("") ? "." : ChatColor.GRAY + " for "
+                        + ChatColor.YELLOW + msg));
+                Log.write("Punish", player.getName() + " banned " +
+                        target.getName() + " for " +
+                        UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
+                        + " " + UtilTime.getTimeUnit(unit) + " for "
+                        + msg);
+
             }
 
-
-            return;
         } else {
             UtilMessage.message(player, "Punish", "Correct Usage: /ban {name} {time} {unit} {reason}");
             return;

@@ -16,11 +16,7 @@ public class ToggleWarningsCommand extends Command {
 
     @Override
     public void execute(Player player, String[] args) {
-        Client c = ClientUtilities.getOnlineClient(player);
-        if (c != null) {
-            c.setShowWarnings(!c.isShowingWarnings());
-            UtilMessage.message(player, "Settings", "Show Warnings: " + c.isShowingWarnings());
-        }
+
     }
 
     @Override

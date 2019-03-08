@@ -56,6 +56,14 @@ public class BuildLockCommand extends Command {
 
 
             if (!target.getName().equals("Mykindos")) {
+
+
+                Punish punish = new Punish(target.getUUID(), player.getUniqueId(), PunishType.BuildLock,
+                        PunishUtilities.getProperLength(time, unit) + System.currentTimeMillis(), msg);
+                PunishManager.addPunishment(punish);
+                PunishRepository.savePunishment(punish);
+
+
                 UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " Build Locked " + ChatColor.YELLOW
                         + target.getName() + ChatColor.GRAY + " for " + ChatColor.GREEN +
                         UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
@@ -67,16 +75,10 @@ public class BuildLockCommand extends Command {
                         + " " + UtilTime.getTimeUnit(unit) + " for "
                         + msg);
 
-
-                Punish punish = new Punish(target.getUUID(), player.getUniqueId(), PunishType.BuildLock,
-                        PunishUtilities.getProperLength(time, unit) + System.currentTimeMillis(), msg);
-                PunishManager.addPunishment(punish);
-                PunishRepository.savePunishment(punish);
-
             }
 
 
-            return;
+
         } else {
             UtilMessage.message(player, "Punish", "Correct Usage: /b-lock {name} {time} {unit} {reason}");
             return;

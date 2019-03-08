@@ -84,7 +84,6 @@ public class ClientCommand extends Command {
         UtilMessage.message(player, ChatColor.YELLOW + "IP Alias: " + ChatColor.GRAY + ClientUtilities.getDetailedIPAlias(target));
         UtilMessage.message(player, ChatColor.YELLOW + "Rank: " + ChatColor.GRAY + UtilFormat.cleanString(target.getRank().toString()));
 
-        UtilMessage.message(player, ChatColor.YELLOW + "Discord Linked: " + ChatColor.GRAY + (target.getDiscordID().equals("") ? "False" : "True"));
         String punishments = "";
         for (Punish punish : PunishManager.getPunishments(target.getUUID())) {
             punishments += punish.getPunishType().name() + " (" + punish.getRemaining() + ")" + ChatColor.WHITE + ", " + ChatColor.GRAY;

@@ -4,7 +4,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public interface Repository<T extends JavaPlugin> {
 
-
     void initialize();
 
     void load(T instance);

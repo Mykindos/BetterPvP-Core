@@ -1,5 +1,6 @@
 package net.betterpvp.core.client;
 
+import net.betterpvp.core.donation.Donation;
 import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.utility.UtilMessage;
 import org.bukkit.Bukkit;
@@ -26,6 +27,7 @@ public class Client {
     public boolean loggedIn;
     private int timePlayed = 0;
     private long lastClick = 0;
+    private List<Donation> donations;
 
 
     public Client(UUID uuid) {
@@ -37,8 +39,22 @@ public class Client {
         this.administrating = false;
         this.lastLogin = 0;
         this.password = "";
+        this.donations = new ArrayList<>();
 
 
+    }
+
+    public List<Donation> getDonations(){
+        return donations;
+    }
+
+    /**
+     * Check if player owns a donation
+     * @param name Name of donation
+     * @return True if the player owns that donation
+     */
+    public boolean hasDonation(String name){
+        return donations.stream().filter(d -> d.getName().equalsIgnoreCase(name)).findAny().isPresent();
     }
 
     public void setTimePlayed(int played) {

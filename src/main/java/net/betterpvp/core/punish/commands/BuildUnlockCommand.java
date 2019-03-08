@@ -46,8 +46,9 @@ public class BuildUnlockCommand extends Command {
 
             PunishRepository.removePunishment(punish);
             PunishManager.removePunishment(punish);
-            UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " unlocked " + ChatColor.YELLOW + target.getName()
-                    + ChatColor.GRAY + ".");
+
+            UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY
+                    + " unlocked " + ChatColor.YELLOW + target.getName() + ChatColor.GRAY + ".");
 
             Log.write("Punish", player.getName() + " unlocked " +
                     target.getName());

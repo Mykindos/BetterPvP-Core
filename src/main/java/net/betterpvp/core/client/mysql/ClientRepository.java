@@ -19,7 +19,9 @@ import java.util.UUID;
 
 public class ClientRepository implements Repository<Core> {
 
-    public static String CREATE_CLIENT_TABLE = "CREATE TABLE IF NOT EXIST `clients`  (" +
+    private static final String TABLE_NAME = "clients";
+
+    public static String CREATE_CLIENT_TABLE = "CREATE TABLE IF NOT EXIST " + TABLE_NAME + " (" +
             "  `UUID` varchar(255) NOT NULL," +
             "  `Name` varchar(255)," +
             "  `IP` varchar(255)," +
@@ -63,7 +65,7 @@ public class ClientRepository implements Repository<Core> {
             public void run() {
                 int count = 0;
                 try {
-                    PreparedStatement statement = Connect.getConnection().prepareStatement("SELECT * FROM `clients`");
+                    PreparedStatement statement = Connect.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME);
                     ResultSet result = statement.executeQuery();
 
                     while (result.next()) {
@@ -73,7 +75,7 @@ public class ClientRepository implements Repository<Core> {
                         Rank rank = Rank.valueOf(result.getString(4));
 
                         String ignoreString = result.getString(5);
-                        String oldName = "" + result.getString(6);
+                        String oldName = result.getString(6);
 
 
                         List<UUID> ignore = new ArrayList<>();
@@ -230,11 +232,6 @@ public class ClientRepository implements Repository<Core> {
 
     public static void updateTimePlayed(Client client) {
         String query = "UPDATE clients SET TimePlayed='" + client.getTimePlayed() + "' WHERE UUID='" + client.getUUID().toString() + "'";
-        QueryFactory.runQuery(query);
-    }
-
-    public static void updateDiscord(Client client) {
-        String query = "UPDATE clients SET DiscordID='" + client.getDiscordID() + "' WHERE UUID='" + client.getUUID().toString() + "'";
         QueryFactory.runQuery(query);
     }
 

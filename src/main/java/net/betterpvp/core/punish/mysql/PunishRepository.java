@@ -15,8 +15,10 @@ import java.util.UUID;
 
 public class PunishRepository implements Repository<Core> {
 
+    private static final String TABLE_NAME = "punishments";
+
     //    UUID punished, UUID punisher, PunishType type, Category category, long time, String reason
-    public static final String CREATE_PUNISHMENTS_TABLE = "CREATE TABLE IF NOT EXISTS Punishments "
+    private final String CREATE_PUNISHMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " "
             + "(Punished VARCHAR(64), "
             + "Punisher VARCHAR(64), "
             + "PunisherName VARCHAR(254), "
@@ -24,27 +26,11 @@ public class PunishRepository implements Repository<Core> {
             + "Time bigint(255),"
             + "Reason VARCHAR(1024)); ";
 
-    public static void savePunishment(Punish punish) {
-        String query = "INSERT INTO punishments (Punished, Punisher, PunishType, Time, Reason) VALUES "
-                + "('" + punish.getPunished().toString() + "', "
-                + "'" + punish.getPunisher().toString() + "', "
-                + "'" + punish.getPunishType().toString() + "', "
-                + "'" + punish.getTime() + "', "
-                + "'" + punish.getReason() + "')";
-        Log.write("Clans", "Saved Punishment [" + ClientUtilities.getClient(punish.getPunished()).getName() + "]");
-        QueryFactory.runQuery(query);
-    }
-
-
-    public static void removePunishment(Punish punish) {
-        String query = "DELETE FROM punishments WHERE Punished='" + punish.getPunished().toString() + "'";
-        QueryFactory.runQuery(query);
-    }
 
 
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
+        QueryFactory.runQuery(CREATE_PUNISHMENTS_TABLE);
 
     }
 
@@ -92,4 +78,23 @@ public class PunishRepository implements Repository<Core> {
         // TODO Auto-generated method stub
         return LoadPriority.HIGH;
     }
+
+
+    public static void savePunishment(Punish punish) {
+        String query = "INSERT INTO punishments (Punished, Punisher, PunishType, Time, Reason) VALUES "
+                + "('" + punish.getPunished().toString() + "', "
+                + "'" + punish.getPunisher().toString() + "', "
+                + "'" + punish.getPunishType().toString() + "', "
+                + "'" + punish.getTime() + "', "
+                + "'" + punish.getReason() + "')";
+        Log.write("Clans", "Saved Punishment [" + ClientUtilities.getClient(punish.getPunished()).getName() + "]");
+        QueryFactory.runQuery(query);
+    }
+
+
+    public static void removePunishment(Punish punish) {
+        String query = "DELETE FROM punishments WHERE Punished='" + punish.getPunished().toString() + "'";
+        QueryFactory.runQuery(query);
+    }
+
 }

@@ -7,6 +7,8 @@ import net.betterpvp.core.database.QueryFactory;
 import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.recharge.RechargeManager;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,11 +22,12 @@ public class Core extends JavaPlugin {
         config = new ConfigManager(this);
         updater = new Updater("Updater");
 
-        QueryFactory.runQueryFactory(this);
+        new QueryFactory(this);
         new CommandCenter(this);
 
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
+
 
 
         new PunishManager(this);

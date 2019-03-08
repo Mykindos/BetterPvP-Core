@@ -28,7 +28,6 @@ public class GriefListener extends BPVPListener<Core> {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlace(BlockPlaceEvent e) {
 
-
         if (PunishManager.isBuildLocked(e.getPlayer().getUniqueId())) {
             e.setCancelled(true);
         }

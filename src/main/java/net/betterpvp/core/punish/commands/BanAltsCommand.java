@@ -82,7 +82,7 @@ public class BanAltsCommand extends Command {
                         Bukkit.getPlayer(alt.getUUID()).kickPlayer(ChatColor.YELLOW + "You have been banned! \n " + ChatColor.YELLOW
                                 + "Remaining: " + ChatColor.GRAY + punish.getRemaining() + " \n"
                                 + ChatColor.YELLOW + "Reason: " + ChatColor.GRAY + msg + "\n  \n "
-                                + ChatColor.AQUA + "Appeal at www.battleau.net");
+                                + ChatColor.AQUA + "Appeal at www.betterpvp.net");
                     }
                 }
 
