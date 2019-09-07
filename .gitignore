@@ -32,3 +32,7 @@ Connect.java
 SelectorManager.java
 ScoreboardManager.java
 src/main/java/net/betterpvp/core/framework/Updater.java
+
+*.idea
+*.idea/
+/target

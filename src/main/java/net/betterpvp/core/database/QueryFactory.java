@@ -24,6 +24,7 @@ public class QueryFactory extends BPVPListener<Core> {
 
 
 
+
         new BukkitRunnable() {
 
             @Override
@@ -41,6 +42,10 @@ public class QueryFactory extends BPVPListener<Core> {
     }
 
 
+    /**
+     *
+     * @param query Runs a query statement
+     */
     public static void runQuery(String query) {
         queries.add(new Query(query));
     }
@@ -50,6 +55,11 @@ public class QueryFactory extends BPVPListener<Core> {
 
     }
 
+    /**
+     * @param packageName Base package to load repositories from
+     * @param instance
+     * Loads all Repository objects in order of priority. Data that requires other data to be loaded first should be on high
+     */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static void loadRepositories(String packageName, JavaPlugin instance) {
 
@@ -62,11 +72,7 @@ public class QueryFactory extends BPVPListener<Core> {
                 Repository repo = r.newInstance();
                 QueryFactory.addRepository(repo);
                 temp.add(repo);
-            } catch (InstantiationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }

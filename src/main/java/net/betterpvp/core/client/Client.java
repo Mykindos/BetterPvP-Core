@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,8 @@ public class Client {
     private long lastClick = 0;
     private List<Donation> donations;
 
+    private HashMap<String, Integer> settings;
+
 
     public Client(UUID uuid) {
 
@@ -40,6 +43,8 @@ public class Client {
         this.lastLogin = 0;
         this.password = "";
         this.donations = new ArrayList<>();
+
+        this.settings = new HashMap<>();
 
 
     }
@@ -186,4 +191,17 @@ public class Client {
         }
         return false;
     }
+
+    public int getSettingAsInt(String key){
+
+        if(!settings.containsKey(key)) return 0;
+
+        return settings.get(key);
+
+    }
+    public boolean getSettingAsBoolean(String key){
+       return getSettingAsInt(key) != 0;
+    }
+
+
 }

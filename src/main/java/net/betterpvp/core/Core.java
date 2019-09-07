@@ -1,5 +1,6 @@
 package net.betterpvp.core;
 
+
 import net.betterpvp.core.command.CommandCenter;
 import net.betterpvp.core.command.CommandManager;
 import net.betterpvp.core.configs.ConfigManager;
@@ -7,8 +8,6 @@ import net.betterpvp.core.database.QueryFactory;
 import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.recharge.RechargeManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
