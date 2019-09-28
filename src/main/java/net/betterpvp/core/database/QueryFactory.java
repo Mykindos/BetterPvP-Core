@@ -2,14 +2,12 @@ package net.betterpvp.core.database;
 
 import net.betterpvp.core.Core;
 import net.betterpvp.core.framework.BPVPListener;
+import net.betterpvp.core.utility.fancymessage.utility.Reflection;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.reflections.Reflections;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class QueryFactory extends BPVPListener<Core> {
@@ -47,6 +45,7 @@ public class QueryFactory extends BPVPListener<Core> {
      * @param query Runs a query statement
      */
     public static void runQuery(String query) {
+        System.out.println(query);
         queries.add(new Query(query));
     }
 
@@ -56,7 +55,7 @@ public class QueryFactory extends BPVPListener<Core> {
     }
 
     /**
-     * @param packageName Base package to load repositories from
+
      * @param instance
      * Loads all Repository objects in order of priority. Data that requires other data to be loaded first should be on high
      */
@@ -64,8 +63,9 @@ public class QueryFactory extends BPVPListener<Core> {
     public static void loadRepositories(String packageName, JavaPlugin instance) {
 
         Reflections reflections = new Reflections(packageName);
+
         Set<Class<? extends Repository>> classes = reflections.getSubTypesOf(Repository.class);
-        System.out.println("Repositories: " + classes.size());
+        System.out.println("Repositories : " + classes.size());
         List<Repository> temp = new ArrayList<>();
         for (Class<? extends Repository> r : classes) {
             try {
@@ -85,6 +85,9 @@ public class QueryFactory extends BPVPListener<Core> {
             r.load(instance);
 
         });
+
+
+
 
     }
 

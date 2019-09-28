@@ -10,7 +10,7 @@ public class SettingsRepository implements Repository<Core> {
 
     private static final String TABLE_NAME = "client_settings";
 
-    public static String CREATE_CLIENT_TABLE = "CREATE TABLE IF NOT EXIST " + TABLE_NAME + " (" +
+    public static String CREATE_CLIENT_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
             "  `UUID` varchar(255) NOT NULL," +
             "  `Name` varchar(255)," +
             "  `Value` int(100));";

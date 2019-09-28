@@ -40,9 +40,15 @@ public class CommandManager {
         Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
         for (Class<? extends Command> c : classes) {
             try {
+
+                if(c.getConstructors()[0].getParameterCount() > 0){
+                    System.out.println("Skipped Command (Requires arguments): " + c.getName());
+                    continue;
+                }
                 if (Listener.class.isAssignableFrom(c)) {
                     Command command = c.newInstance();
                     Bukkit.getPluginManager().registerEvents((Listener) command, instance);
+                    CommandManager.addCommand(command);
                     System.out.println("Registered command + event listener");
 
                 } else {

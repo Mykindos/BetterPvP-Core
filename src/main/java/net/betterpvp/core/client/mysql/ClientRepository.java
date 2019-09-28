@@ -21,7 +21,7 @@ public class ClientRepository implements Repository<Core> {
 
     private static final String TABLE_NAME = "clients";
 
-    public static String CREATE_CLIENT_TABLE = "CREATE TABLE IF NOT EXIST " + TABLE_NAME + " (" +
+    public static String CREATE_CLIENT_TABLE = "CREATE TABLE IF NOT EXISTS `" + TABLE_NAME + "` (" +
             "  `UUID` varchar(255) NOT NULL," +
             "  `Name` varchar(255)," +
             "  `IP` varchar(255)," +

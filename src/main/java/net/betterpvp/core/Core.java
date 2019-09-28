@@ -1,15 +1,22 @@
 package net.betterpvp.core;
 
 
+import net.betterpvp.core.client.listeners.ConnectionListener;
 import net.betterpvp.core.command.CommandCenter;
 import net.betterpvp.core.command.CommandManager;
 import net.betterpvp.core.configs.ConfigManager;
+import net.betterpvp.core.database.Connect;
 import net.betterpvp.core.database.QueryFactory;
 import net.betterpvp.core.framework.Updater;
+import net.betterpvp.core.interfaces.MenuManager;
 import net.betterpvp.core.punish.PunishManager;
+import net.betterpvp.core.punish.listeners.GriefListener;
 import net.betterpvp.core.utility.recharge.RechargeManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.reflections.Reflections;
+
+import java.sql.Connection;
 
 public class Core extends JavaPlugin {
 
@@ -21,8 +28,11 @@ public class Core extends JavaPlugin {
         config = new ConfigManager(this);
         updater = new Updater("Updater");
 
+        new Connect(this);
         new QueryFactory(this);
         new CommandCenter(this);
+
+
 
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
@@ -54,6 +64,8 @@ public class Core extends JavaPlugin {
 
             }
         }.runTaskTimerAsynchronously(this, 0L, 2L);
+
+        registerListeners();
     }
 
     @Override
@@ -73,5 +85,13 @@ public class Core extends JavaPlugin {
     public boolean hasStarted() {
         // TODO Auto-generated method stub
         return true;
+    }
+
+    private void registerListeners(){
+        new ConnectionListener(this);
+        new CommandCenter((this));
+        new PunishManager(this);
+        new GriefListener(this);
+        new MenuManager(this);
     }
 }

@@ -221,6 +221,12 @@ public class ConnectionListener extends BPVPListener<Core> {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+        Client client = ClientUtilities.getOnlineClient(event.getPlayer());
+
+        if(client != null){
+            Bukkit.getPluginManager().callEvent(new ClientQuitEvent(client));
+        }
+
         Player player = event.getPlayer();
 
         if (String.valueOf(player.getLocation().getX()).equalsIgnoreCase("NaN")) {

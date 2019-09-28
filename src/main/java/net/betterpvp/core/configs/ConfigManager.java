@@ -11,14 +11,15 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private Configs current;
+    private Configs current = Configs.MAIN;
 
     private FileConfiguration fc;
     private Plugin inst;
 
     public ConfigManager(Plugin i) {
         inst = i;
-
+        fc = YamlConfiguration.loadConfiguration(new File(inst.getDataFolder() + current.getPath()));
+        save();
 
     }
 
@@ -63,6 +64,10 @@ public class ConfigManager {
     }
 
     public String getString(String key) {
+        String str = fc.getString(key);
+        if(str == null || str.equals("")){
+            check(key, "");
+        }
         return fc.getString(key);
     }
 

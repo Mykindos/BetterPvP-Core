@@ -88,7 +88,7 @@ public class CommandCenter extends BPVPListener<Core> {
                 Player p = event.getPlayer();
                 UtilMessage.message(p, ChatColor.YELLOW + "----- Help [1 / 1] -----");
                 UtilMessage.message(p, ChatColor.AQUA + "/c help" + ChatColor.GRAY + " - View a list of Clan related commands");
-                UtilMessage.message(p, ChatColor.AQUA + "/kit starter" + ChatColor.GRAY + " - Claim free kit");
+                UtilMessage.message(p, ChatColor.AQUA + "/kit starter" + ChatColor.GRAY + " - Claim a free kit");
                 UtilMessage.message(p, ChatColor.AQUA + "/settings" + ChatColor.GRAY + " - Change some settings for your account");
                 UtilMessage.message(p, ChatColor.AQUA + "/coords" + ChatColor.GRAY + " - Display the coordinates to common locations");
                 UtilMessage.message(p, ChatColor.AQUA + "/log or /quit" + ChatColor.GRAY + " - Attempt to log out safely");

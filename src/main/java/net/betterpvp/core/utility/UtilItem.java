@@ -18,6 +18,11 @@ import java.util.Set;
 public class UtilItem {
 
 
+    public static ItemStack updateNames(ItemStack item){
+ // TODO
+        return item;
+    }
+
     /**
      * Updates an ItemStack, giving it a custom name and lore
      *
