@@ -59,72 +59,66 @@ public class ClientRepository implements Repository<Core> {
 
     @Override
     public void load(Core plugin) {
-        new BukkitRunnable() {
 
-            @Override
-            public void run() {
-                int count = 0;
-                try {
-                    PreparedStatement statement = Connect.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME);
-                    ResultSet result = statement.executeQuery();
+        int count = 0;
+        try {
+            PreparedStatement statement = Connect.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME);
+            ResultSet result = statement.executeQuery();
 
-                    while (result.next()) {
-                        UUID uuid = UUID.fromString(result.getString(1));
-                        String name = result.getString(2);
-                        String ip = result.getString(3);
-                        Rank rank = Rank.valueOf(result.getString(4));
+            while (result.next()) {
+                UUID uuid = UUID.fromString(result.getString(1));
+                String name = result.getString(2);
+                String ip = result.getString(3);
+                Rank rank = Rank.valueOf(result.getString(4));
 
-                        String ignoreString = result.getString(5);
-                        String oldName = result.getString(6);
+                String ignoreString = result.getString(5);
+                String oldName = result.getString(6);
 
 
-                        List<UUID> ignore = new ArrayList<>();
-                        if (!ignoreString.isEmpty()) {
-                            String[] ignoreArray = ignoreString.split(", ");
-                            for (int i = 0; i < ignoreArray.length; i++) {
-                                ignore.add(UUID.fromString(ignoreArray[i]));
-                            }
-                        }
-
-                        long lastLogin = result.getLong(7);
-                        int timePlayed = result.getInt(8);
-                        String password = result.getString(9);
-
-
-
-                        Client client = new Client(uuid);
-                        client.setName(name);
-                        client.setIP(ip);
-                        client.setRank(rank);
-
-                        client.setLastLogin(lastLogin);
-                        client.setPassword(password);
-                        client.setTimePlayed(timePlayed);
-
-                        client.setIgnore(ignore);
-                        client.setOldName(oldName);
-
-                        ClientUtilities.addClientOnLoad(client);
-                        count++;
+                List<UUID> ignore = new ArrayList<>();
+                if (!ignoreString.isEmpty()) {
+                    String[] ignoreArray = ignoreString.split(", ");
+                    for (int i = 0; i < ignoreArray.length; i++) {
+                        ignore.add(UUID.fromString(ignoreArray[i]));
                     }
-
-                    statement.close();
-                    result.close();
-
-                    Log.debug("MySQL", "Loaded " + count + " Clients");
-
-                } catch (SQLException ex) {
-                    Log.debug("Connection", "Could not load Clients (Connection Error), ");
-                    ex.printStackTrace();
                 }
 
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    Client client = ClientUtilities.getClient(p);
-                    ClientUtilities.addOnlineClient(client);
-                }
+                long lastLogin = result.getLong(7);
+                int timePlayed = result.getInt(8);
+                String password = result.getString(9);
 
+
+                Client client = new Client(uuid);
+                client.setName(name);
+                client.setIP(ip);
+                client.setRank(rank);
+
+                client.setLastLogin(lastLogin);
+                client.setPassword(password);
+                client.setTimePlayed(timePlayed);
+
+                client.setIgnore(ignore);
+                client.setOldName(oldName);
+
+                ClientUtilities.addClientOnLoad(client);
+                count++;
             }
-        }.runTaskAsynchronously(plugin);
+
+            statement.close();
+            result.close();
+
+            Log.debug("MySQL", "Loaded " + count + " Clients");
+
+        } catch (SQLException ex) {
+            Log.debug("Connection", "Could not load Clients (Connection Error), ");
+            ex.printStackTrace();
+        }
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            Client client = ClientUtilities.getClient(p);
+            ClientUtilities.addOnlineClient(client);
+        }
+
 
     }
 
@@ -234,7 +228,6 @@ public class ClientRepository implements Repository<Core> {
         String query = "UPDATE clients SET TimePlayed='" + client.getTimePlayed() + "' WHERE UUID='" + client.getUUID().toString() + "'";
         QueryFactory.runQuery(query);
     }
-
 
 
     @Override

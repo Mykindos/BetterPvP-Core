@@ -1,5 +1,6 @@
 package net.betterpvp.core.client;
 
+import net.betterpvp.core.client.mysql.SettingsRepository;
 import net.betterpvp.core.donation.Donation;
 import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.utility.UtilMessage;
@@ -194,7 +195,15 @@ public class Client {
 
     public int getSettingAsInt(String key){
 
-        if(!settings.containsKey(key)) return 0;
+        try {
+            if (!settings.containsKey(key)) {
+                settings.put(key, 0);
+                SettingsRepository.saveSetting(uuid, key, 0);
+                return 0;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
 
         return settings.get(key);
 

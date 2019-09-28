@@ -7,11 +7,13 @@ import net.betterpvp.core.command.CommandManager;
 import net.betterpvp.core.configs.ConfigManager;
 import net.betterpvp.core.database.Connect;
 import net.betterpvp.core.database.QueryFactory;
+import net.betterpvp.core.framework.CoreLoadedEvent;
 import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.interfaces.MenuManager;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
 import net.betterpvp.core.utility.recharge.RechargeManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.reflections.Reflections;
@@ -30,7 +32,6 @@ public class Core extends JavaPlugin {
 
         new Connect(this);
         new QueryFactory(this);
-        new CommandCenter(this);
 
 
 
@@ -66,6 +67,13 @@ public class Core extends JavaPlugin {
         }.runTaskTimerAsynchronously(this, 0L, 2L);
 
         registerListeners();
+
+        new BukkitRunnable(){
+            public void run(){
+                Bukkit.getPluginManager().callEvent(new CoreLoadedEvent(Core.this));
+            }
+        }.runTaskLater(this, 20L);
+
     }
 
     @Override

@@ -6,6 +6,8 @@ import net.betterpvp.core.database.QueryFactory;
 import net.betterpvp.core.database.Repository;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.UUID;
+
 public class SettingsRepository implements Repository<Core> {
 
     private static final String TABLE_NAME = "client_settings";
@@ -14,6 +16,21 @@ public class SettingsRepository implements Repository<Core> {
             "  `UUID` varchar(255) NOT NULL," +
             "  `Name` varchar(255)," +
             "  `Value` int(100));";
+
+    public static void saveSetting(UUID uuid, String setting, int value){
+        String query = "INSERT INTO `" + TABLE_NAME + "` VALUES ('"
+                + uuid.toString() + "','"
+                + setting + "',"
+                + value + ");";
+        QueryFactory.runQuery(query);
+    }
+
+    public static void updateSetting(UUID uuid, String setting, int value){
+        String query = "UPDATE `" + TABLE_NAME + "` SET Value ="
+                + value + " WHERE UUID ='" + uuid + "' AND settings='" + setting + "'";
+
+        QueryFactory.runQuery(query);
+    }
 
     @Override
     public void initialize() {

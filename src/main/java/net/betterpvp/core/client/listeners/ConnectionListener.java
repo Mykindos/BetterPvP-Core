@@ -17,6 +17,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -37,7 +38,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 
     public static List<String> JOIN_ATTEMPTS = new ArrayList<>();
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void handleKicks(PlayerLoginEvent e) {
         if (!getInstance().hasStarted()) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "Server has not finished starting up!");
@@ -56,7 +57,7 @@ public class ConnectionListener extends BPVPListener<Core> {
                 if (client == null) {
                     client = new Client(player.getUniqueId());
                     client.setName(player.getName());
-                    client.setIP("127.0.0.1");
+                    client.setIP(player.getAddress().getAddress().getHostAddress());
 
                     ClientUtilities.addClient(client);
                     ClientRepository.saveClient(client);

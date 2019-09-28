@@ -4,11 +4,11 @@ import net.betterpvp.core.Core;
 
 public class Log implements Repository<Core> {
 
-    public static final String TABLE_NAME = "kitmap_log";
+    public static final String TABLE_NAME = "log";
     public static String CREATE_LOG_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " "
             + "(Time DATETIME, "
             + "Type VARCHAR(24), "
-            + "Message VARCHAR(256), "
+            + "Message VARCHAR(255), "
             + "SystemTime LONG); ";
 
     public static void debug(String module, String message) {
