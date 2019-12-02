@@ -33,12 +33,8 @@ public class Core extends JavaPlugin {
         new Connect(this);
         new QueryFactory(this);
 
-
-
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
-
-
 
         new PunishManager(this);
         new BukkitRunnable() {
