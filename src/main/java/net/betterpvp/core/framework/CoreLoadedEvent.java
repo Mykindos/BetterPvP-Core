@@ -23,6 +23,6 @@ public class CoreLoadedEvent extends Event {
 
     public HandlerList getHandlers() {
         return handlers;
-    } 
+    }
 
 }
