@@ -16,9 +16,6 @@ import net.betterpvp.core.utility.recharge.RechargeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.reflections.Reflections;
-
-import java.sql.Connection;
 
 public class Core extends JavaPlugin {
 
@@ -98,4 +95,5 @@ public class Core extends JavaPlugin {
         new GriefListener(this);
         new MenuManager(this);
     }
+
 }

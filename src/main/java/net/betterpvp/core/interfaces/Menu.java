@@ -1,8 +1,10 @@
 package net.betterpvp.core.interfaces;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,11 +91,25 @@ public class Menu {
         return false;
     }
 
+    public Button getButton(ItemStack item) {
+        if (item != null && item.getType() != Material.AIR) {
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+                for (Button button : getButtons()) {
+                    if (button.getItemStack().equals(item)) {
+                        return button;
+                    }
+                }
+            }
+
+        }
+        return null;
+    }
+
+
     public static Menu getMenu(Inventory inventory, Player p) {
         for (Menu menu : menus) {
             if (menu.getTitle().equals(inventory.getName())) {
                 if (inventory.getViewers().size() > 0) {
-                    //if (menu.getPlayer().getUniqueId().equals(inventory.getViewers().get(0).getUniqueId())) {
                     if (menu.getPlayer().getUniqueId().equals(p.getUniqueId())) {
                         return menu;
                     }

@@ -68,7 +68,7 @@ public class MenuManager extends BPVPListener<Core> {
                 if (Button.isButton(event.getCurrentItem())) {
                     Player player = (Player) event.getWhoClicked();
                     Menu menu = Menu.getMenu(event.getInventory(), player);
-                    Button button = Button.getButton(event.getCurrentItem());
+                    Button button = menu.getButton(event.getCurrentItem());
                     if (RechargeManager.getInstance().add(player, "Button Click", 0.05, false)) {
                         Bukkit.getPluginManager().callEvent(new ButtonClickEvent(player, menu, button, event.getClick(), event.getSlot()));
                     }
@@ -97,4 +97,6 @@ public class MenuManager extends BPVPListener<Core> {
             }
         }
     }
+
+
 }
