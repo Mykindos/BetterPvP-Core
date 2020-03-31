@@ -191,7 +191,7 @@ public class ClientRepository implements Repository<Core> {
 
 
     public static void updateRank(Client client) {
-        String query = "UPDATE clients SET Rank='" + client.getRank().toString() + "' WHERE UUID='" + client.getUUID() + "'";
+        String query = "UPDATE clients SET `Rank`='" + client.getRank().toString() + "' WHERE `UUID`='" + client.getUUID() + "'";
         QueryFactory.runQuery(query);
     }
 
