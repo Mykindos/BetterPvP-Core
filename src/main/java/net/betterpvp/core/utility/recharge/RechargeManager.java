@@ -58,7 +58,7 @@ public class RechargeManager {
 
             if (inform) {
                 player.sendMessage(ChatColor.BLUE + "Recharge> " + ChatColor.GRAY + "You cannot use " + ChatColor.GREEN + ability + ChatColor.GRAY + " for "
-                        + ChatColor.GREEN + Math.min(0, getAbilityRecharge(player.getName(), ability).getRemaining()) + " Seconds" + ChatColor.GRAY + ".");
+                        + ChatColor.GREEN + Math.max(0, getAbilityRecharge(player.getName(), ability).getRemaining()) + " Seconds" + ChatColor.GRAY + ".");
             }
 
             return false;
