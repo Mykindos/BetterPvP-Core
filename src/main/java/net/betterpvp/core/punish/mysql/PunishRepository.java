@@ -21,7 +21,6 @@ public class PunishRepository implements Repository<Core> {
     private final String CREATE_PUNISHMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " "
             + "(Punished VARCHAR(64), "
             + "Punisher VARCHAR(64), "
-            + "PunisherName VARCHAR(254), "
             + "PunishType VARCHAR(64), "
             + "Time bigint(255),"
             + "Reason VARCHAR(1024)); ";
@@ -48,9 +47,9 @@ public class PunishRepository implements Repository<Core> {
                     while (result.next()) {
                         UUID punisher = UUID.fromString(result.getString(1));
                         UUID punished = UUID.fromString(result.getString(2));
-                        PunishType type = PunishType.valueOf(result.getString(3));
-                        Long time = result.getLong(4);
-                        String reason = result.getString(5);
+                        PunishType type = PunishType.valueOf(result.getString(4));
+                        Long time = result.getLong(5);
+                        String reason = result.getString(6);
 
                         PunishManager.addPunishment(new Punish(punisher, punished, type, time, reason));
                         count++;
