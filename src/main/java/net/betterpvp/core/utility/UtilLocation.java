@@ -1,10 +1,7 @@
 package net.betterpvp.core.utility;
 
 import net.betterpvp.core.utility.restoration.BlockRestoreData;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
@@ -86,10 +83,10 @@ public class UtilLocation {
                     if (z == 0 || z == 15 || x == 0 || x == 15) {
                         Block down = chunk.getWorld().getHighestBlockAt(chunk.getBlock(x, 0, z).getLocation()).getRelative(BlockFace.DOWN);
 
-                        if (down.getTypeId() == 1 || down.getTypeId() == 2
-                                || down.getTypeId() == 3 || down.getTypeId() == 12
-                                || down.getTypeId() == 8) {
-                            new BlockRestoreData(down, 89, (byte) 0, 60000L);
+                        if (down.getType() == Material.DIRT ||down.getType() == Material.GRASS
+                                || down.getType() == Material.STONE || down.getType() == Material.SAND
+                                || down.getType() == Material.GRAVEL || down.getType() == Material.WATER) {
+                            new BlockRestoreData(down, Material.GLOWSTONE, (byte) 0, 60000L);
                         }
                     }
                 }

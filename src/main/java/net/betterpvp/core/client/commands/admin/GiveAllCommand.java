@@ -3,6 +3,7 @@ package net.betterpvp.core.client.commands.admin;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.utility.UtilFormat;
+import net.betterpvp.core.utility.UtilItem;
 import net.betterpvp.core.utility.UtilMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,9 +26,10 @@ public class GiveAllCommand extends Command {
         }
 
         Material material = Material.matchMaterial(args[0]);
-        if (material == null) {
+       /* if (material == null) {
             material = Bukkit.getUnsafe().getMaterialFromInternalName(args[0]);
-        }
+
+        }*/
 
         if (material != null) {
             if (args.length == 2) {
@@ -37,7 +39,7 @@ public class GiveAllCommand extends Command {
 
                 for (Player target : Bukkit.getOnlinePlayers()) {
 
-                    //	target.getInventory().addItem(UtilItem.updateNames(stack.clone()));
+                    target.getInventory().addItem(UtilItem.updateNames(stack.clone()));
                 }
                 UtilMessage.broadcast("Give", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " gave everyone"
                         + ChatColor.GREEN + " " + amount + " " + UtilFormat.cleanString(material.toString()));

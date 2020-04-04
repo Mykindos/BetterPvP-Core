@@ -44,7 +44,7 @@ public class UtilMessage {
      */
     public static void message(Player player, String prefix, String message, boolean sound) {
         if (sound) {
-            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 1.0F);
         }
 
         player.sendMessage(ChatColor.BLUE + prefix + "> " + ChatColor.GRAY + message);

@@ -1,5 +1,6 @@
 package net.betterpvp.core.utility.restoration;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -11,17 +12,17 @@ public final class BlockRestoreData {
     public static List<BlockRestoreData> restoreData = new ArrayList<BlockRestoreData>();
 
     private Block block;
-    private int id;
-    private int oldID;
+    private Material material;
+    private Material oldMaterial;
     private byte data;
     private byte oldData;
     private long expire;
 
     @SuppressWarnings("deprecation")
-    public BlockRestoreData(Block block, int id, byte data, long expire) {
+    public BlockRestoreData(Block block, Material mat, byte data, long expire) {
         this.block = block;
-        this.id = id;
-        this.oldID = block.getTypeId();
+        this.material = mat;
+        this.oldMaterial = block.getType();
         this.data = data;
         this.oldData = block.getData();
         this.expire = System.currentTimeMillis() + expire;
@@ -39,20 +40,20 @@ public final class BlockRestoreData {
         this.block = block;
     }
 
-    public int getID() {
-        return id;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setID(int id) {
-        this.id = id;
+    public void setMaterial(Material mat) {
+        this.material = mat;
     }
 
-    public int getOldID() {
-        return oldID;
+    public Material getOldID() {
+        return oldMaterial;
     }
 
-    public void setOldID(int id) {
-        this.oldID = id;
+    public void setOldMaterial(Material mat) {
+        this.oldMaterial = mat;
     }
 
     public byte getData() {
@@ -81,17 +82,17 @@ public final class BlockRestoreData {
 
     @SuppressWarnings("deprecation")
     public void setRestoreData() {
-        getBlock().setTypeIdAndData(getID(), getData(), true);
+        getBlock().setType(material);
     }
 
     @SuppressWarnings("deprecation")
     public void restore() {
-        getBlock().setTypeIdAndData(getOldID(), getOldData(), true);
+        getBlock().setType(getOldID());
     }
 
-    public void update(Block block, int id, byte data, long expire) {
+    public void update(Block block, Material mat, byte data, long expire) {
         setBlock(block);
-        setID(id);
+        setMaterial(mat);
         setData(data);
         setExpire(expire);
     }

@@ -82,9 +82,9 @@ public class Menu {
         }
     }
 
-    public static boolean isMenu(Inventory inventory) {
+    public static boolean isMenu(String title) {
         for (Menu menu : menus) {
-            if (menu.getTitle().equalsIgnoreCase(inventory.getName())) {
+            if (menu.getTitle().equalsIgnoreCase(title)) {
                 return true;
             }
         }
@@ -106,9 +106,9 @@ public class Menu {
     }
 
 
-    public static Menu getMenu(Inventory inventory, Player p) {
+    public static Menu getMenu(Inventory inventory, String inventoryTitle, Player p) {
         for (Menu menu : menus) {
-            if (menu.getTitle().equals(inventory.getName())) {
+            if (menu.getTitle().equals(inventoryTitle)) {
                 if (inventory.getViewers().size() > 0) {
                     if (menu.getPlayer().getUniqueId().equals(p.getUniqueId())) {
                         return menu;

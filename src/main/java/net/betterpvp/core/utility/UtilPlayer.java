@@ -40,7 +40,7 @@ public class UtilPlayer {
     }
 
     public static void sendActionBar(Player p, String msg) {
-        String nmsver = "v1_8_R3";
+        String nmsver = "v1_15_R1";
         try {
             Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit." + nmsver + ".entity.CraftPlayer");
             Object craftPlayer = craftPlayerClass.cast(p);

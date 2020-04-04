@@ -34,7 +34,7 @@ public class AdminChatCommand extends Command {
                 }
                 UtilMessage.message(player, ChatColor.GOLD.toString() + ChatColor.BOLD + player.getName() + "> " + ChatColor.YELLOW.toString() + ChatColor.BOLD + message);
                 ClientUtilities.messageStaffSound(ChatColor.GOLD.toString() + ChatColor.BOLD + player.getName(),
-                        ChatColor.YELLOW.toString() + ChatColor.BOLD + message, Sound.LEVEL_UP, Rank.ADMIN);
+                        ChatColor.YELLOW.toString() + ChatColor.BOLD + message, Sound.ENTITY_PLAYER_LEVELUP, Rank.ADMIN);
             } else {
                 UtilMessage.message(player, "Admin Chat", "There is currently no admins online to receive this message!");
             }

@@ -37,9 +37,9 @@ public class GiveCommand extends Command {
         Player target = UtilPlayer.searchOnline(player, args[0], false);
         if (target != null) {
             Material material = Material.matchMaterial(args[1]);
-            if (material == null) {
+          /*  if (material == null) {
                 material = Bukkit.getUnsafe().getMaterialFromInternalName(args[1]);
-            }
+            }*/
 
             if (material != null) {
                 int amount = 1;

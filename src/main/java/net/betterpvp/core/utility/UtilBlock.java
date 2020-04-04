@@ -1,15 +1,16 @@
 package net.betterpvp.core.utility;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EntityArrow;
-import net.minecraft.server.v1_8_R3.IBlockData;
+import com.comphenix.protocol.wrappers.BlockPosition;
+import net.minecraft.server.v1_15_R1.EntityArrow;
+import net.minecraft.server.v1_15_R1.IBlockData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftArrow;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+
+import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftArrow;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -34,8 +35,7 @@ public class UtilBlock {
      */
     public static boolean isInLava(Player p) {
 
-        return p.getLocation().getBlock().getType() == Material.LAVA
-                || p.getLocation().getBlock().getType() == Material.STATIONARY_LAVA;
+        return p.getLocation().getBlock().getType() == Material.LAVA;
     }
 
     /**
@@ -58,8 +58,7 @@ public class UtilBlock {
      */
     public static boolean isInWater(Player p) {
 
-        return p.getLocation().getBlock().getType() == Material.WATER
-                || p.getLocation().getBlock().getType() == Material.STATIONARY_WATER;
+        return p.getLocation().getBlock().getType() == Material.WATER;
     }
 
     /**
@@ -113,16 +112,10 @@ public class UtilBlock {
      *
      * @param loc  Location to change
      * @param m    Material of the new block
-     * @param data Data of the new block
+
      */
-    public static void setBlock(Location loc, Material m, byte data) {
-        net.minecraft.server.v1_8_R3.World w = ((CraftWorld) loc.getWorld()).getHandle();
-        net.minecraft.server.v1_8_R3.Chunk chunk = w.getChunkAt((int) loc.getX() >> 4, (int) loc.getZ() >> 4);
-        BlockPosition bp = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
-        int combined = m.getId() + (data << 12);
-        IBlockData ibd = net.minecraft.server.v1_8_R3.Block.getByCombinedId(combined);
-        chunk.a(bp, ibd);
-        w.notify(bp);
+    public static void setBlock(Location loc, Material m) {
+        loc.getWorld().getBlockAt(loc).setType(m);
     }
 
     /**
@@ -328,7 +321,7 @@ public class UtilBlock {
      * @return Returns true if the block is Long Grass
      */
     public static boolean airFoliageBlock(Block b) {
-        return b.getType() == Material.LONG_GRASS;
+        return b.getType() == Material.TALL_GRASS;
     }
 
     /**
@@ -352,7 +345,7 @@ public class UtilBlock {
         if (block == null) {
             return false;
         }
-        return airFoliage(block.getTypeId());
+        return airFoliage(block.getType().getId());
     }
 
     /**
@@ -443,7 +436,7 @@ public class UtilBlock {
         if (block == null) {
             return false;
         }
-        return solid(block.getTypeId());
+        return solid(block.getType().getId());
     }
 
     /**
@@ -457,7 +450,7 @@ public class UtilBlock {
         if (block == null) {
             return false;
         }
-        return usable(block.getTypeId());
+        return usable(block.getType().getId());
     }
 
     /**

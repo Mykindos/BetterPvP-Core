@@ -77,7 +77,7 @@ public class BlockRestore extends BPVPListener<Core> {
             }
 
             if (BlockRestoreData.isRestoredBlock(push)) {
-                push.getWorld().playEffect(push.getLocation(), Effect.STEP_SOUND, push.getTypeId());
+                push.getWorld().playEffect(push.getLocation(), Effect.STEP_SOUND, push.getType().getId());
                 event.setCancelled(true);
             }
         }
@@ -92,7 +92,7 @@ public class BlockRestore extends BPVPListener<Core> {
         }
 
         if (BlockRestoreData.isRestoredBlock(retract)) {
-            retract.getWorld().playEffect(retract.getLocation(), Effect.STEP_SOUND, retract.getTypeId());
+            retract.getWorld().playEffect(retract.getLocation(), Effect.STEP_SOUND, retract.getType().getId());
             e.setCancelled(true);
         }
     }

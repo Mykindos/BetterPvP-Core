@@ -15,6 +15,8 @@ import net.betterpvp.core.utility.Titles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -93,9 +95,15 @@ public class ConnectionListener extends BPVPListener<Core> {
         attachment.setPermission("safetrade.request", true);
         attachment.setPermission("safetrade.accept", true);
         attachment.setPermission("safetrade.deny", true);
-
         attachment.unsetPermission("worldedit.calc"); // Server crash
 
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        double baseValue = attribute.getBaseValue();
+
+        if (baseValue != 16) {
+            attribute.setBaseValue(16);
+            player.saveData();
+        }
 
         updateTab(player);
 
