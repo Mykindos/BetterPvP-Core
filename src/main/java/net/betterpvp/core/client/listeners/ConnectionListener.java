@@ -151,6 +151,8 @@ public class ConnectionListener extends BPVPListener<Core> {
         Bukkit.getPluginManager().callEvent(cle);
     }
 
+
+
     @EventHandler
     public void onClientLogin(ClientLoginEvent e) {
         Player p = Bukkit.getPlayer(e.getClient().getUUID());

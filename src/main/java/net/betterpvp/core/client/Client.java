@@ -212,5 +212,8 @@ public class Client {
        return getSettingAsInt(key) != 0;
     }
 
+    public HashMap<String, Integer> getSettings(){
+        return settings;
+    }
 
 }

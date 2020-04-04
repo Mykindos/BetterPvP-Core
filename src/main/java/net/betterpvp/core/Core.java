@@ -1,6 +1,7 @@
 package net.betterpvp.core;
 
 
+import net.betterpvp.core.client.commands.SpawnCommand;
 import net.betterpvp.core.client.listeners.ConnectionListener;
 import net.betterpvp.core.command.CommandCenter;
 import net.betterpvp.core.command.CommandManager;
@@ -13,6 +14,7 @@ import net.betterpvp.core.interfaces.MenuManager;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
 import net.betterpvp.core.utility.recharge.RechargeManager;
+import net.betterpvp.core.utility.restoration.BlockRestore;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,6 +36,8 @@ public class Core extends JavaPlugin {
         CommandManager.registerCommands("net.betterpvp.core", this);
 
         new PunishManager(this);
+        new BlockRestore(this);
+
         new BukkitRunnable() {
 
             @Override
@@ -60,6 +64,7 @@ public class Core extends JavaPlugin {
         }.runTaskTimerAsynchronously(this, 0L, 2L);
 
         registerListeners();
+        loadCommands();
 
         new BukkitRunnable(){
             public void run(){
@@ -79,10 +84,6 @@ public class Core extends JavaPlugin {
         return config;
     }
 
-    public static int test() {
-        return 1;
-    }
-
     public boolean hasStarted() {
         // TODO Auto-generated method stub
         return true;
@@ -94,6 +95,10 @@ public class Core extends JavaPlugin {
         new PunishManager(this);
         new GriefListener(this);
         new MenuManager(this);
+    }
+
+    private void loadCommands(){
+        new SpawnCommand(this);
     }
 
 }

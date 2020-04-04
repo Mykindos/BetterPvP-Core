@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class QueryFactory extends BPVPListener<Core> {
 
     private static ConcurrentLinkedQueue<Query> queries = new ConcurrentLinkedQueue<>();
+    private static ConcurrentLinkedQueue<BukkitRunnable> requests = new ConcurrentLinkedQueue<>();
 
     @SuppressWarnings("rawtypes")
     private static List<Repository> repositories = new ArrayList<>();
@@ -30,7 +31,15 @@ public class QueryFactory extends BPVPListener<Core> {
                 Query q = queries.poll();
                 if (q != null) {
                     q.execute();
+                }else{
+                    // Process all data submission queries before loading in any data
+                    BukkitRunnable r = requests.poll();
+                    if(r != null){
+                        r.runTask(getInstance());
+                    }
                 }
+
+
 
             }
 
@@ -47,6 +56,14 @@ public class QueryFactory extends BPVPListener<Core> {
     public static void runQuery(String query) {
         System.out.println(query);
         queries.add(new Query(query));
+    }
+
+    /**
+     *
+     * @param request Runs a bukkit runnable
+     */
+    public static void requestData(BukkitRunnable request) {
+       requests.add(request);
     }
 
     public static void addRepository(Repository r) {

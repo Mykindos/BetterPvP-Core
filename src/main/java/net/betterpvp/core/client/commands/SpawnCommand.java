@@ -1,5 +1,6 @@
 package net.betterpvp.core.client.commands;
 
+import net.betterpvp.core.Core;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.client.commands.events.SpawnTeleportEvent;
@@ -19,8 +20,9 @@ public class SpawnCommand extends Command implements Listener {
 
     private WeakHashMap<Player, Long> spawns;
 
-    public SpawnCommand() {
+    public SpawnCommand(Core i) {
         super("spawn", new String[]{}, Rank.PLAYER);
+        Bukkit.getPluginManager().registerEvents(this, i);
         spawns = new WeakHashMap<>();
 
     }

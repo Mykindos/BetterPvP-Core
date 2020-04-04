@@ -35,7 +35,7 @@ public class Query {
             Connect.connection = null;
 
         } catch (SQLException ex) {
-
+            System.out.println(stmt);
             ex.printStackTrace();
 
         }
