@@ -18,7 +18,6 @@ public final class BlockRestoreData {
     private byte oldData;
     private long expire;
 
-    @SuppressWarnings("deprecation")
     public BlockRestoreData(Block block, Material mat, byte data, long expire) {
         this.block = block;
         this.material = mat;

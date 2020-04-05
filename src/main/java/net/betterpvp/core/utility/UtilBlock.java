@@ -23,9 +23,9 @@ import java.util.HashSet;
 
 public class UtilBlock {
 
-    public static HashSet<Byte> blockAirFoliageSet = new HashSet<>();
-    public static HashSet<Byte> blockPassSet = new HashSet<>();
-    public static HashSet<Byte> blockUseSet = new HashSet<>();
+    public static HashSet<Material> blockAirFoliageSet = new HashSet<>();
+    public static HashSet<Material> blockPassSet = new HashSet<>();
+    public static HashSet<Material> blockUseSet = new HashSet<>();
 
     /**
      * Check if a Player is in Lava
@@ -275,11 +275,21 @@ public class UtilBlock {
      */
     public static boolean airFoliage(byte block) {
         if (blockAirFoliageSet.isEmpty()) {
-            blockAirFoliageSet.add((byte) 0);
-            blockAirFoliageSet.add((byte) 6);
-            blockAirFoliageSet.add((byte) 31);
-            blockAirFoliageSet.add((byte) 32);
-            blockAirFoliageSet.add((byte) 37);
+            blockAirFoliageSet.add(Material.AIR);
+            for(Material m : Material.values()){
+                if(m.name().contains("SAPLING")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("DEAD")){
+                    blockAirFoliageSet.add(m);
+                }
+            }
+            blockAirFoliageSet.add(Material.FERN);
+            blockAirFoliageSet.add(Material.LARGE_FERN);
+            blockAirFoliageSet.add(Material.GRASS);
+            blockAirFoliageSet.add(Material.SEAGRASS);
+            blockAirFoliageSet.add(Material.TALL_SEAGRASS);
+
+            /*blockAirFoliageSet.add((byte) 37);
             blockAirFoliageSet.add((byte) 38);
             blockAirFoliageSet.add((byte) 39);
             blockAirFoliageSet.add((byte) 40);
@@ -309,6 +319,8 @@ public class UtilBlock {
             //blockAirFoliageSet.add((byte) 187);
             blockAirFoliageSet.add((byte) 167);
             blockAirFoliageSet.add((byte) 330);
+
+             */
         }
 
         return blockAirFoliageSet.contains(block);
@@ -356,7 +368,8 @@ public class UtilBlock {
      */
     public static boolean solid(byte block) {
         if (blockPassSet.isEmpty()) {
-            blockPassSet.add((byte) 0);
+
+          /*  blockPassSet.add((byte) 0);
             blockPassSet.add((byte) 6);
             blockPassSet.add((byte) 8);
             blockPassSet.add((byte) 9);
@@ -408,7 +421,7 @@ public class UtilBlock {
             blockPassSet.add((byte) 118);
             blockPassSet.add((byte) 119);
             blockPassSet.add((byte) 120);
-            blockPassSet.add((byte) 208);
+            blockPassSet.add((byte) 208);*/
 
         }
 
@@ -461,7 +474,7 @@ public class UtilBlock {
      */
     public static boolean usable(byte block) {
         if (blockUseSet.isEmpty()) {
-            blockUseSet.add((byte) 23);
+          /*  blockUseSet.add((byte) 23);
             blockUseSet.add((byte) 330);
             blockUseSet.add((byte) 167);
             blockUseSet.add((byte) 26);
@@ -485,7 +498,7 @@ public class UtilBlock {
             blockUseSet.add((byte) 117);
             blockUseSet.add((byte) 116);
             blockUseSet.add((byte) 145);
-            blockUseSet.add((byte) 146);
+            blockUseSet.add((byte) 146);*/
         }
         return blockUseSet.contains(Byte.valueOf(block));
     }

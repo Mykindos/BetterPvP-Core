@@ -5,6 +5,7 @@ import com.comphenix.protocol.wrappers.nbt.NbtCompound;
 import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -286,11 +287,10 @@ public class UtilItem {
      * @return Returns an ItemStack that is now glowing
      */
     public static ItemStack addGlow(ItemStack item) {
-        if (!MinecraftReflection.isCraftItemStack(item)) {
-            item = MinecraftReflection.getBukkitItemStack(item);
-        }
-        NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
-        compound.put(NbtFactory.ofList("ench"));
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+        item.addUnsafeEnchantment(Enchantment.LUCK, 1);
 
 
         return item;
@@ -338,12 +338,11 @@ public class UtilItem {
      *
      * @param player   Player to check
      * @param item     Material to look for
-     * @param data     Data of item to look for
      * @param required Required amount of item to have
      * @return Returns true if players inventory contains an item matching the defined Material, Data and stack size
      */
     @SuppressWarnings("deprecation")
-    public static boolean contains(Player player, Material item, byte data, int required) {
+    public static boolean contains(Player player, Material item, int required) {
         for (Iterator<Integer> localIterator = player.getInventory().all(item).keySet().iterator(); localIterator.hasNext(); ) {
             int i = localIterator.next();
             if (required <= 0) {
@@ -351,7 +350,7 @@ public class UtilItem {
             }
 
             ItemStack stack = player.getInventory().getItem(i);
-            if ((stack != null) && (stack.getAmount() > 0) && ((stack.getData() == null) || (stack.getData().getData() == data))) {
+            if ((stack != null) && (stack.getAmount() > 0) && ((stack.getData() == null))) {
                 required -= stack.getAmount();
             }
         }
@@ -365,12 +364,11 @@ public class UtilItem {
      *
      * @param player   The Player
      * @param item     The Material to remove
-     * @param data     The data value of the item
      * @param toRemove The amount to remove
      * @return Returns true if the ItemStack was successfully removed from the players inventory
      */
-    public static boolean remove(Player player, Material item, byte data, int toRemove) {
-        if (!contains(player, item, data, toRemove)) {
+    public static boolean remove(Player player, Material item, int toRemove) {
+        if (!contains(player, item, toRemove)) {
             return false;
         }
 
