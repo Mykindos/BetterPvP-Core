@@ -4,6 +4,7 @@ import net.betterpvp.core.utility.UtilTime;
 import net.betterpvp.core.utility.UtilTime.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -53,6 +54,12 @@ public class RechargeManager {
     }
 
     public boolean add(Player player, String ability, double d, boolean inform, boolean removeOnDeath, boolean cancellable) {
+
+        if(player.isOp()){
+            if(player.getGameMode() == GameMode.CREATIVE){
+                return true;
+            }
+        }
 
         if (isCooling(player.getName(), ability)) {
 

@@ -3,10 +3,7 @@ package net.betterpvp.core.client.commands.admin;
 import com.google.common.base.Joiner;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
-import net.betterpvp.core.utility.UtilFormat;
-import net.betterpvp.core.utility.UtilMath;
-import net.betterpvp.core.utility.UtilMessage;
-import net.betterpvp.core.utility.UtilPlayer;
+import net.betterpvp.core.utility.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -64,7 +61,7 @@ public class GiveCommand extends Command {
                         return;
                     }
                 }
-                //target.getInventory().addItem(UtilItem.updateNames(stack));
+                target.getInventory().addItem(UtilItem.updateNames(stack));
                 UtilMessage.broadcast("Give", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " gave " + ChatColor.YELLOW
                         + target.getName() + ChatColor.GREEN + " " + amount + " " + UtilFormat.cleanString(material.toString()));
             } else {

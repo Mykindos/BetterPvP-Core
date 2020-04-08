@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -270,11 +271,9 @@ public class UtilItem {
      * @return Returns an itemstack without its attributes
      */
     public static ItemStack removeAttributes(ItemStack item) {
-        if (!MinecraftReflection.isCraftItemStack(item)) {
-            item = MinecraftReflection.getBukkitItemStack(item);
-        }
-        NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
-        compound.put(NbtFactory.ofList("AttributeModifiers"));
+        ItemMeta itemMeta =item.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        item.setItemMeta(itemMeta);
 
 
         return item;

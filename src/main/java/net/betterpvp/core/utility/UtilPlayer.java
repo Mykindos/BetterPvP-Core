@@ -1,6 +1,12 @@
 package net.betterpvp.core.utility;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_15_R1.ChatComponentText;
+import net.minecraft.server.v1_15_R1.IChatBaseComponent;
+import net.minecraft.server.v1_15_R1.Packet;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -40,29 +46,10 @@ public class UtilPlayer {
     }
 
     public static void sendActionBar(Player p, String msg) {
-        String nmsver = "v1_15_R1";
-        try {
-            Class<?> craftPlayerClass = Class.forName("org.bukkit.craftbukkit." + nmsver + ".entity.CraftPlayer");
-            Object craftPlayer = craftPlayerClass.cast(p);
-            Object ppoc;
-            Class<?> c4 = Class.forName("net.minecraft.server." + nmsver + ".PacketPlayOutChat");
-            Class<?> c5 = Class.forName("net.minecraft.server." + nmsver + ".Packet");
 
-            Class<?> c2 = Class.forName("net.minecraft.server." + nmsver + ".ChatComponentText");
-            Class<?> c3 = Class.forName("net.minecraft.server." + nmsver + ".IChatBaseComponent");
-            Object o = c2.getConstructor(new Class<?>[]{String.class}).newInstance(msg);
-            ppoc = c4.getConstructor(new Class<?>[]{c3, byte.class}).newInstance(o, (byte) 2);
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
 
-            Method m1 = craftPlayerClass.getDeclaredMethod("getHandle");
-            Object h = m1.invoke(craftPlayer);
-            Field f1 = h.getClass().getDeclaredField("playerConnection");
-            Object pc = f1.get(h);
-            Method m5 = pc.getClass().getDeclaredMethod("sendPacket", c5);
-            m5.invoke(pc, ppoc);
-        } catch (Exception ex) {
-            ex.printStackTrace();
 
-        }
     }
 
 
