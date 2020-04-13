@@ -275,6 +275,8 @@ public class UtilBlock {
     public static boolean airFoliage(Material mat) {
         if (blockAirFoliageSet.isEmpty()) {
             blockAirFoliageSet.add(Material.AIR);
+            blockAirFoliageSet.add(Material.CAVE_AIR);
+            blockAirFoliageSet.add(Material.VOID_AIR);
             for (Material m : Material.values()) {
                 if (m.name().contains("SAPLING")) {
                     blockAirFoliageSet.add(m);
@@ -302,6 +304,7 @@ public class UtilBlock {
             blockAirFoliageSet.add(Material.FERN);
             blockAirFoliageSet.add(Material.LARGE_FERN);
             blockAirFoliageSet.add(Material.GRASS);
+            blockAirFoliageSet.add(Material.TALL_GRASS);
             blockAirFoliageSet.add(Material.SEAGRASS);
             blockAirFoliageSet.add(Material.TALL_SEAGRASS);
             blockAirFoliageSet.add(Material.CORNFLOWER);
@@ -355,6 +358,8 @@ public class UtilBlock {
         if (blockPassSet.isEmpty()) {
 
             blockPassSet.add(Material.AIR);
+            blockPassSet.add(Material.CAVE_AIR);
+            blockPassSet.add(Material.VOID_AIR);
             for (Material m : Material.values()) {
                 if (m.name().contains("SAPLING")) {
                     blockPassSet.add(m);
@@ -388,10 +393,13 @@ public class UtilBlock {
                     blockPassSet.add(m);
                 }else if(m.name().contains("GATE")){
                     blockPassSet.add(m);
+                }else if(m.name().contains("BUTTON")){
+                    blockPassSet.add(m);
                 }
             }
 
             blockPassSet.add(Material.GRASS);
+            blockPassSet.add(Material.TALL_GRASS);
             blockPassSet.add(Material.REDSTONE_WIRE);
             blockPassSet.add(Material.CAULDRON);
             blockPassSet.add(Material.BREWING_STAND);
@@ -414,6 +422,9 @@ public class UtilBlock {
             blockPassSet.add(Material.AZURE_BLUET);
             blockPassSet.add(Material.BLUE_ORCHID);
             blockPassSet.add(Material.ALLIUM);
+            blockPassSet.add(Material.LANTERN);
+            blockPassSet.add(Material.CAMPFIRE);
+            blockPassSet.add(Material.BARRIER);
 
         }
 

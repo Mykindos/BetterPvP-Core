@@ -143,6 +143,16 @@ public class UtilItem {
     }
 
     /**
+     * Check if a Material is a type of ranged weapon
+     *
+     * @param wep Material to check
+     * @return Returns true if the Material is a type of ranged weapon
+     */
+    public static boolean isRanged(Material wep) {
+        return (wep == Material.BOW || wep == Material.CROSSBOW);
+    }
+
+    /**
      * Check if a Material is a gold tool
      *
      * @param item Material to check

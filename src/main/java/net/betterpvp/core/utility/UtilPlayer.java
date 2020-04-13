@@ -6,6 +6,7 @@ import net.minecraft.server.v1_15_R1.ChatComponentText;
 import net.minecraft.server.v1_15_R1.IChatBaseComponent;
 import net.minecraft.server.v1_15_R1.Packet;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -363,5 +364,12 @@ public class UtilPlayer {
         return nearbyMap;
     }
 
+    public static double getHealthPercentage(LivingEntity e){
+       return e.getHealth() / e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 100;
+    }
+
+    public static double getMaxHealth(LivingEntity e){
+        return e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+    }
 
 }

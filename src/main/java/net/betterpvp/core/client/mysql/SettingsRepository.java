@@ -79,7 +79,7 @@ public class SettingsRepository implements Repository<Core> {
                     statement.close();
                     result.close();
 
-                    Log.debug("MySQL", "Loaded " + count + " Clients");
+                    Log.debug("MySQL", "Loaded " + count + " settings");
 
                 } catch (SQLException ex) {
                     Log.debug("Connection", "Could not load Clients (Connection Error), ");

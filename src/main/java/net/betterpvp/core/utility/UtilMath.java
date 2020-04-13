@@ -231,4 +231,19 @@ public class UtilMath {
         }
     }
 
+    /**
+     * Round a double to specified decimal places
+     * @param value Value to round
+     * @param places Decimal places
+     * @return rounded double
+     */
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
 }
