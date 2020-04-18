@@ -11,6 +11,7 @@ import net.betterpvp.core.database.QueryFactory;
 import net.betterpvp.core.framework.CoreLoadedEvent;
 import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.interfaces.MenuManager;
+import net.betterpvp.core.proxy.ProxyDetector;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
 import net.betterpvp.core.utility.recharge.RechargeManager;
@@ -72,6 +73,7 @@ public class Core extends JavaPlugin {
             }
         }.runTaskLater(this, 20L);
 
+
     }
 
     @Override
@@ -98,7 +100,7 @@ public class Core extends JavaPlugin {
     }
 
     private void loadCommands(){
-        new SpawnCommand(this);
+      //  new SpawnCommand();
     }
 
 }

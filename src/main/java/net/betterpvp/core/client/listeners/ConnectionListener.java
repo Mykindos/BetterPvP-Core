@@ -7,11 +7,13 @@ import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import net.betterpvp.core.Core;
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
+import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.framework.BPVPListener;
 import net.betterpvp.core.framework.UpdateEvent;
 import net.betterpvp.core.framework.UpdateEvent.UpdateType;
 import net.betterpvp.core.utility.Titles;
+import net.betterpvp.core.utility.UtilProxy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -24,6 +26,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -81,9 +84,9 @@ public class ConnectionListener extends BPVPListener<Core> {
 
         if (!player.hasPlayedBefore()) {
             if (!ClientUtilities.isClient(player.getName())) {
-                player.teleport(new Location(Bukkit.getWorld("world"), 72.5, 71, -24.5, 180F, 0));
+                player.teleport(new Location(Bukkit.getWorld("world"), -231.9, 67, -308.9, -90F, 0));
             } else {
-                player.teleport(new Location(Bukkit.getWorld("world"), 72.5, 71, -24.5, 180F, 0));
+                player.teleport(new Location(Bukkit.getWorld("world"), -231.9, 67, -308.9, -90F, 0));
 
             }
         }
@@ -157,6 +160,17 @@ public class ConnectionListener extends BPVPListener<Core> {
         cle.setNewClient(isNew);
 
         Bukkit.getPluginManager().callEvent(cle);
+
+        new Thread(() -> {
+            if(UtilProxy.isUsingProxy(player)) {
+                new BukkitRunnable(){
+                    @Override
+                    public void run(){
+                        ClientUtilities.messageStaff("Proxy", player.getName() + " may be using a VPN / Proxy", Rank.ADMIN);
+                    }
+                }.runTask(getInstance());
+            }
+        }).start();
     }
 
 

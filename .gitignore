@@ -31,6 +31,8 @@ Connect.java
 SelectorManager.java
 ScoreboardManager.java
 src/main/java/net/betterpvp/core/framework/Updater.java
+ProxyDetector.java
+UtilProxy.java
 
 *.idea
 *.idea/

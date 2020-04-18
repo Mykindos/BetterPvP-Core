@@ -81,9 +81,9 @@ public class UtilLocation {
             for (int x = 0; x < 16; x++) {
                 for (int z = 0; z < 16; z++) {
                     if (z == 0 || z == 15 || x == 0 || x == 15) {
-                        Block down = chunk.getWorld().getHighestBlockAt(chunk.getBlock(x, 0, z).getLocation()).getRelative(BlockFace.DOWN);
+                        Block down = chunk.getWorld().getHighestBlockAt(chunk.getBlock(x, 0, z).getLocation());
 
-                        if (down.getType() == Material.DIRT ||down.getType() == Material.GRASS
+                        if (down.getType() == Material.DIRT ||down.getType() == Material.GRASS_BLOCK
                                 || down.getType() == Material.STONE || down.getType() == Material.SAND
                                 || down.getType() == Material.GRAVEL || down.getType() == Material.WATER) {
                             new BlockRestoreData(down, Material.GLOWSTONE, (byte) 0, 60000L);

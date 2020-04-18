@@ -466,6 +466,34 @@ public class UtilBlock {
      */
     public static boolean usable(Material mat) {
         if (blockUseSet.isEmpty()) {
+            for(Material m : Material.values()){
+                if(m.name().contains("CHEST")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("FURNACE")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("SHULKER")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("ANVIL")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("DOOR")){
+                    blockUseSet.add(m);
+                }
+            }
+
+            blockUseSet.add(Material.CAULDRON);
+            blockUseSet.add(Material.CARTOGRAPHY_TABLE);
+            blockUseSet.add(Material.BEEHIVE);
+            blockUseSet.add(Material.JUKEBOX);
+            blockUseSet.add(Material.ENCHANTING_TABLE);
+            blockUseSet.add(Material.SMOKER);
+            blockUseSet.add(Material.BARREL);
+            blockUseSet.add(Material.BREWING_STAND);
+            blockUseSet.add(Material.BELL);
+            blockUseSet.add(Material.SMITHING_TABLE);
+            blockUseSet.add(Material.LOOM);
+            blockUseSet.add(Material.GRINDSTONE);
+            blockUseSet.add(Material.DISPENSER);
+
           /*  blockUseSet.add((byte) 23);
             blockUseSet.add((byte) 330);
             blockUseSet.add((byte) 167);
