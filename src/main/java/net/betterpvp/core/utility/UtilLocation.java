@@ -83,11 +83,10 @@ public class UtilLocation {
                     if (z == 0 || z == 15 || x == 0 || x == 15) {
                         Block down = chunk.getWorld().getHighestBlockAt(chunk.getBlock(x, 0, z).getLocation());
 
-                        if (down.getType() == Material.DIRT ||down.getType() == Material.GRASS_BLOCK
-                                || down.getType() == Material.STONE || down.getType() == Material.SAND
-                                || down.getType() == Material.GRAVEL || down.getType() == Material.WATER) {
-                            new BlockRestoreData(down, Material.GLOWSTONE, (byte) 0, 60000L);
+                        if((UtilBlock.solid(down) || down.getType() == Material.WATER) && !UtilBlock.usable(down)){
+                            new BlockRestoreData(down, Material.SEA_LANTERN, (byte) 0, 60000L);
                         }
+
                     }
                 }
             }

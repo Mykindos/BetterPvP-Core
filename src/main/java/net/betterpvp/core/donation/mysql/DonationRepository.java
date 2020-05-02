@@ -17,10 +17,17 @@ import java.util.UUID;
 public class DonationRepository implements Repository<Core> {
 
     private static final String TABLE_NAME = "donations";
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS `" + TABLE_NAME + "`("
+            + "id int auto_increment primary key,"
+            + "UUID varchar(255) not null,"
+            + "Name varchar(255) not null,"
+            + "Expiry timestamp null,"
+            + "Claimed tinyint(1) default 0 null)";
+
 
     @Override
     public void initialize() {
-
+        QueryFactory.runQuery(CREATE_TABLE);
     }
 
     @Override
@@ -35,9 +42,10 @@ public class DonationRepository implements Repository<Core> {
                 while (result.next()) {
 
                     String donation = result.getString(2);
+                    long expiry = result.getLong(3);
+                    boolean claimed = result.getBoolean(4);
 
-
-                    Donation d = new Donation(donation);
+                    Donation d = new Donation(donation, expiry, claimed);
                     client.getDonations().add(d);
                 }
 
@@ -50,11 +58,16 @@ public class DonationRepository implements Repository<Core> {
         }
     }
 
-    public static void saveDonation(UUID uuid, String donation){
-        String query = "INSERT IGNORE INTO " + TABLE_NAME + " VALUES('" + uuid.toString() + "', '" + donation + "');";
+
+    public static void saveDonation(UUID uuid, Donation donation) {
+        String query = "INSERT IGNORE INTO " + TABLE_NAME + " VALUES('" + uuid.toString() + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + donation.isClaimed() + "');";
         QueryFactory.runQuery(query);
     }
 
+    public static void removeDonation(UUID uuid, String perk){
+        String query = "DELETE FROM `" + TABLE_NAME + "` WHERE UUID='" + uuid.toString() + "' AND Name='" + perk + "'";
+        QueryFactory.runQuery(query);
+    }
 
     @Override
     public LoadPriority getLoadPriority() {

@@ -359,7 +359,7 @@ public class UtilItem {
             }
 
             ItemStack stack = player.getInventory().getItem(i);
-            if ((stack != null) && (stack.getAmount() > 0) && ((stack.getData() == null))) {
+            if ((stack != null) && (stack.getAmount() > 0)) {
                 required -= stack.getAmount();
             }
         }

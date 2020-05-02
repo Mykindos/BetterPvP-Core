@@ -318,6 +318,7 @@ public class UtilBlock {
             blockAirFoliageSet.add(Material.AZURE_BLUET);
             blockAirFoliageSet.add(Material.BLUE_ORCHID);
             blockAirFoliageSet.add(Material.ALLIUM);
+            blockAirFoliageSet.add(Material.SNOW);
 
         }
 
@@ -493,6 +494,8 @@ public class UtilBlock {
             blockUseSet.add(Material.LOOM);
             blockUseSet.add(Material.GRINDSTONE);
             blockUseSet.add(Material.DISPENSER);
+            blockUseSet.add(Material.IRON_DOOR);
+            blockUseSet.add(Material.IRON_TRAPDOOR);
 
           /*  blockUseSet.add((byte) 23);
             blockUseSet.add((byte) 330);

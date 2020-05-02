@@ -43,7 +43,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 
     public static List<String> JOIN_ATTEMPTS = new ArrayList<>();
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void handleKicks(PlayerLoginEvent e) {
         if (!getInstance().hasStarted()) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "Server has not finished starting up!");
@@ -83,10 +83,12 @@ public class ConnectionListener extends BPVPListener<Core> {
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
-            if (!ClientUtilities.isClient(player.getName())) {
-                player.teleport(new Location(Bukkit.getWorld("world"), -231.9, 67, -308.9, -90F, 0));
+
+            // Alternate spawns
+            if (Bukkit.getOnlinePlayers().size() % 2 == 0) {
+                player.teleport(Core.getOptions().getSpawnA());
             } else {
-                player.teleport(new Location(Bukkit.getWorld("world"), -231.9, 67, -308.9, -90F, 0));
+                player.teleport(Core.getOptions().getSpawnB());
 
             }
         }
@@ -162,17 +164,16 @@ public class ConnectionListener extends BPVPListener<Core> {
         Bukkit.getPluginManager().callEvent(cle);
 
         new Thread(() -> {
-            if(UtilProxy.isUsingProxy(player)) {
-                new BukkitRunnable(){
+            if (UtilProxy.isUsingProxy(player)) {
+                new BukkitRunnable() {
                     @Override
-                    public void run(){
+                    public void run() {
                         ClientUtilities.messageStaff("Proxy", player.getName() + " may be using a VPN / Proxy", Rank.ADMIN);
                     }
                 }.runTask(getInstance());
             }
         }).start();
     }
-
 
 
     @EventHandler
@@ -248,7 +249,7 @@ public class ConnectionListener extends BPVPListener<Core> {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Client client = ClientUtilities.getOnlineClient(event.getPlayer());
 
-        if(client != null){
+        if (client != null) {
             Bukkit.getPluginManager().callEvent(new ClientQuitEvent(client));
         }
 
