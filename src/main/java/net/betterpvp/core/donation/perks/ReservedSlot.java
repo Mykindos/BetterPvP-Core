@@ -5,6 +5,8 @@ import net.betterpvp.core.Core;
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.donation.IPerk;
+import net.betterpvp.core.donation.Perk;
 import net.betterpvp.core.framework.BPVPListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,7 +40,7 @@ public class ReservedSlot extends BPVPListener<Core> implements IPerk {
         for(Player p : Bukkit.getOnlinePlayers()){
             Client pClient = ClientUtilities.getOnlineClient(p);
             if(pClient != null){
-                if(pClient.hasDonation(getPerkName()) || client.hasRank(Rank.TRIAL_MOD, false)){
+                if(pClient.hasDonation(getPerk().getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
                     count++;
                 }
             }
@@ -49,7 +51,7 @@ public class ReservedSlot extends BPVPListener<Core> implements IPerk {
             return;
         }
 
-        if(client.hasDonation(getPerkName()) || client.hasRank(Rank.TRIAL_MOD, false)){
+        if(client.hasDonation(getPerk().getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
             e.setResult(PlayerLoginEvent.Result.ALLOWED);
             return;
         }
@@ -63,7 +65,5 @@ public class ReservedSlot extends BPVPListener<Core> implements IPerk {
     }
 
     @Override
-    public String getPerkName() {
-        return "ReservedSlot";
-    }
+    public Perk getPerk() {return Perk.RESERVEDSLOT;}
 }

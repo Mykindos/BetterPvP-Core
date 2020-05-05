@@ -27,4 +27,8 @@ public class Donation {
     public boolean isClaimed() {
         return claimed;
     }
+
+    public boolean hasExpired(){
+        return expiry - System.currentTimeMillis() <= 0 && expiry != 0;
+    }
 }

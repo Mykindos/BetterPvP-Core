@@ -34,8 +34,8 @@ public class SettingsRepository implements Repository<Core> {
     }
 
     public static void updateSetting(UUID uuid, String setting, int value) {
-        String query = "UPDATE `" + TABLE_NAME + "` SET Value ="
-                + value + " WHERE UUID ='" + uuid + "' AND settings='" + setting + "'";
+        String query = "UPDATE `" + TABLE_NAME + "` SET Value = "
+                + value + " WHERE UUID ='" + uuid + "' AND Name ='" + setting + "'";
 
         QueryFactory.runQuery(query);
     }

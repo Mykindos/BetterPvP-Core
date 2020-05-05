@@ -17,7 +17,7 @@ public abstract class Command {
 
     }
 
-    public String getCommandLable() {
+    public String getCommandLabel() {
         return this.commandLable;
     }
 

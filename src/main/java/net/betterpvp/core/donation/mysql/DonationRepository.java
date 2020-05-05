@@ -21,7 +21,7 @@ public class DonationRepository implements Repository<Core> {
             + "id int auto_increment primary key,"
             + "UUID varchar(255) not null,"
             + "Name varchar(255) not null,"
-            + "Expiry timestamp null,"
+            + "Expiry long null,"
             + "Claimed tinyint(1) default 0 null)";
 
 
@@ -36,14 +36,14 @@ public class DonationRepository implements Repository<Core> {
 
             for (Client client : ClientUtilities.getClients()) {
                 PreparedStatement statement = Connect.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME
-                        + " WHERE UUID=" + client.getUUID());
+                        + " WHERE UUID='" + client.getUUID() + "'");
                 ResultSet result = statement.executeQuery();
 
                 while (result.next()) {
 
-                    String donation = result.getString(2);
-                    long expiry = result.getLong(3);
-                    boolean claimed = result.getBoolean(4);
+                    String donation = result.getString(3);
+                    long expiry = result.getLong(4);
+                    boolean claimed = result.getBoolean(5);
 
                     Donation d = new Donation(donation, expiry, claimed);
                     client.getDonations().add(d);
@@ -60,7 +60,7 @@ public class DonationRepository implements Repository<Core> {
 
 
     public static void saveDonation(UUID uuid, Donation donation) {
-        String query = "INSERT IGNORE INTO " + TABLE_NAME + " VALUES('" + uuid.toString() + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + donation.isClaimed() + "');";
+        String query = "INSERT IGNORE INTO " + TABLE_NAME + "(UUID, Name, Expiry, Claimed) VALUES('" + uuid.toString() + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + donation.isClaimed() + "');";
         QueryFactory.runQuery(query);
     }
 

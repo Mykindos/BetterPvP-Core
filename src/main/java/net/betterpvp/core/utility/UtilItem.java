@@ -11,10 +11,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class UtilItem {
@@ -34,7 +31,11 @@ public class UtilItem {
      * @return Returns the ItemStack with the newly adjusted name and lore
      */
     public static ItemStack setItemNameAndLore(ItemStack item, String name, String[] lore) {
-        return setItemNameAndLore(item, name, Arrays.asList(lore));
+        if(lore != null){
+            return setItemNameAndLore(item, name, Arrays.asList(lore));
+        }
+
+        return setItemNameAndLore(item, name, new ArrayList<>());
 
     }
 

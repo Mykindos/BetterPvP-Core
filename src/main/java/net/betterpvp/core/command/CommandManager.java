@@ -18,7 +18,7 @@ public class CommandManager {
     public static Command getCommand(String commandLabel) {
 
 
-        return commands.stream().filter(c -> c.getCommandLable().equalsIgnoreCase(commandLabel)
+        return commands.stream().filter(c -> c.getCommandLabel().equalsIgnoreCase(commandLabel)
                 || Arrays.stream(c.getAliases()).filter(a -> a.equalsIgnoreCase(commandLabel)).findAny().isPresent())
                 .findFirst().orElse(null);
 

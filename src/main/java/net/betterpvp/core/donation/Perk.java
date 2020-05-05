@@ -1,4 +1,4 @@
-package net.betterpvp.core.donation.perks;
+package net.betterpvp.core.donation;
 
 import java.util.stream.Stream;
 

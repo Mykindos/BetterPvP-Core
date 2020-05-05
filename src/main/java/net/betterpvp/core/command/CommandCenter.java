@@ -70,7 +70,7 @@ public class CommandCenter extends BPVPListener<Core> {
 
     @EventHandler
     public void onConsoleCommand(ServerCommandEvent event) {
-        String command = event.getCommand().substring(1);
+        String command = event.getCommand();
         String[] args = null;
 
         if (command == null) {

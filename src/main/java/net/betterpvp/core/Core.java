@@ -16,6 +16,7 @@ import net.betterpvp.core.networking.NetworkReceiver;
 import net.betterpvp.core.proxy.ProxyDetector;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
+import net.betterpvp.core.settings.SettingsListener;
 import net.betterpvp.core.utility.recharge.RechargeManager;
 import net.betterpvp.core.utility.restoration.BlockRestore;
 import org.bukkit.Bukkit;
@@ -44,6 +45,7 @@ public class Core extends JavaPlugin {
 
         new PunishManager(this);
         new BlockRestore(this);
+        new SettingsListener(this);
 
         new BukkitRunnable() {
 
