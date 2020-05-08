@@ -526,7 +526,7 @@ public class UtilBlock {
         return blockUseSet.contains(mat);
     }
 
-    public static boolean isInLiquid(LivingEntity ent) {
+    public static boolean isInLiquid(Entity ent) {
         Block bottomBlock = ent.getLocation().getBlock();
         Block topBlock = ent.getLocation().add(0, 1, 0).getBlock();
 

@@ -1,25 +1,21 @@
 package net.betterpvp.core.donation.perks;
 
 
-import net.betterpvp.core.Core;
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
-import net.betterpvp.core.donation.IPerk;
-import net.betterpvp.core.donation.Perk;
-import net.betterpvp.core.framework.BPVPListener;
+import net.betterpvp.core.donation.DonationExpiryTimes;
+import net.betterpvp.core.donation.IDonation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class ReservedSlot extends BPVPListener<Core> implements IPerk {
+public class ReservedSlot implements IDonation, Listener {
 
-    public ReservedSlot(Core instance) {
-        super(instance);
-    }
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onLogin(PlayerLoginEvent e){
@@ -40,7 +36,7 @@ public class ReservedSlot extends BPVPListener<Core> implements IPerk {
         for(Player p : Bukkit.getOnlinePlayers()){
             Client pClient = ClientUtilities.getOnlineClient(p);
             if(pClient != null){
-                if(pClient.hasDonation(getPerk().getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
+                if(pClient.hasDonation(getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
                     count++;
                 }
             }
@@ -51,7 +47,7 @@ public class ReservedSlot extends BPVPListener<Core> implements IPerk {
             return;
         }
 
-        if(client.hasDonation(getPerk().getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
+        if(client.hasDonation(getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
             e.setResult(PlayerLoginEvent.Result.ALLOWED);
             return;
         }
@@ -65,5 +61,17 @@ public class ReservedSlot extends BPVPListener<Core> implements IPerk {
     }
 
     @Override
-    public Perk getPerk() {return Perk.RESERVEDSLOT;}
+    public String getName() {
+        return "ReservedSlot";
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Reserved Slot";
+    }
+
+    @Override
+    public long getExpiryTime() {
+        return DonationExpiryTimes.DAY * 30;
+    }
 }

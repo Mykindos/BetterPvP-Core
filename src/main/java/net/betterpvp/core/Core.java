@@ -8,6 +8,8 @@ import net.betterpvp.core.command.CommandManager;
 import net.betterpvp.core.configs.ConfigManager;
 import net.betterpvp.core.database.Connect;
 import net.betterpvp.core.database.QueryFactory;
+import net.betterpvp.core.donation.DonationManager;
+import net.betterpvp.core.donation.menu.DonationMenuListener;
 import net.betterpvp.core.framework.CoreLoadedEvent;
 import net.betterpvp.core.framework.Options;
 import net.betterpvp.core.framework.Updater;
@@ -42,6 +44,7 @@ public class Core extends JavaPlugin {
 
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
+        DonationManager.registerDonations("net.betterpvp.core", this);
 
         new PunishManager(this);
         new BlockRestore(this);
@@ -105,6 +108,7 @@ public class Core extends JavaPlugin {
         new PunishManager(this);
         new GriefListener(this);
         new MenuManager(this);
+        new DonationMenuListener(this);
     }
 
     private void loadCommands(){

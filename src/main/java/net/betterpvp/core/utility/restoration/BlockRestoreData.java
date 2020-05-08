@@ -2,6 +2,7 @@ package net.betterpvp.core.utility.restoration;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Levelled;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ public final class BlockRestoreData {
     private byte data;
     private byte oldData;
     private long expire;
+    private int blocklevel = 0;
 
     public BlockRestoreData(Block block, Material mat, byte data, long expire) {
         this.block = block;
@@ -25,6 +27,11 @@ public final class BlockRestoreData {
         this.data = data;
         this.oldData = block.getData();
         this.expire = System.currentTimeMillis() + expire;
+        if(block.getBlockData() instanceof Levelled){
+            Levelled levelled = (Levelled) block.getBlockData();
+            this.blocklevel = levelled.getLevel();
+
+        }
         if (!isRestoredBlock(block)) {
             restoreData.add(this);
             setRestoreData();
@@ -87,6 +94,11 @@ public final class BlockRestoreData {
     @SuppressWarnings("deprecation")
     public void restore() {
         getBlock().setType(getOldID());
+        if(getBlock().getBlockData() instanceof Levelled){
+            Levelled levelled = (Levelled) getBlock().getBlockData();
+            levelled.setLevel(blocklevel);
+            getBlock().setBlockData(levelled);
+        }
     }
 
     public void update(Block block, Material mat, byte data, long expire) {
@@ -94,6 +106,8 @@ public final class BlockRestoreData {
         setMaterial(mat);
         setData(data);
         setExpire(expire);
+
+
     }
 
     public static BlockRestoreData getRestoreData(Block block) {

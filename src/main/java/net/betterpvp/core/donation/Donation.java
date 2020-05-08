@@ -28,6 +28,10 @@ public class Donation {
         return claimed;
     }
 
+    public void setClaimed(boolean claimed){
+        this.claimed = claimed;
+    }
+
     public boolean hasExpired(){
         return expiry - System.currentTimeMillis() <= 0 && expiry != 0;
     }

@@ -64,8 +64,14 @@ public class DonationRepository implements Repository<Core> {
         QueryFactory.runQuery(query);
     }
 
-    public static void removeDonation(UUID uuid, String perk){
+    public static void removeDonation(UUID uuid, String perk) {
         String query = "DELETE FROM `" + TABLE_NAME + "` WHERE UUID='" + uuid.toString() + "' AND Name='" + perk + "'";
+        QueryFactory.runQuery(query);
+    }
+
+    public static void setClaimed(UUID uuid, String perk) {
+        String query = "UPDATE `" + TABLE_NAME + "` SET Claimed = 1 WHERE id = (SELECT id from `"
+                + TABLE_NAME + "` WHERE Name ='" + perk + "' AND UUID = '" + uuid.toString() + "' LIMIT 1)";
         QueryFactory.runQuery(query);
     }
 
