@@ -70,8 +70,8 @@ public class DonationRepository implements Repository<Core> {
     }
 
     public static void setClaimed(UUID uuid, String perk) {
-        String query = "UPDATE `" + TABLE_NAME + "` SET Claimed = 1 WHERE id = (SELECT id from `"
-                + TABLE_NAME + "` WHERE Name ='" + perk + "' AND UUID = '" + uuid.toString() + "' LIMIT 1)";
+        String query = "UPDATE `" + TABLE_NAME + "` SET Claimed = 1 WHERE Claimed = 0 AND Name ='" + perk
+                + "' AND UUID = '" + uuid.toString() + "' ORDER BY id ASC LIMIT 1";
         QueryFactory.runQuery(query);
     }
 

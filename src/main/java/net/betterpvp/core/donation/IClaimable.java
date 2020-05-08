@@ -6,4 +6,6 @@ public interface IClaimable {
 
     void claim(Player player);
 
+    String getClaimFailedReason();
+    boolean canClaim(Player player);
 }

@@ -20,6 +20,7 @@ public class Menu {
     private List<Button> buttons;
     private boolean keep;
     private long openTime;
+    private int size;
 
     public Menu(Player player, int size, String title, Button[] buttons) {
         this.player = player;
@@ -27,6 +28,7 @@ public class Menu {
         this.buttons = new ArrayList<>(Arrays.asList(buttons));
         this.inventory = Bukkit.createInventory(player, size, title);
         this.keep = false;
+        this.size = size;
         construct();
         menus.add(this);
         openTime = System.currentTimeMillis();
@@ -66,7 +68,11 @@ public class Menu {
     }
 
     public void construct() {
+
         Inventory inv = getInventory();
+        for(int i = 0; i < size; i++){
+            getInventory().setItem(i, new ItemStack(Material.AIR));
+        }
         for (Button button : getButtons()) {
             inv.setItem(button.getSlot(), button.getItemStack());
         }

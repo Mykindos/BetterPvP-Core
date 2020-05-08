@@ -23,7 +23,6 @@ public class DonationClaimMenu extends Menu {
     }
 
     public void buildPage(Player player) {
-        getButtons().clear();
         int slot = 0;
         Client client = ClientUtilities.getOnlineClient(player);
         if (client != null) {
