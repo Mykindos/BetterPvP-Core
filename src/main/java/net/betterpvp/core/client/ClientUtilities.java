@@ -1,5 +1,6 @@
 package net.betterpvp.core.client;
 
+import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.UtilMessage;
 import net.betterpvp.core.utility.fancymessage.FancyMessage;
@@ -81,6 +82,23 @@ public class ClientUtilities {
             }
         }
         return null;
+    }
+
+    public static Client getOrCreateClient(String[] string) {
+        for (Client client : clients) {
+            if (client.getName().equalsIgnoreCase(string[1])
+                    || client.getUUID().toString().equalsIgnoreCase(string[0])) {
+                return client;
+            }
+        }
+
+        Client client = new Client(UUID.fromString(string[0]));
+        client.setName(string[1]);
+        addClient(client);
+        ClientRepository.saveClient(client);
+
+
+        return client;
     }
 
     public static Client getOnlineClient(String string) {
@@ -258,13 +276,15 @@ public class ClientUtilities {
         StringBuilder alias = new StringBuilder();
 
         for (Client clients : clients) {
-            if (client.getIP().equals(clients.getIP())) {
-                if (clients.getUUID().equals(client.getUUID())) {
-                    continue;
+            if(client.getIP() != null) {
+                if (client.getIP().equals(clients.getIP())) {
+                    if (clients.getUUID().equals(client.getUUID())) {
+                        continue;
+                    }
+                    alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
+                            .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
+                                    true ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
                 }
-                alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
-                        .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
-                               true ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
             }
         }
         return alias.toString();

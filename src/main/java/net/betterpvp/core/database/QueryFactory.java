@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.reflections.Reflections;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -22,23 +23,22 @@ public class QueryFactory extends BPVPListener<Core> {
         super(i);
 
 
-
-
         new BukkitRunnable() {
 
             @Override
             public void run() {
                 Query q = queries.poll();
                 if (q != null) {
+
                     q.execute();
-                }else{
+
+                } else {
                     // Process all data submission queries before loading in any data
                     BukkitRunnable r = requests.poll();
-                    if(r != null){
+                    if (r != null) {
                         r.runTask(getInstance());
                     }
                 }
-
 
 
             }
@@ -50,7 +50,6 @@ public class QueryFactory extends BPVPListener<Core> {
 
 
     /**
-     *
      * @param query Runs a query statement
      */
     public static void runQuery(String query) {
@@ -58,12 +57,17 @@ public class QueryFactory extends BPVPListener<Core> {
         queries.add(new Query(query));
     }
 
+    public static void runTransaction(List<String> statements) {
+
+        queries.add(new Transaction(statements));
+    }
+
+
     /**
-     *
      * @param request Runs a bukkit runnable
      */
     public static void requestData(BukkitRunnable request) {
-       requests.add(request);
+        requests.add(request);
     }
 
     public static void addRepository(Repository r) {
@@ -72,9 +76,7 @@ public class QueryFactory extends BPVPListener<Core> {
     }
 
     /**
-
-     * @param instance
-     * Loads all Repository objects in order of priority. Data that requires other data to be loaded first should be on high
+     * @param instance Loads all Repository objects in order of priority. Data that requires other data to be loaded first should be on high
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static void loadRepositories(String packageName, JavaPlugin instance) {
@@ -102,8 +104,6 @@ public class QueryFactory extends BPVPListener<Core> {
             r.load(instance);
 
         });
-
-
 
 
     }

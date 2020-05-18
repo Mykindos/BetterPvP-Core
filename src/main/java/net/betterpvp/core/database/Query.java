@@ -23,16 +23,41 @@ public class Query {
 
 
     public void execute() {
+
+        PreparedStatement con = null;
         try {
 
-            PreparedStatement preparedStatement = Connect.getConnection().prepareStatement(getStatment());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
+            if(this instanceof Transaction){
+                Connect.getConnection().setAutoCommit(false);
+                Transaction transaction = (Transaction) this;
+                for(String q : transaction.getStatements()){
+                    con = Connect.getConnection().prepareStatement(q);
+                    con.executeUpdate();
+                    con.close();
+                }
+                Connect.getConnection().commit();
+                Connect.getConnection().setAutoCommit(true);
+
+            }else{
+                con = Connect.getConnection().prepareStatement(getStatment());
+                con.executeUpdate();
+                con.close();
+            }
+
+
 
         } catch (SQLException ex) {
             System.out.println(stmt);
             ex.printStackTrace();
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
