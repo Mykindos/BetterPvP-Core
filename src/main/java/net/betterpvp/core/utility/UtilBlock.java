@@ -1,16 +1,18 @@
 package net.betterpvp.core.utility;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EntityArrow;
-import net.minecraft.server.v1_8_R3.IBlockData;
+import com.comphenix.protocol.wrappers.BlockPosition;
+import net.minecraft.server.v1_15_R1.EntityArrow;
+import net.minecraft.server.v1_15_R1.IBlockData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftArrow;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+
+import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftArrow;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.util.BlockIterator;
@@ -22,9 +24,9 @@ import java.util.HashSet;
 
 public class UtilBlock {
 
-    public static HashSet<Byte> blockAirFoliageSet = new HashSet<>();
-    public static HashSet<Byte> blockPassSet = new HashSet<>();
-    public static HashSet<Byte> blockUseSet = new HashSet<>();
+    public static HashSet<Material> blockAirFoliageSet = new HashSet<>();
+    public static HashSet<Material> blockPassSet = new HashSet<>();
+    public static HashSet<Material> blockUseSet = new HashSet<>();
 
     /**
      * Check if a Player is in Lava
@@ -34,8 +36,7 @@ public class UtilBlock {
      */
     public static boolean isInLava(Player p) {
 
-        return p.getLocation().getBlock().getType() == Material.LAVA
-                || p.getLocation().getBlock().getType() == Material.STATIONARY_LAVA;
+        return p.getLocation().getBlock().getType() == Material.LAVA;
     }
 
     /**
@@ -58,8 +59,7 @@ public class UtilBlock {
      */
     public static boolean isInWater(Player p) {
 
-        return p.getLocation().getBlock().getType() == Material.WATER
-                || p.getLocation().getBlock().getType() == Material.STATIONARY_WATER;
+        return p.getLocation().getBlock().getType() == Material.WATER;
     }
 
     /**
@@ -111,18 +111,11 @@ public class UtilBlock {
     /**
      * Set the block type at a specific location
      *
-     * @param loc  Location to change
-     * @param m    Material of the new block
-     * @param data Data of the new block
+     * @param loc Location to change
+     * @param m   Material of the new block
      */
-    public static void setBlock(Location loc, Material m, byte data) {
-        net.minecraft.server.v1_8_R3.World w = ((CraftWorld) loc.getWorld()).getHandle();
-        net.minecraft.server.v1_8_R3.Chunk chunk = w.getChunkAt((int) loc.getX() >> 4, (int) loc.getZ() >> 4);
-        BlockPosition bp = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
-        int combined = m.getId() + (data << 12);
-        IBlockData ibd = net.minecraft.server.v1_8_R3.Block.getByCombinedId(combined);
-        chunk.a(bp, ibd);
-        w.notify(bp);
+    public static void setBlock(Location loc, Material m) {
+        loc.getWorld().getBlockAt(loc).setType(m);
     }
 
     /**
@@ -277,59 +270,61 @@ public class UtilBlock {
     /**
      * Check if block is a block entities can walk through (e.g. Long grass)
      *
-     * @param block block ID
      * @return Returns true if the block does not stop player movement
      */
-    public static boolean airFoliage(byte block) {
+    public static boolean airFoliage(Material mat) {
         if (blockAirFoliageSet.isEmpty()) {
-            blockAirFoliageSet.add((byte) 0);
-            blockAirFoliageSet.add((byte) 6);
-            blockAirFoliageSet.add((byte) 31);
-            blockAirFoliageSet.add((byte) 32);
-            blockAirFoliageSet.add((byte) 37);
-            blockAirFoliageSet.add((byte) 38);
-            blockAirFoliageSet.add((byte) 39);
-            blockAirFoliageSet.add((byte) 40);
-            blockAirFoliageSet.add((byte) 51);
-            blockAirFoliageSet.add((byte) 132);
-            blockAirFoliageSet.add((byte) 131);
-            blockAirFoliageSet.add((byte) 59);
-            blockAirFoliageSet.add((byte) 104);
-            blockAirFoliageSet.add((byte) 105);
-            blockAirFoliageSet.add((byte) 115);
-            blockAirFoliageSet.add((byte) 102);
+            blockAirFoliageSet.add(Material.AIR);
+            blockAirFoliageSet.add(Material.CAVE_AIR);
+            blockAirFoliageSet.add(Material.VOID_AIR);
+            for (Material m : Material.values()) {
+                if (m.name().contains("SAPLING")) {
+                    blockAirFoliageSet.add(m);
+                } else if (m.name().contains("DEAD")) {
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("TULIP")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("MUSHROOM")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("CORAL")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("_SIGN")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("_BANNER")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("CHORUS")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("TORCH")){
+                    blockAirFoliageSet.add(m);
+                }else if(m.name().contains("GATE")){
+                    blockAirFoliageSet.add(m);
+                }
+            }
 
-            blockAirFoliageSet.add((byte) 50);
-            blockAirFoliageSet.add((byte) 76);
-            blockAirFoliageSet.add((byte) 175);
-            blockAirFoliageSet.add((byte) 166);
-            blockAirFoliageSet.add((byte) 323);
-            blockAirFoliageSet.add((byte) 287);
-            blockAirFoliageSet.add((byte) 68);
-            blockAirFoliageSet.add((byte) 77);
-            blockAirFoliageSet.add((byte) 143);
-            //blockAirFoliageSet.add((byte) 183);
-            //blockAirFoliageSet.add((byte) 184);
-            //blockAirFoliageSet.add((byte) 185);
-            //blockAirFoliageSet.add((byte) 186);
-            //blockAirFoliageSet.add((byte) 107);
-            //blockAirFoliageSet.add((byte) 187);
-            blockAirFoliageSet.add((byte) 167);
-            blockAirFoliageSet.add((byte) 330);
+            blockAirFoliageSet.add(Material.FERN);
+            blockAirFoliageSet.add(Material.LARGE_FERN);
+            blockAirFoliageSet.add(Material.GRASS);
+            blockAirFoliageSet.add(Material.TALL_GRASS);
+            blockAirFoliageSet.add(Material.SEAGRASS);
+            blockAirFoliageSet.add(Material.TALL_SEAGRASS);
+            blockAirFoliageSet.add(Material.CORNFLOWER);
+            blockAirFoliageSet.add(Material.SUNFLOWER);
+            blockAirFoliageSet.add(Material.LILY_OF_THE_VALLEY);
+            blockAirFoliageSet.add(Material.SEA_PICKLE);
+            blockAirFoliageSet.add(Material.POPPY);
+            blockAirFoliageSet.add(Material.OXEYE_DAISY);
+            blockAirFoliageSet.add(Material.WITHER_ROSE);
+            blockAirFoliageSet.add(Material.DANDELION);
+            blockAirFoliageSet.add(Material.AZURE_BLUET);
+            blockAirFoliageSet.add(Material.BLUE_ORCHID);
+            blockAirFoliageSet.add(Material.ALLIUM);
+            blockAirFoliageSet.add(Material.SNOW);
+
         }
 
-        return blockAirFoliageSet.contains(block);
+        return blockAirFoliageSet.contains(mat);
     }
 
-    /**
-     * Check if block is long grass
-     *
-     * @param b Block to check
-     * @return Returns true if the block is Long Grass
-     */
-    public static boolean airFoliageBlock(Block b) {
-        return b.getType() == Material.LONG_GRASS;
-    }
 
     /**
      * Check if block is a block entities can walk through (e.g. Long grass)
@@ -352,84 +347,89 @@ public class UtilBlock {
         if (block == null) {
             return false;
         }
-        return airFoliage(block.getTypeId());
+        return airFoliage(block.getType());
     }
 
     /**
      * Check if a block is a solid block
      *
-     * @param block Block ID to check
      * @return Returns true if the block is solid (e.g. Stone)
      */
-    public static boolean solid(byte block) {
+    public static boolean solid(Material mat) {
         if (blockPassSet.isEmpty()) {
-            blockPassSet.add((byte) 0);
-            blockPassSet.add((byte) 6);
-            blockPassSet.add((byte) 8);
-            blockPassSet.add((byte) 9);
-            blockPassSet.add((byte) 10);
-            blockPassSet.add((byte) 11);
-            blockPassSet.add((byte) 26);
-            blockPassSet.add((byte) 27);
-            blockPassSet.add((byte) 28);
-            blockPassSet.add((byte) 30);
-            blockPassSet.add((byte) 31);
-            blockPassSet.add((byte) 32);
-            blockPassSet.add((byte) 37);
-            blockPassSet.add((byte) 38);
-            blockPassSet.add((byte) 39);
-            blockPassSet.add((byte) 40);
-            blockPassSet.add((byte) 50);
-            blockPassSet.add((byte) 51);
-            blockPassSet.add((byte) 55);
-            blockPassSet.add((byte) 59);
-            blockPassSet.add((byte) 63);
-            blockPassSet.add((byte) 64);
-            blockPassSet.add((byte) 65);
-            blockPassSet.add((byte) 66);
-            blockPassSet.add((byte) 68);
-            blockPassSet.add((byte) 69);
-            blockPassSet.add((byte) 70);
-            blockPassSet.add((byte) 71);
-            blockPassSet.add((byte) 72);
-            blockPassSet.add((byte) 75);
-            blockPassSet.add((byte) 77);
-            blockPassSet.add((byte) 76);
-            blockPassSet.add((byte) 78);
-            blockPassSet.add((byte) 83);
-            blockPassSet.add((byte) 90);
-            blockPassSet.add((byte) 92);
-            blockPassSet.add((byte) 93);
-            blockPassSet.add((byte) 94);
-            blockPassSet.add((byte) 96);
-            blockPassSet.add((byte) 101);
-            blockPassSet.add((byte) 102);
-            blockPassSet.add((byte) 104);
-            blockPassSet.add((byte) 105);
-            blockPassSet.add((byte) 106);
-            blockPassSet.add((byte) 107);
-            blockPassSet.add((byte) 111);
-            blockPassSet.add((byte) 115);
-            blockPassSet.add((byte) 116);
-            blockPassSet.add((byte) 117);
-            blockPassSet.add((byte) 118);
-            blockPassSet.add((byte) 119);
-            blockPassSet.add((byte) 120);
-            blockPassSet.add((byte) 208);
+
+            blockPassSet.add(Material.AIR);
+            blockPassSet.add(Material.CAVE_AIR);
+            blockPassSet.add(Material.VOID_AIR);
+            for (Material m : Material.values()) {
+                if (m.name().contains("SAPLING")) {
+                    blockPassSet.add(m);
+                } else if (m.name().contains("DEAD")) {
+                    blockPassSet.add(m);
+                }else if(m.name().contains("_BED")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("RAIL")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("TULIP")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("MUSHROOM")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("CARPET")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("CORAL")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("_SIGN")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("_BANNER")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("_HEAD")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("_SLAB")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("POTTED")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("CHORUS")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("TORCH")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("GATE")){
+                    blockPassSet.add(m);
+                }else if(m.name().contains("BUTTON")){
+                    blockPassSet.add(m);
+                }
+            }
+
+            blockPassSet.add(Material.GRASS);
+            blockPassSet.add(Material.TALL_GRASS);
+            blockPassSet.add(Material.REDSTONE_WIRE);
+            blockPassSet.add(Material.CAULDRON);
+            blockPassSet.add(Material.BREWING_STAND);
+            blockPassSet.add(Material.WATER);
+            blockPassSet.add(Material.LAVA);
+            blockPassSet.add(Material.COBWEB);
+            blockPassSet.add(Material.FERN);
+            blockPassSet.add(Material.LARGE_FERN);
+            blockPassSet.add(Material.GRASS);
+            blockPassSet.add(Material.SEAGRASS);
+            blockPassSet.add(Material.TALL_SEAGRASS);
+            blockPassSet.add(Material.CORNFLOWER);
+            blockPassSet.add(Material.SUNFLOWER);
+            blockPassSet.add(Material.LILY_OF_THE_VALLEY);
+            blockPassSet.add(Material.SEA_PICKLE);
+            blockPassSet.add(Material.POPPY);
+            blockPassSet.add(Material.OXEYE_DAISY);
+            blockPassSet.add(Material.WITHER_ROSE);
+            blockPassSet.add(Material.DANDELION);
+            blockPassSet.add(Material.AZURE_BLUET);
+            blockPassSet.add(Material.BLUE_ORCHID);
+            blockPassSet.add(Material.ALLIUM);
+            blockPassSet.add(Material.LANTERN);
+            blockPassSet.add(Material.CAMPFIRE);
+            blockPassSet.add(Material.BARRIER);
 
         }
 
-        return !blockPassSet.contains(block);
-    }
-
-    /**
-     * Check if a block is a solid block
-     *
-     * @param block Block ID to check
-     * @return Returns true if the block is solid (e.g. Stone)
-     */
-    public static boolean solid(int block) {
-        return solid((byte) block);
+        return !blockPassSet.contains(mat);
     }
 
     /**
@@ -443,7 +443,7 @@ public class UtilBlock {
         if (block == null) {
             return false;
         }
-        return solid(block.getTypeId());
+        return solid(block.getType());
     }
 
     /**
@@ -457,18 +457,47 @@ public class UtilBlock {
         if (block == null) {
             return false;
         }
-        return usable(block.getTypeId());
+        return usable(block.getType());
     }
 
     /**
      * Check if a block is usable (can interact with)
      *
-     * @param block Block ID to check
      * @return True if the block can be interacted with. (E.g. a chest or door)
      */
-    public static boolean usable(byte block) {
+    public static boolean usable(Material mat) {
         if (blockUseSet.isEmpty()) {
-            blockUseSet.add((byte) 23);
+            for(Material m : Material.values()){
+                if(m.name().contains("CHEST")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("FURNACE")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("SHULKER")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("ANVIL")){
+                    blockUseSet.add(m);
+                }else if(m.name().contains("DOOR")){
+                    blockUseSet.add(m);
+                }
+            }
+
+            blockUseSet.add(Material.CAULDRON);
+            blockUseSet.add(Material.CARTOGRAPHY_TABLE);
+            blockUseSet.add(Material.BEEHIVE);
+            blockUseSet.add(Material.JUKEBOX);
+            blockUseSet.add(Material.ENCHANTING_TABLE);
+            blockUseSet.add(Material.SMOKER);
+            blockUseSet.add(Material.BARREL);
+            blockUseSet.add(Material.BREWING_STAND);
+            blockUseSet.add(Material.BELL);
+            blockUseSet.add(Material.SMITHING_TABLE);
+            blockUseSet.add(Material.LOOM);
+            blockUseSet.add(Material.GRINDSTONE);
+            blockUseSet.add(Material.DISPENSER);
+            blockUseSet.add(Material.IRON_DOOR);
+            blockUseSet.add(Material.IRON_TRAPDOOR);
+
+          /*  blockUseSet.add((byte) 23);
             blockUseSet.add((byte) 330);
             blockUseSet.add((byte) 167);
             blockUseSet.add((byte) 26);
@@ -492,18 +521,21 @@ public class UtilBlock {
             blockUseSet.add((byte) 117);
             blockUseSet.add((byte) 116);
             blockUseSet.add((byte) 145);
-            blockUseSet.add((byte) 146);
+            blockUseSet.add((byte) 146);*/
         }
-        return blockUseSet.contains(Byte.valueOf(block));
+        return blockUseSet.contains(mat);
     }
 
-    /**
-     * Check if a block is usable (can interact with)
-     *
-     * @param block Block ID to check
-     * @return True if the block can be interacted with. (E.g. a chest or door)
-     */
-    public static boolean usable(int block) {
-        return usable((byte) block);
+    public static boolean isInLiquid(Entity ent) {
+        Block bottomBlock = ent.getLocation().getBlock();
+        Block topBlock = ent.getLocation().add(0, 1, 0).getBlock();
+
+        if (bottomBlock.isLiquid() || bottomBlock.getType().name().contains("SEAGRASS") || bottomBlock.getType().name().contains("KELP")
+                || topBlock.isLiquid() || topBlock.getType().name().contains("SEAGRASS") || bottomBlock.getType().name().contains("KELP")) {
+            return true;
+        }
+
+        return false;
     }
+
 }

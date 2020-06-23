@@ -47,9 +47,9 @@ public class PunishRepository implements Repository<Core> {
                     while (result.next()) {
                         UUID punisher = UUID.fromString(result.getString(1));
                         UUID punished = UUID.fromString(result.getString(2));
-                        PunishType type = PunishType.valueOf(result.getString(4));
-                        Long time = result.getLong(5);
-                        String reason = result.getString(6);
+                        PunishType type = PunishType.valueOf(result.getString(3));
+                        Long time = result.getLong(4);
+                        String reason = result.getString(5);
 
                         PunishManager.addPunishment(new Punish(punisher, punished, type, time, reason));
                         count++;

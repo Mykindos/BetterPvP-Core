@@ -1,12 +1,13 @@
 package net.betterpvp.core.utility;
 
-import net.minecraft.server.v1_8_R3.EntityFireworks;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityStatus;
-import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_15_R1.EntityFireworks;
+import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.server.v1_15_R1.PacketPlayOutEntityStatus;
+import net.minecraft.server.v1_15_R1.World;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -16,7 +17,7 @@ public class UtilFirework extends EntityFireworks {
     Player[] players = null;
 
     public UtilFirework(World world, Player... p) {
-        super(world);
+        super(EntityTypes.FIREWORK_ROCKET, world);
         players = p;
         this.a(0.25F, 0.25F);
     }
@@ -24,7 +25,7 @@ public class UtilFirework extends EntityFireworks {
     boolean gone = false;
 
     @Override
-    public void t_() {
+    public void tick() {
         if (gone) {
             return;
         }

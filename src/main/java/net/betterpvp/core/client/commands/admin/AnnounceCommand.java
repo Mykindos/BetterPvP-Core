@@ -24,7 +24,8 @@ public class AnnounceCommand extends Command {
         if (args.length >= 1) {
             String msg = UtilMessage.getFinalArg(args, 0);
             Bukkit.broadcastMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + player.getName() + "> " + ChatColor.WHITE.toString() + ChatColor.BOLD + msg);
-            Titles.sendTitle(player, 0, 40, 20, ChatColor.YELLOW + "Announce", msg);
+            Bukkit.getOnlinePlayers().forEach(p -> Titles.sendTitle(p, 0, 40, 20, "", msg));
+
         }
     }
 

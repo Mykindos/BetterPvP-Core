@@ -7,14 +7,18 @@ import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import net.betterpvp.core.Core;
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
+import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.framework.BPVPListener;
 import net.betterpvp.core.framework.UpdateEvent;
 import net.betterpvp.core.framework.UpdateEvent.UpdateType;
 import net.betterpvp.core.utility.Titles;
+import net.betterpvp.core.utility.UtilProxy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,6 +26,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -38,7 +43,7 @@ public class ConnectionListener extends BPVPListener<Core> {
 
     public static List<String> JOIN_ATTEMPTS = new ArrayList<>();
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void handleKicks(PlayerLoginEvent e) {
         if (!getInstance().hasStarted()) {
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "Server has not finished starting up!");
@@ -78,10 +83,12 @@ public class ConnectionListener extends BPVPListener<Core> {
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
-            if (!ClientUtilities.isClient(player.getName())) {
-                player.teleport(new Location(Bukkit.getWorld("world"), 72.5, 71, -24.5, 180F, 0));
+
+            // Alternate spawns
+            if (Bukkit.getOnlinePlayers().size() % 2 == 0) {
+                player.teleport(Core.getOptions().getSpawnA());
             } else {
-                player.teleport(new Location(Bukkit.getWorld("world"), 72.5, 71, -24.5, 180F, 0));
+                player.teleport(Core.getOptions().getSpawnB());
 
             }
         }
@@ -93,9 +100,15 @@ public class ConnectionListener extends BPVPListener<Core> {
         attachment.setPermission("safetrade.request", true);
         attachment.setPermission("safetrade.accept", true);
         attachment.setPermission("safetrade.deny", true);
-
         attachment.unsetPermission("worldedit.calc"); // Server crash
 
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        double baseValue = attribute.getBaseValue();
+
+        if (baseValue != 16) {
+            attribute.setBaseValue(16);
+            player.saveData();
+        }
 
         updateTab(player);
 
@@ -149,8 +162,18 @@ public class ConnectionListener extends BPVPListener<Core> {
         cle.setNewClient(isNew);
 
         Bukkit.getPluginManager().callEvent(cle);
-    }
 
+        new Thread(() -> {
+            if (UtilProxy.isUsingProxy(player)) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        ClientUtilities.messageStaff("Proxy", player.getName() + " may be using a VPN / Proxy", Rank.ADMIN);
+                    }
+                }.runTask(getInstance());
+            }
+        }).start();
+    }
 
 
     @EventHandler
@@ -226,7 +249,7 @@ public class ConnectionListener extends BPVPListener<Core> {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Client client = ClientUtilities.getOnlineClient(event.getPlayer());
 
-        if(client != null){
+        if (client != null) {
             Bukkit.getPluginManager().callEvent(new ClientQuitEvent(client));
         }
 

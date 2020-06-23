@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 
 public class CommandCenter extends BPVPListener<Core> {
 
@@ -68,6 +69,31 @@ public class CommandCenter extends BPVPListener<Core> {
     }
 
     @EventHandler
+    public void onConsoleCommand(ServerCommandEvent event) {
+        String command = event.getCommand();
+        String[] args = null;
+
+        if (command == null) {
+            return;
+        }
+
+        if (command.contains(" ")) {
+            command = command.split(" ")[0];
+            args = event.getCommand().substring(event.getCommand().indexOf(' ') + 1).split(" ");
+        }
+
+        Command cmd = CommandManager.getCommand(command);
+        if(cmd != null){
+            if(cmd instanceof IServerCommand){
+                IServerCommand serverCommand = (IServerCommand) cmd;
+                serverCommand.execute(event.getSender(), args);
+                event.setCancelled(true);
+            }
+        }
+
+    }
+
+    @EventHandler
     public void preventMe(PlayerCommandPreprocessEvent event) {
         if (!event.getPlayer().isOp()) {
             if (event.getMessage().toLowerCase().startsWith("/me")
@@ -105,7 +131,8 @@ public class CommandCenter extends BPVPListener<Core> {
 
             if (event.getMessage().toLowerCase().startsWith("/pl")
                     || event.getMessage().toLowerCase().startsWith("/plugins")) {
-                UtilMessage.message(event.getPlayer(), "Plugins (3): " + ChatColor.GREEN + "Clans" + ChatColor.WHITE + ", "
+                UtilMessage.message(event.getPlayer(), "Plugins (3): " + ChatColor.GREEN + "BetterPvP-Clans" + ChatColor.WHITE + ", "
+                        + ChatColor.GREEN + "BetterPvP-Core" + ChatColor.WHITE + ", "
                         + ChatColor.GREEN + "WorldEdit" + ChatColor.WHITE + ", " + ChatColor.GREEN + "Buycraft");
                 event.setCancelled(true);
             }

@@ -18,7 +18,7 @@ public class CommandManager {
     public static Command getCommand(String commandLabel) {
 
 
-        return commands.stream().filter(c -> c.getCommandLable().equalsIgnoreCase(commandLabel)
+        return commands.stream().filter(c -> c.getCommandLabel().equalsIgnoreCase(commandLabel)
                 || Arrays.stream(c.getAliases()).filter(a -> a.equalsIgnoreCase(commandLabel)).findAny().isPresent())
                 .findFirst().orElse(null);
 
@@ -41,10 +41,7 @@ public class CommandManager {
         for (Class<? extends Command> c : classes) {
             try {
 
-                if(c.getConstructors()[0].getParameterCount() > 0){
-                    System.out.println("Skipped Command (Requires arguments): " + c.getName());
-                    continue;
-                }
+
                 if (Listener.class.isAssignableFrom(c)) {
                     Command command = c.newInstance();
                     Bukkit.getPluginManager().registerEvents((Listener) command, instance);
@@ -52,6 +49,11 @@ public class CommandManager {
                     System.out.println("Registered command + event listener");
 
                 } else {
+                    if(c.getConstructors()[0].getParameterCount() > 0){
+                        System.out.println("Skipped Command (Requires arguments): " + c.getName());
+                        continue;
+                    }
+
                     CommandManager.addCommand(c.newInstance());
                 }
                 count++;

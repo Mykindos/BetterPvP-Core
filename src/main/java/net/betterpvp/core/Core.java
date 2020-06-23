@@ -8,11 +8,17 @@ import net.betterpvp.core.command.CommandManager;
 import net.betterpvp.core.configs.ConfigManager;
 import net.betterpvp.core.database.Connect;
 import net.betterpvp.core.database.QueryFactory;
+import net.betterpvp.core.donation.DonationManager;
+import net.betterpvp.core.donation.menu.DonationMenuListener;
 import net.betterpvp.core.framework.CoreLoadedEvent;
+import net.betterpvp.core.framework.Options;
 import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.interfaces.MenuManager;
+import net.betterpvp.core.networking.NetworkReceiver;
+import net.betterpvp.core.proxy.ProxyDetector;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
+import net.betterpvp.core.settings.SettingsListener;
 import net.betterpvp.core.utility.recharge.RechargeManager;
 import net.betterpvp.core.utility.restoration.BlockRestore;
 import org.bukkit.Bukkit;
@@ -22,21 +28,27 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Core extends JavaPlugin {
 
     private ConfigManager config;
+    private static Options options;
     private Updater updater;
+    private NetworkReceiver networkReceiver;
 
     @Override
     public void onEnable() {
         config = new ConfigManager(this);
+        options = new Options(this);
         updater = new Updater("Updater");
+        networkReceiver = new NetworkReceiver();
 
         new Connect(this);
         new QueryFactory(this);
 
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
+        DonationManager.registerDonations("net.betterpvp.core", this);
 
         new PunishManager(this);
         new BlockRestore(this);
+        new SettingsListener(this);
 
         new BukkitRunnable() {
 
@@ -72,11 +84,12 @@ public class Core extends JavaPlugin {
             }
         }.runTaskLater(this, 20L);
 
+
     }
 
     @Override
     public void onDisable() {
-
+        networkReceiver.stop();
 
     }
 
@@ -95,10 +108,15 @@ public class Core extends JavaPlugin {
         new PunishManager(this);
         new GriefListener(this);
         new MenuManager(this);
+        new DonationMenuListener(this);
     }
 
     private void loadCommands(){
-        new SpawnCommand(this);
+      //  new SpawnCommand();
+    }
+
+    public static Options getOptions() {
+        return options;
     }
 
 }

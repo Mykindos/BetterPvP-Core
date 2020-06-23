@@ -5,7 +5,11 @@ import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.client.commands.events.SpawnTeleportEvent;
 import net.betterpvp.core.command.Command;
+import net.betterpvp.core.framework.UpdateEvent;
+import net.betterpvp.core.utility.UtilItem;
 import net.betterpvp.core.utility.UtilMessage;
+import net.betterpvp.core.utility.UtilTime;
+import net.betterpvp.core.utility.recharge.RechargeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,15 +18,16 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 public class SpawnCommand extends Command implements Listener {
 
     private WeakHashMap<Player, Long> spawns;
 
-    public SpawnCommand(Core i) {
+    public SpawnCommand() {
         super("spawn", new String[]{}, Rank.PLAYER);
-        Bukkit.getPluginManager().registerEvents(this, i);
         spawns = new WeakHashMap<>();
 
     }
@@ -36,7 +41,7 @@ public class SpawnCommand extends Command implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onTeleport(SpawnTeleportEvent e) {
         if (spawns.containsKey(e.getPlayer())) {
             UtilMessage.message(e.getPlayer(), "Spawn", "You are already teleporting to spawn.");
@@ -68,25 +73,18 @@ public class SpawnCommand extends Command implements Listener {
         }
     }
 
-	/*@EventHandler
+	@EventHandler
 	public void onUpdate(UpdateEvent e){
-		if(e.getType() == UpdateType.SEC){
-			Iterator<Entry<Player, Long>> it = spawns.entrySet().iterator();
+		if(e.getType() == UpdateEvent.UpdateType.SEC){
+			Iterator<Map.Entry<Player, Long>> it = spawns.entrySet().iterator();
 			while(it.hasNext()){
-				Entry<Player, Long> next = it.next();
+				Map.Entry<Player, Long> next = it.next();
 				if(next.getKey() == null){
 					it.remove();
 					continue;
 				}
-				if(MorphUtilities.isMorphed(next.getKey())){
-					UtilMessage.message(next.getKey(), "Spawn", "Teleport cancelled.");
-					continue;
-				}
-				if(UtilItem.hasValuables(next.getKey())){
-					UtilMessage.message(next.getKey(), "Spawn", "Teleport cancelled.");
-					it.remove();
-					continue;
-				}
+
+
 				if(UtilTime.elapsed(next.getValue(), 15000)){
 					if(RechargeManager.getInstance().add(next.getKey(), "Spawn", 900, true, false)){
 						next.getKey().teleport(Bukkit.getWorld("world").getSpawnLocation());
@@ -97,7 +95,7 @@ public class SpawnCommand extends Command implements Listener {
 			}
 		}
 	}
-	*/
+
 
 
     @Override

@@ -31,7 +31,7 @@ public class MenuManager extends BPVPListener<Core> {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (e.getClickedBlock().getType() == Material.ENCHANTMENT_TABLE) {
+            if (e.getClickedBlock().getType() == Material.ENCHANTING_TABLE) {
                 Player p = e.getPlayer();
                 //p.openInventory(new ClassSelectionPage(p).getInventory());
                 e.setCancelled(true);
@@ -63,11 +63,11 @@ public class MenuManager extends BPVPListener<Core> {
     @EventHandler
     public void onButtonClick(InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player) {
-            if (Menu.isMenu(event.getInventory())) {
+            if (Menu.isMenu(event.getView().getTitle())) {
                 event.setCancelled(true);
                 if (Button.isButton(event.getCurrentItem())) {
                     Player player = (Player) event.getWhoClicked();
-                    Menu menu = Menu.getMenu(event.getInventory(), player);
+                    Menu menu = Menu.getMenu(event.getInventory(), event.getView().getTitle(), player);
                     Button button = menu.getButton(event.getCurrentItem());
                     if (RechargeManager.getInstance().add(player, "Button Click", 0.05, false)) {
                         Bukkit.getPluginManager().callEvent(new ButtonClickEvent(player, menu, button, event.getClick(), event.getSlot()));
@@ -81,9 +81,9 @@ public class MenuManager extends BPVPListener<Core> {
     public void onMenuClose(InventoryCloseEvent event) {
         if (event.getPlayer() instanceof Player) {
 
-            if (Menu.isMenu(event.getInventory())) {
+            if (Menu.isMenu(event.getView().getTitle())) {
                 Player player = (Player) event.getPlayer();
-                Menu menu = Menu.getMenu(event.getView().getTopInventory(), player);
+                Menu menu = Menu.getMenu(event.getView().getTopInventory(), event.getView().getTitle(), player);
                 Bukkit.getPluginManager().callEvent(new MenuCloseEvent(player, menu));
             }
         }

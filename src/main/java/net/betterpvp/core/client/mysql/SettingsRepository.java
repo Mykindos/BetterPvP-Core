@@ -34,8 +34,8 @@ public class SettingsRepository implements Repository<Core> {
     }
 
     public static void updateSetting(UUID uuid, String setting, int value) {
-        String query = "UPDATE `" + TABLE_NAME + "` SET Value ="
-                + value + " WHERE UUID ='" + uuid + "' AND settings='" + setting + "'";
+        String query = "UPDATE `" + TABLE_NAME + "` SET Value = "
+                + value + " WHERE UUID ='" + uuid + "' AND Name ='" + setting + "'";
 
         QueryFactory.runQuery(query);
     }
@@ -79,7 +79,7 @@ public class SettingsRepository implements Repository<Core> {
                     statement.close();
                     result.close();
 
-                    Log.debug("MySQL", "Loaded " + count + " Clients");
+                    Log.debug("MySQL", "Loaded " + count + " settings");
 
                 } catch (SQLException ex) {
                     Log.debug("Connection", "Could not load Clients (Connection Error), ");

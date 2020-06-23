@@ -60,7 +60,7 @@ public class Client {
      * @return True if the player owns that donation
      */
     public boolean hasDonation(String name){
-        return donations.stream().filter(d -> d.getName().equalsIgnoreCase(name)).findAny().isPresent();
+        return donations.stream().filter(d -> d.getName().equalsIgnoreCase(name) && !d.hasExpired()).findAny().isPresent();
     }
 
     public void setTimePlayed(int played) {

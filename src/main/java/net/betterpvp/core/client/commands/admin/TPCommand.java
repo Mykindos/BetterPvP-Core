@@ -18,6 +18,13 @@ public class TPCommand extends Command {
             if (p != null) {
                 player.teleport(p.getLocation());
             }
+        }else if(args.length == 2){
+            Player p1 = Bukkit.getPlayer(args[0]);
+            Player p2 = Bukkit.getPlayer(args[1]);
+
+            if(p1 != null && p2 != null){
+                p1.teleport(p2);
+            }
         }
 
     }
