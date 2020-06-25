@@ -178,7 +178,8 @@ public class UtilItem {
                 || m.name().contains("IRON")
                 || m.name().contains("GOLD")
                 || m.name().contains("CHAINMAIL")
-                || m.name().contains("DIAMOND");
+                || m.name().contains("DIAMOND")
+                || m.name().contains("NETHERITE");
     }
 
     /**

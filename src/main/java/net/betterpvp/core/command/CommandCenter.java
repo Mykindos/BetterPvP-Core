@@ -102,7 +102,8 @@ public class CommandCenter extends BPVPListener<Core> {
                     || event.getMessage().toLowerCase().startsWith("/enjin")
                     || event.getMessage().toLowerCase().startsWith("/minecraft")
                     || event.getMessage().toLowerCase().contains("bukkit")
-                    || event.getMessage().toLowerCase().contains("massivecore") || event.getMessage().toLowerCase().contains("mcore")) {
+                    || event.getMessage().toLowerCase().contains("massivecore") || event.getMessage().toLowerCase().contains("mcore")
+                    || event.getMessage().toLowerCase().contains("minecraft:")) {
 
                 UtilMessage.message(event.getPlayer(), "Unknown command. Type \"/help\" for help.");
                 event.setCancelled(true);

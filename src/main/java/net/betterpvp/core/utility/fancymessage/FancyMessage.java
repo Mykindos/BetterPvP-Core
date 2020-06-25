@@ -7,6 +7,11 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
 import net.betterpvp.core.utility.fancymessage.utility.ArrayWrapper;
 import net.betterpvp.core.utility.fancymessage.utility.Reflection;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
+import net.minecraft.server.v1_16_R1.PacketPlayOutChat;
 import org.bukkit.*;
 import org.bukkit.Statistic.Type;
 import org.bukkit.command.CommandSender;
@@ -73,16 +78,17 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
         jsonString = null;
         dirty = false;
 
-        if (nmsPacketPlayOutChatConstructor == null) {
+        /*if (nmsPacketPlayOutChatConstructor == null) {
             try {
-                nmsPacketPlayOutChatConstructor = Reflection.getNMSClass("PacketPlayOutChat").getDeclaredConstructor(Reflection.getNMSClass("IChatBaseComponent"));
+                PacketPlayOutChat test;
+                nmsPacketPlayOutChatConstructor = Reflection.getNMSClass("PacketPlayOutChat").getDeclaredConstructor(Reflection.getNMSClass("IChatBaseComponent"), Reflection.getNMSClass("ChatMessageType"), UUID.class);
                 nmsPacketPlayOutChatConstructor.setAccessible(true);
             } catch (NoSuchMethodException e) {
                 Bukkit.getLogger().log(Level.SEVERE, "Could not find Minecraft method or constructor.", e);
             } catch (SecurityException e) {
                 Bukkit.getLogger().log(Level.WARNING, "Could not access constructor.", e);
             }
-        }
+        }*/
     }
 
     /**
@@ -605,23 +611,8 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
             return;
         }
         Player player = (Player) sender;
-        try {
-            Object handle = Reflection.getHandle(player);
-            Object connection = Reflection.getField(handle.getClass(), "playerConnection").get(handle);
-            Reflection.getMethod(connection.getClass(), "sendPacket", Reflection.getNMSClass("Packet")).invoke(connection, createChatPacket(jsonString));
-        } catch (IllegalArgumentException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Argument could not be passed.", e);
-        } catch (IllegalAccessException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not access method.", e);
-        } catch (InstantiationException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Underlying class is abstract.", e);
-        } catch (InvocationTargetException e) {
-            Bukkit.getLogger().log(Level.WARNING, "A error has occured durring invoking of method.", e);
-        } catch (NoSuchMethodException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not find method.", e);
-        } catch (ClassNotFoundException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Could not find class.", e);
-        }
+        player.spigot().sendMessage(ComponentSerializer.parse(jsonString));
+
     }
 
     // The ChatSerializer's instance of Gson
@@ -667,7 +658,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 
         // Since the method is so simple, and all the obfuscated methods have the same name, it's easier to reimplement 'IChatBaseComponent a(String)' than to reflectively call it
         // Of course, the implementation may change, but fuzzy matches might break with signature changes
-        Object serializedChatComponent = fromJsonMethod.invoke(nmsChatSerializerGsonInstance, json, Reflection.getNMSClass("IChatBaseComponent"));
+        Object serializedChatComponent = fromJsonMethod.invoke(nmsChatSerializerGsonInstance, json, Reflection.getNMSClass("IChatBaseComponent"), 0, 0);
 
         return nmsPacketPlayOutChatConstructor.newInstance(serializedChatComponent);
     }
