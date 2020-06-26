@@ -61,7 +61,7 @@ public class GiveCommand extends Command {
                         return;
                     }
                 }
-                target.getInventory().addItem(UtilItem.updateNames(stack));
+                target.getInventory().addItem(stack);
                 UtilMessage.broadcast("Give", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " gave " + ChatColor.YELLOW
                         + target.getName() + ChatColor.GREEN + " " + amount + " " + UtilFormat.cleanString(material.toString()));
             } else {

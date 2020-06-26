@@ -44,11 +44,13 @@ public class UtilItem {
      */
     public static ItemStack setItemNameAndLore(ItemStack item, String name, List<String> lore) {
         ItemMeta im = item.getItemMeta();
-
         im.setDisplayName(name);
         if (lore != null) {
             im.setLore(lore);
         }
+
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_POTION_EFFECTS);
+
         item.setItemMeta(im);
         return item;
     }

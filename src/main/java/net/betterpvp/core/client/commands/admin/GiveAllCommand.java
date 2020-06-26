@@ -39,7 +39,7 @@ public class GiveAllCommand extends Command {
 
                 for (Player target : Bukkit.getOnlinePlayers()) {
 
-                    target.getInventory().addItem(UtilItem.updateNames(stack.clone()));
+                    target.getInventory().addItem(stack.clone());
                 }
                 UtilMessage.broadcast("Give", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " gave everyone"
                         + ChatColor.GREEN + " " + amount + " " + UtilFormat.cleanString(material.toString()));
