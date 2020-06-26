@@ -121,7 +121,9 @@ public class RechargeManager {
     public Recharge getAbilityRecharge(String player, String ability) {
 
         if (recharge.containsKey(player)) {
-            for (Recharge r : recharge.get(player)) {
+            ListIterator<Recharge> it = recharge.get(player).listIterator();
+            while(it.hasNext()){
+                Recharge r = it.next();
                 if (r.getAbility().toLowerCase().equalsIgnoreCase(ability.toLowerCase())) {
                     return r;
                 }
