@@ -1,16 +1,16 @@
 package net.betterpvp.core.utility;
 
 import com.comphenix.protocol.wrappers.BlockPosition;
-import net.minecraft.server.v1_15_R1.EntityArrow;
-import net.minecraft.server.v1_15_R1.IBlockData;
+import net.minecraft.server.v1_16_R1.EntityArrow;
+import net.minecraft.server.v1_16_R1.IBlockData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftArrow;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftArrow;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -90,7 +90,7 @@ public class UtilBlock {
      */
     public static boolean isGrounded(Entity ent) {
         if ((ent instanceof CraftEntity)) {
-            return ((CraftEntity) ent).getHandle().onGround;
+            return ((CraftEntity) ent).getHandle().isOnGround();
         }
         return !airFoliage(ent.getLocation().add(0, -1, 0).getBlock());
     }

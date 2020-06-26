@@ -17,11 +17,6 @@ import java.util.*;
 public class UtilItem {
 
 
-    public static ItemStack updateNames(ItemStack item){
- // TODO
-        return item;
-    }
-
     /**
      * Updates an ItemStack, giving it a custom name and lore
      *
@@ -31,7 +26,7 @@ public class UtilItem {
      * @return Returns the ItemStack with the newly adjusted name and lore
      */
     public static ItemStack setItemNameAndLore(ItemStack item, String name, String[] lore) {
-        if(lore != null){
+        if (lore != null) {
             return setItemNameAndLore(item, name, Arrays.asList(lore));
         }
 
@@ -86,11 +81,7 @@ public class UtilItem {
      * @return Returns true if the Material is a type of sword
      */
     public static boolean isSword(Material swordType) {
-        return (swordType == Material.IRON_SWORD
-                || swordType == Material.GOLDEN_SWORD
-                || swordType == Material.DIAMOND_SWORD
-                || swordType == Material.STONE_SWORD
-                || swordType == Material.WOODEN_SWORD);
+        return swordType.name().contains("_SWORD");
     }
 
     /**
@@ -100,11 +91,7 @@ public class UtilItem {
      * @return Returns true if the Material is a type of axe
      */
     public static boolean isAxe(Material axeType) {
-        return (axeType == Material.IRON_AXE
-                || axeType == Material.GOLDEN_AXE
-                || axeType == Material.DIAMOND_AXE
-                || axeType == Material.STONE_AXE
-                || axeType == Material.WOODEN_AXE);
+        return axeType.name().contains("_AXE");
     }
 
     /**
@@ -114,19 +101,11 @@ public class UtilItem {
      * @return Returns true if the Material is a type of pickaxe
      */
     public static boolean isPickAxe(Material pickType) {
-        return (pickType == Material.WOODEN_PICKAXE
-                || pickType == Material.STONE_PICKAXE
-                || pickType == Material.IRON_PICKAXE
-                || pickType == Material.GOLDEN_PICKAXE
-                || pickType == Material.DIAMOND_PICKAXE);
+        return pickType.name().contains("_PICKAXE");
     }
 
     public static boolean isShovel(Material shovelType) {
-        return (shovelType == Material.WOODEN_SHOVEL
-                || shovelType == Material.STONE_SHOVEL
-                || shovelType == Material.IRON_SHOVEL
-                || shovelType == Material.GOLDEN_SHOVEL
-                || shovelType == Material.DIAMOND_SHOVEL);
+        return shovelType.name().contains("_SHOVEL");
     }
 
     /**
@@ -136,11 +115,7 @@ public class UtilItem {
      * @return Returns true if the Material is a type of hoe
      */
     public static boolean isHoe(Material hoeType) {
-        return (hoeType == Material.WOODEN_HOE
-                || hoeType == Material.STONE_HOE
-                || hoeType == Material.IRON_HOE
-                || hoeType == Material.GOLDEN_HOE
-                || hoeType == Material.DIAMOND_HOE);
+        return hoeType.name().contains("_HOE");
     }
 
     /**
@@ -178,7 +153,8 @@ public class UtilItem {
                 || m.name().contains("IRON")
                 || m.name().contains("GOLD")
                 || m.name().contains("CHAINMAIL")
-                || m.name().contains("DIAMOND");
+                || m.name().contains("DIAMOND")
+                || m.name().contains("NETHERITE");
     }
 
     /**
@@ -271,7 +247,16 @@ public class UtilItem {
                 || item == Material.LEATHER_CHESTPLATE
                 || item == Material.LEATHER_LEGGINGS
                 || item == Material.LEATHER_BOOTS
-                || item == Material.BOW);
+                || item == Material.BOW
+                || item == Material.CROSSBOW
+                || item == Material.NETHERITE_SWORD
+                || item == Material.NETHERITE_AXE
+                || item == Material.NETHERITE_PICKAXE
+                || item == Material.NETHERITE_HOE
+                || item == Material.NETHERITE_CHESTPLATE
+                || item == Material.NETHERITE_HELMET
+                || item == Material.NETHERITE_LEGGINGS
+                || item == Material.NETHERITE_BOOTS);
     }
 
     /**
@@ -282,7 +267,7 @@ public class UtilItem {
      * @return Returns an itemstack without its attributes
      */
     public static ItemStack removeAttributes(ItemStack item) {
-        ItemMeta itemMeta =item.getItemMeta();
+        ItemMeta itemMeta = item.getItemMeta();
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         item.setItemMeta(itemMeta);
 

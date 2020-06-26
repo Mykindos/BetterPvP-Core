@@ -103,12 +103,17 @@ public class ConnectionListener extends BPVPListener<Core> {
         attachment.unsetPermission("worldedit.calc"); // Server crash
 
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-        double baseValue = attribute.getBaseValue();
+       // if(attribute != null) {
+            double baseValue = attribute.getBaseValue();
 
-        if (baseValue != 16) {
-            attribute.setBaseValue(16);
-            player.saveData();
-        }
+            if (baseValue != 16) {
+                attribute.setBaseValue(16);
+                player.saveData();
+
+            }
+       // }else{
+       //     System.out.println("NULL ATTRIBUTE FOR GENERIC_ATTACK_SPEED");
+       // }
 
         updateTab(player);
 

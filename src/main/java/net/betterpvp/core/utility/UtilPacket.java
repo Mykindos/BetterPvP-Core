@@ -1,7 +1,7 @@
 package net.betterpvp.core.utility;
 
-import net.minecraft.server.v1_15_R1.Packet;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import net.minecraft.server.v1_16_R1.Packet;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class UtilPacket {
