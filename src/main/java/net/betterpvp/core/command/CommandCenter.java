@@ -132,7 +132,7 @@ public class CommandCenter extends BPVPListener<Core> {
 
             if (event.getMessage().toLowerCase().startsWith("/pl")
                     || event.getMessage().toLowerCase().startsWith("/plugins")) {
-                UtilMessage.message(event.getPlayer(), "Plugins (3): " + ChatColor.GREEN + "BetterPvP-Clans" + ChatColor.WHITE + ", "
+                UtilMessage.message(event.getPlayer(), "Plugins (4): " + ChatColor.GREEN + "BetterPvP-Clans" + ChatColor.WHITE + ", "
                         + ChatColor.GREEN + "BetterPvP-Core" + ChatColor.WHITE + ", "
                         + ChatColor.GREEN + "WorldEdit" + ChatColor.WHITE + ", " + ChatColor.GREEN + "Buycraft");
                 event.setCancelled(true);

@@ -15,6 +15,7 @@ import net.betterpvp.core.framework.Options;
 import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.interfaces.MenuManager;
 import net.betterpvp.core.networking.NetworkReceiver;
+import net.betterpvp.core.networking.commands.HubCommand;
 import net.betterpvp.core.proxy.ProxyDetector;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
@@ -45,6 +46,7 @@ public class Core extends JavaPlugin {
         QueryFactory.loadRepositories("net.betterpvp.core", this);
         CommandManager.registerCommands("net.betterpvp.core", this);
         DonationManager.registerDonations("net.betterpvp.core", this);
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         new PunishManager(this);
         new BlockRestore(this);
@@ -113,6 +115,7 @@ public class Core extends JavaPlugin {
 
     private void loadCommands(){
       //  new SpawnCommand();
+        CommandManager.addCommand(new HubCommand(this));
     }
 
     public static Options getOptions() {

@@ -5,20 +5,20 @@ import org.bukkit.entity.Player;
 
 public abstract class Command {
 
-    private String commandLable;
+    private String commandLabel;
     private String[] aliases;
     private Rank requiredRank;
 
 
-    public Command(String commandLable, String[] aliases, Rank requiredRank) {
-        this.commandLable = commandLable;
+    public Command(String commandLabel, String[] aliases, Rank requiredRank) {
+        this.commandLabel = commandLabel;
         this.requiredRank = requiredRank;
         this.aliases = aliases;
 
     }
 
     public String getCommandLabel() {
-        return this.commandLable;
+        return this.commandLabel;
     }
 
     public String[] getAliases() {
