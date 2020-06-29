@@ -32,13 +32,14 @@ public class Core extends JavaPlugin {
     private static Options options;
     private Updater updater;
     private NetworkReceiver networkReceiver;
+    private boolean hasStarted;
 
     @Override
     public void onEnable() {
         config = new ConfigManager(this);
         options = new Options(this);
         updater = new Updater("Updater");
-        networkReceiver = new NetworkReceiver();
+        networkReceiver = new NetworkReceiver(this);
 
         new Connect(this);
         new QueryFactory(this);
@@ -101,7 +102,11 @@ public class Core extends JavaPlugin {
 
     public boolean hasStarted() {
         // TODO Auto-generated method stub
-        return true;
+        return hasStarted;
+    }
+
+    public void setStarted(boolean started){
+        this.hasStarted = started;
     }
 
     private void registerListeners(){
