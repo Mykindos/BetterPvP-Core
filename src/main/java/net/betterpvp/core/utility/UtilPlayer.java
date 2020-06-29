@@ -48,7 +48,7 @@ public class UtilPlayer {
 
     public static void sendActionBar(Player p, String msg) {
 
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
 
 
     }
@@ -364,11 +364,20 @@ public class UtilPlayer {
         return nearbyMap;
     }
 
-    public static double getHealthPercentage(LivingEntity e){
-       return e.getHealth() / e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 100;
+    public static Player getClosest(Location loc) {
+        List<Player> temp = loc.getWorld().getPlayers();
+        if (!temp.isEmpty()) {
+            temp.sort(Comparator.comparingInt(p -> (int) loc.distance(p.getLocation())));
+            return temp.get(0);
+        }
+        return null;
     }
 
-    public static double getMaxHealth(LivingEntity e){
+    public static double getHealthPercentage(LivingEntity e) {
+        return e.getHealth() / e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 100;
+    }
+
+    public static double getMaxHealth(LivingEntity e) {
         return e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
     }
 

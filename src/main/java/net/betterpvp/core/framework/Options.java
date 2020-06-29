@@ -12,6 +12,8 @@ public class Options {
     private Location spawnA;
     private Location spawnB;
 
+    private int networkPort;
+
     public Options(Core i) {
         this.i = i;
 
@@ -34,6 +36,8 @@ public class Options {
                 i.getConfigManager().get(Configs.MAIN).getDouble("SpawnB.Z"),
                 (float) i.getConfigManager().get(Configs.MAIN).getDouble("SpawnB.Yaw"),
                 (float) i.getConfigManager().get(Configs.MAIN).getDouble("SpawnB.Pitch"));
+
+        networkPort = i.getConfigManager().get(Configs.MAIN).getInt("Network.Port");
     }
 
 
@@ -51,6 +55,7 @@ public class Options {
         i.getConfigManager().get(Configs.MAIN).check("SpawnB.Z", 0);
         i.getConfigManager().get(Configs.MAIN).check("SpawnB.Yaw", 0f);
         i.getConfigManager().get(Configs.MAIN).check("SpawnB.Pitch", 0f);
+        i.getConfigManager().get(Configs.MAIN).check("Network.Port", 0);
     }
 
     public void saveLocation(Location loc){
@@ -68,6 +73,10 @@ public class Options {
 
     public Location getSpawnB(){
         return spawnB;
+    }
+
+    public int getNetworkPort(){
+        return networkPort;
     }
 
 

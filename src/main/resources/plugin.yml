@@ -1,7 +1,7 @@
 author: Mykindos
 main: net.betterpvp.core.Core
 name: Core
-startup: postworld
+load: startup
 version: '1.0'
 depend: [ProtocolLib]
 api-version: 1.15

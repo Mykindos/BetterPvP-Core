@@ -108,6 +108,7 @@ public class ClientRepository implements Repository<Core> {
             result.close();
 
             Log.debug("MySQL", "Loaded " + count + " Clients");
+            plugin.setStarted(true);
 
         } catch (SQLException ex) {
             Log.debug("Connection", "Could not load Clients (Connection Error), ");
