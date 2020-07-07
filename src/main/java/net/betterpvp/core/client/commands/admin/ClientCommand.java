@@ -3,6 +3,7 @@ package net.betterpvp.core.client.commands.admin;
 import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.client.commands.admin.events.ClientSearchEvent;
 import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.database.Log;
@@ -10,11 +11,15 @@ import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.UtilFormat;
 import net.betterpvp.core.utility.UtilMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 
 
-public class ClientCommand extends Command {
+public class ClientCommand extends Command implements Listener {
 
     public ClientCommand() {
         super("client", new String[]{}, Rank.MODERATOR);
@@ -77,18 +82,30 @@ public class ClientCommand extends Command {
             return;
         }
 
-        UtilMessage.message(player, "Client", ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " Client Details:");
-        UtilMessage.message(player, ChatColor.YELLOW + "IP Address: "
-                + (ClientUtilities.getOnlineClient(player).hasRank(Rank.ADMIN, false) ? ChatColor.GRAY + target.getIP() : ChatColor.RED + "N/A"));
-        UtilMessage.message(player, ChatColor.YELLOW + "Previous Name: " + ChatColor.GRAY + target.getOldName());
-        UtilMessage.message(player, ChatColor.YELLOW + "IP Alias: " + ChatColor.GRAY + ClientUtilities.getDetailedIPAlias(target));
-        UtilMessage.message(player, ChatColor.YELLOW + "Rank: " + ChatColor.GRAY + UtilFormat.cleanString(target.getRank().toString()));
-
         String punishments = "";
         for (Punish punish : PunishManager.getPunishments(target.getUUID())) {
             punishments += punish.getPunishType().name() + " (" + punish.getRemaining() + ")" + ChatColor.WHITE + ", " + ChatColor.GRAY;
         }
-        UtilMessage.message(player, ChatColor.YELLOW + "Punishments: " + ChatColor.GRAY + punishments);
+
+
+        ClientSearchEvent event = new ClientSearchEvent(player);
+        event.getResult().add(ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " Client Details:");
+        event.getResult().add(ChatColor.YELLOW + "IP Address: "
+                + (ClientUtilities.getOnlineClient(player).hasRank(Rank.ADMIN, false) ? ChatColor.GRAY + target.getIP() : ChatColor.RED + "N/A"));
+        event.getResult().add(ChatColor.YELLOW + "Previous Name: " + ChatColor.GRAY + target.getOldName());
+        event.getResult().add(ChatColor.YELLOW + "IP Alias: " + ChatColor.GRAY + ClientUtilities.getDetailedIPAlias(target));
+        event.getResult().add(ChatColor.YELLOW + "Rank: " + ChatColor.GRAY + UtilFormat.cleanString(target.getRank().toString()));
+        event.getResult().add(ChatColor.YELLOW + "Discord Linked: " + ChatColor.GRAY + target.isDiscordLinked());
+        event.getResult().add(ChatColor.YELLOW + "Punishments: " + ChatColor.GRAY + punishments);
+
+        Bukkit.getPluginManager().callEvent(event);
+    }
+
+    @EventHandler (priority = EventPriority.MONITOR)
+    public void onClientSearch(ClientSearchEvent e){
+        for(String msg : e.getResult()){
+            UtilMessage.message(e.getPlayer(), msg);
+        }
     }
 
     public void promoteCommand(Player player, String[] args) {

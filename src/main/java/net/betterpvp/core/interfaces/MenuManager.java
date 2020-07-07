@@ -62,16 +62,19 @@ public class MenuManager extends BPVPListener<Core> {
 
     @EventHandler
     public void onButtonClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
         if (event.getWhoClicked() instanceof Player) {
-            if (Menu.isMenu(event.getView().getTitle())) {
+            Menu menu = Menu.getMenu(event.getInventory(), event.getView().getTitle(), player);
+            if (menu != null) {
+
                 event.setCancelled(true);
-                if (Button.isButton(event.getCurrentItem())) {
-                    Player player = (Player) event.getWhoClicked();
-                    Menu menu = Menu.getMenu(event.getInventory(), event.getView().getTitle(), player);
-                    Button button = menu.getButton(event.getCurrentItem());
+                Button button = menu.getButton(event.getCurrentItem());
+                if (button != null) {
+
                     if (RechargeManager.getInstance().add(player, "Button Click", 0.05, false)) {
                         Bukkit.getPluginManager().callEvent(new ButtonClickEvent(player, menu, button, event.getClick(), event.getSlot()));
                     }
+
                 }
             }
         }
@@ -92,7 +95,7 @@ public class MenuManager extends BPVPListener<Core> {
     @EventHandler
     public void onMenuClose(MenuCloseEvent event) {
         if (event.getMenu() != null) {
-            if (event.getMenu().keepMenu() == false) {
+            if (!event.getMenu().keepMenu()) {
                 Menu.menus.remove(event.getMenu());
             }
         }

@@ -31,6 +31,7 @@ public class ClientRepository implements Repository<Core> {
             "  `LastLogin` bigint(255)," +
             "  `TimePlayed` bigint(255)," +
             "  `Password` varchar(255)," +
+            "  `DiscordLinked` tinyint," +
             "  PRIMARY KEY (`UUID`)" +
             ");";
 
@@ -50,7 +51,8 @@ public class ClientRepository implements Repository<Core> {
                 + "'" + "" + "', "
                 + "'" + System.currentTimeMillis() + "', "
                 + "'" + 0 + "', "
-                + "'" + "" + "')";
+                + "'', "
+                + "0)";
 
         System.out.println(query);
         Log.write("Clans", "Saved Client [" + client.getName() + "]");
@@ -86,7 +88,7 @@ public class ClientRepository implements Repository<Core> {
                 long lastLogin = result.getLong(7);
                 int timePlayed = result.getInt(8);
                 String password = result.getString(9);
-
+                boolean discordLinked = result.getBoolean(10);
 
                 Client client = new Client(uuid);
                 client.setName(name);
@@ -99,7 +101,7 @@ public class ClientRepository implements Repository<Core> {
 
                 client.setIgnore(ignore);
                 client.setOldName(oldName);
-
+                client.setDiscordLinked(discordLinked);
                 ClientUtilities.addClientOnLoad(client);
                 count++;
             }
@@ -154,7 +156,7 @@ public class ClientRepository implements Repository<Core> {
                         long lastLogin = result.getLong(7);
                         String password = result.getString(8);
                         int timePlayed = result.getInt(9);
-
+                        boolean discordLinked = result.getBoolean(10);
 
                         Client client = ClientUtilities.getOnlineClient(uuid);
                         if (client != null) {
@@ -167,7 +169,7 @@ public class ClientRepository implements Repository<Core> {
                             client.setLastLogin(lastLogin);
                             client.setPassword(password);
                             client.setTimePlayed(timePlayed);
-
+                            client.setDiscordLinked(discordLinked);
 
                         }
 
@@ -227,6 +229,11 @@ public class ClientRepository implements Repository<Core> {
 
     public static void updateTimePlayed(Client client) {
         String query = "UPDATE clients SET TimePlayed='" + client.getTimePlayed() + "' WHERE UUID='" + client.getUUID().toString() + "'";
+        QueryFactory.runQuery(query);
+    }
+
+    public static void updateDiscordLink(Client client) {
+        String query = "UPDATE clients SET DiscordLinked=" + client.isDiscordLinked() + " WHERE UUID='" + client.getUUID().toString() + "'";
         QueryFactory.runQuery(query);
     }
 

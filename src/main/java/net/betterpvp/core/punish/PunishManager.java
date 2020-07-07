@@ -113,14 +113,14 @@ public class PunishManager extends BPVPListener<Core> {
                 event.disallow(PlayerLoginEvent.Result.KICK_BANNED, ChatColor.YELLOW + "You have been banned! \n " + ChatColor.YELLOW
                         + "Remaining: " + ChatColor.GRAY + "Permanent" + " \n"
                         + ChatColor.YELLOW + "Reason: " + ChatColor.GRAY + punish.getReason()
-                        + "\n  \n " + ChatColor.AQUA + "Appeal at www.battleau.net/forum");
+                        + "\n  \n " + ChatColor.AQUA + "Appeal at www.betterpvp.net/forum");
                 return;
             }
 
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, ChatColor.YELLOW + "You have been banned! \n " + ChatColor.YELLOW
                     + "Remaining: " + ChatColor.GRAY + punish.getRemaining() + " \n"
                     + ChatColor.YELLOW + "Reason: " + ChatColor.GRAY + punish.getReason()
-                    + "\n  \n " + ChatColor.AQUA + "Appeal at www.battleau.net/forumm");
+                    + "\n  \n " + ChatColor.AQUA + "Appeal at www.betterpvp.net/forum");
 
         }
     }

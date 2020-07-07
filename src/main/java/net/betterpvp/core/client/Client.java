@@ -30,6 +30,7 @@ public class Client {
     private int timePlayed = 0;
     private long lastClick = 0;
     private List<Donation> donations;
+    private boolean discordLinked;
 
     private HashMap<String, Integer> settings;
 
@@ -66,8 +67,6 @@ public class Client {
     public void setTimePlayed(int played) {
         this.timePlayed = played;
     }
-
-
 
     public int getTimePlayed() {
         return timePlayed;
@@ -216,4 +215,11 @@ public class Client {
         return settings;
     }
 
+    public boolean isDiscordLinked() {
+        return discordLinked;
+    }
+
+    public void setDiscordLinked(boolean discordLinked) {
+        this.discordLinked = discordLinked;
+    }
 }
