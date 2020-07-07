@@ -1,7 +1,10 @@
 package net.betterpvp.core.client.commands;
 
 import net.betterpvp.core.Core;
+import net.betterpvp.core.client.Client;
+import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.framework.BPVPListener;
 import net.betterpvp.core.networking.NetworkReceiver;
@@ -46,15 +49,21 @@ public class LinkCommand extends Command implements Listener {
     public void execute(Player player, String[] args) {
         if(args == null){
             UtilMessage.message(player, "Discord", "To link your account, type " + ChatColor.GREEN
-                    + "!link " + player.getName() + ChatColor.GRAY + " in the BetterPvP Discord!");
+                    + "!link " + player.getName() + ChatColor.GRAY + " in the BetterPvP Discord! https://discord.gg/qPZTbvx");
         }else{
             if(args.length == 1) {
                 if(pendingLinks.containsKey(player.getUniqueId())) {
                     if (args[0].equals("finish")) {
-                        NetworkReceiver.sendNetworkMessage("127.0.0.1", 1335, "Discord",
+                        NetworkReceiver.sendNetworkMessage("network.betterpvp.net", 1335, "Discord",
                                 "FinishLink-!-" + pendingLinks.get(player.getUniqueId()) + "-!-" + player.getUniqueId().toString() + "-!-" + player.getName());
                         UtilMessage.message(player, "Discord", "Successfully linked your account. Enjoy the benefits!");
                         pendingLinks.remove(player.getUniqueId());
+
+                        Client client = ClientUtilities.getOnlineClient(player);
+                        if(client != null){
+                            client.setDiscordLinked(true);
+                            ClientRepository.updateDiscordLink(client);
+                        }
                     }
                 }
             }

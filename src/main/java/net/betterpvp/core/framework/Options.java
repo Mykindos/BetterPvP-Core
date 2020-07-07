@@ -13,6 +13,7 @@ public class Options {
     private Location spawnB;
 
     private int networkPort;
+    private String proxyAPIKey;
 
     public Options(Core i) {
         this.i = i;
@@ -38,6 +39,7 @@ public class Options {
                 (float) i.getConfigManager().get(Configs.MAIN).getDouble("SpawnB.Pitch"));
 
         networkPort = i.getConfigManager().get(Configs.MAIN).getInt("Network.Port");
+        proxyAPIKey = i.getConfigManager().get(Configs.MAIN).getString("ProxyAPIKey");
     }
 
 
@@ -56,6 +58,8 @@ public class Options {
         i.getConfigManager().get(Configs.MAIN).check("SpawnB.Yaw", 0f);
         i.getConfigManager().get(Configs.MAIN).check("SpawnB.Pitch", 0f);
         i.getConfigManager().get(Configs.MAIN).check("Network.Port", 0);
+
+        i.getConfigManager().get(Configs.MAIN).check("ProxyAPIKey", "");
     }
 
     public void saveLocation(Location loc){
@@ -77,6 +81,10 @@ public class Options {
 
     public int getNetworkPort(){
         return networkPort;
+    }
+
+    public String getProxyAPIKey(){
+        return proxyAPIKey;
     }
 
 
