@@ -5,6 +5,7 @@ import net.betterpvp.core.command.Command;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 
 public class TPWorldCommand extends Command {
@@ -15,11 +16,13 @@ public class TPWorldCommand extends Command {
 
     @Override
     public void execute(Player player, String[] args) {
-        if(args != null){
+        if (args != null) {
             World world = Bukkit.getWorld(args[0]);
-            if(world != null){
-                player.teleport(new Location(world, 0, 64, 0));
+            if (world == null) {
+                new WorldCreator(args[0]).createWorld();
             }
+            player.teleport(new Location(world, 0, 64, 0));
+
         }
     }
 
