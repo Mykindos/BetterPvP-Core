@@ -69,6 +69,8 @@ public class Options {
         i.getConfigManager().get(Configs.MAIN).set("SpawnA.Z", loc.getZ());
         i.getConfigManager().get(Configs.MAIN).set("SpawnA.Yaw", loc.getYaw());
         i.getConfigManager().get(Configs.MAIN).set("SpawnA.Pitch", loc.getPitch());
+
+        spawnA = loc;
     }
 
     public Location getSpawnA(){

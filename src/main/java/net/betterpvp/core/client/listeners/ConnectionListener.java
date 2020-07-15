@@ -12,6 +12,8 @@ import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.framework.BPVPListener;
 import net.betterpvp.core.framework.UpdateEvent;
 import net.betterpvp.core.framework.UpdateEvent.UpdateType;
+import net.betterpvp.core.networking.NetworkReceiver;
+import net.betterpvp.core.networking.events.NetworkMessageEvent;
 import net.betterpvp.core.utility.Titles;
 import net.betterpvp.core.utility.UtilProxy;
 import org.bukkit.Bukkit;
@@ -25,6 +27,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -33,6 +36,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ConnectionListener extends BPVPListener<Core> {
 
@@ -66,6 +70,8 @@ public class ConnectionListener extends BPVPListener<Core> {
 
                     ClientUtilities.addClient(client);
                     ClientRepository.saveClient(client);
+                    NetworkReceiver.sendGlobalNetworkMessage("Core", "AddClient-!-" + player.getUniqueId().toString()
+                            + "-!-" + player.getName() + "-!-" + player.getAddress().getAddress().getHostAddress());
 
                 }
 
@@ -75,6 +81,11 @@ public class ConnectionListener extends BPVPListener<Core> {
             }
         }
 
+    }
+
+    @EventHandler (priority = EventPriority.MONITOR)
+    public void onRespawn(PlayerRespawnEvent e){
+       e.setRespawnLocation(Core.getOptions().getSpawnA());
     }
 
 
@@ -119,15 +130,18 @@ public class ConnectionListener extends BPVPListener<Core> {
 
 
         boolean isNew = false;
-        if (!ClientUtilities.isClient(player.getUniqueId())) {
+        Client client = ClientUtilities.getClient(player.getUniqueId());
+        if (client == null) {
             isNew = true;
 
-            Client client = new Client(player.getUniqueId());
+             client = new Client(player.getUniqueId());
             client.setName(player.getName());
             client.setIP(player.getAddress().getAddress().getHostAddress());
 
             ClientUtilities.addClient(client);
             ClientRepository.saveClient(client);
+            NetworkReceiver.sendGlobalNetworkMessage("Core", "AddClient-!-" + player.getUniqueId().toString()
+                    + "-!-" + player.getName() + "-!-" + player.getAddress().getAddress().getHostAddress());
 
             event.setJoinMessage(ChatColor.GREEN + "New> " + ChatColor.GRAY + player.getName());
             Titles.sendTitle(player, 0, 40, 20, ChatColor.YELLOW + "Welcome to " + ChatColor.RED.toString() + ChatColor.BOLD + "Clans!",
@@ -138,7 +152,6 @@ public class ConnectionListener extends BPVPListener<Core> {
 
         } else {
 
-            Client client = ClientUtilities.getClient(player);
             client.setName(player.getName());
             ClientRepository.updateName(player);
 
@@ -178,6 +191,30 @@ public class ConnectionListener extends BPVPListener<Core> {
                 }.runTask(getInstance());
             }
         }).start();
+    }
+
+    @EventHandler
+    public void onNetworkClientAdd(NetworkMessageEvent e){
+        if(e.getChannel().equalsIgnoreCase("Core")){
+            if(e.getMessage().startsWith("AddClient")){
+                new BukkitRunnable(){
+                    @Override
+                    public void run(){
+                        String[] args = e.getMessage().split("-!-");
+                        Client client = ClientUtilities.getClient(UUID.fromString(args[1]));
+                        if(client == null){
+                            client = new Client(UUID.fromString(args[1]));
+                            client.setName(args[2]);
+                            client.setIP(args[3]);
+
+                            ClientUtilities.addClient(client);
+                            ClientRepository.saveClient(client);
+                        }
+                    }
+                }.runTaskAsynchronously(getInstance());
+
+            }
+        }
     }
 
 
@@ -249,6 +286,13 @@ public class ConnectionListener extends BPVPListener<Core> {
         }
     }
 
+    @EventHandler (priority = EventPriority.MONITOR)
+    public void onRemoveOnlineClient(PlayerQuitEvent e){
+        Client client = ClientUtilities.getOnlineClient(e.getPlayer());
+        if(client != null){
+            ClientUtilities.getOnlineClients().remove(client);
+        }
+    }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {

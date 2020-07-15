@@ -17,17 +17,25 @@ import org.bukkit.event.player.PlayerLoginEvent;
 public class ReservedSlot implements IDonation, Listener {
 
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler (priority = EventPriority.HIGHEST)
     public void onLogin(PlayerLoginEvent e){
 
         if(Bukkit.getServer().hasWhitelist()){
-            return;
+            if(!Bukkit.getWhitelistedPlayers().contains(e.getPlayer())){
+                return;
+            }
+
         }
 
-        if(e.getPlayer() == null) return;
+        //if(e.getPlayer() == null) return;
 
         Client client = ClientUtilities.getClient(e.getPlayer());
         if(client == null){
+            e.setResult(PlayerLoginEvent.Result.ALLOWED);
+            return;
+        }
+
+        if(client.hasDonation(getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
             e.setResult(PlayerLoginEvent.Result.ALLOWED);
             return;
         }
@@ -36,7 +44,7 @@ public class ReservedSlot implements IDonation, Listener {
         for(Player p : Bukkit.getOnlinePlayers()){
             Client pClient = ClientUtilities.getOnlineClient(p);
             if(pClient != null){
-                if(pClient.hasDonation(getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
+                if(pClient.hasDonation(getName()) || pClient.hasRank(Rank.TRIAL_MOD, false)){
                     count++;
                 }
             }
@@ -47,15 +55,11 @@ public class ReservedSlot implements IDonation, Listener {
             return;
         }
 
-        if(client.hasDonation(getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
-            e.setResult(PlayerLoginEvent.Result.ALLOWED);
-            return;
-        }
 
         if (e.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
             e.setKickMessage(ChatColor.RED + "Server - " + ChatColor.YELLOW + " Visit https://store.betterpvp.net to purchase a reserved slot\n" + ChatColor.WHITE
                     + "There are currently " + ChatColor.GREEN + Bukkit.getOnlinePlayers().size()
-                    + ChatColor.YELLOW + " / " + ChatColor.GREEN + Bukkit.getServer().getMaxPlayers() + ChatColor.WHITE + "players online");
+                    + ChatColor.YELLOW + " / " + ChatColor.GREEN + Bukkit.getServer().getMaxPlayers() + ChatColor.WHITE + " players online");
         }
 
     }

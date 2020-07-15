@@ -38,6 +38,7 @@
                             <pattern>org.reflections</pattern>
                             <shadedPattern>net.betterpvp.core.reflections</shadedPattern>
                         </relocation>
+
                     </relocations>
                     <artifactSet>
 
@@ -50,6 +51,7 @@
                             <exclude>*:xml-apis</exclude>
                             <exclude>org.apache.maven:lib:tests</exclude>
                             <exclude>log4j:log4j:jar:</exclude>
+                            <exclude>*tr7zw*</exclude>
 
                         </excludes>
                     </artifactSet>
@@ -66,6 +68,7 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
 
         <repository>
             <id>dmulloy2-repo</id>

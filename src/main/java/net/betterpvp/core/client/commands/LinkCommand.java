@@ -16,6 +16,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -41,6 +42,13 @@ public class LinkCommand extends Command implements Listener {
                             .then(ChatColor.RED.toString() + ChatColor.BOLD + "here").command("/link finish").then(ChatColor.YELLOW.toString() + ChatColor.BOLD + " to finish linking your discord account.").send(player);
                     pendingLinks.put(player.getUniqueId(), data[2]);
                 }
+            }else if(data[0].equals("LinkedDiscord")){
+                UUID uuid = UUID.fromString(data[1]);
+                Client client = ClientUtilities.getClient(uuid);
+                if(client != null){
+                    client.setDiscordLinked(true);
+                    ClientRepository.updateDiscordLink(client);
+                }
             }
         }
     }
@@ -59,11 +67,8 @@ public class LinkCommand extends Command implements Listener {
                         UtilMessage.message(player, "Discord", "Successfully linked your account. Enjoy the benefits!");
                         pendingLinks.remove(player.getUniqueId());
 
-                        Client client = ClientUtilities.getOnlineClient(player);
-                        if(client != null){
-                            client.setDiscordLinked(true);
-                            ClientRepository.updateDiscordLink(client);
-                        }
+                        NetworkReceiver.sendGlobalNetworkMessage("Discord", "LinkedDiscord-!-" + player.getUniqueId().toString());
+
                     }
                 }
             }

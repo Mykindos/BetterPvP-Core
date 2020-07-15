@@ -12,7 +12,7 @@ public class Log implements Repository<Core> {
             + "SystemTime LONG); ";
 
     public static void debug(String module, String message) {
-        System.out.println("[BattleAU> " + module + "] " + message);
+        System.out.println("[BetterPvP> " + module + "] " + message);
     }
 
     public static void write(String type, String message) {

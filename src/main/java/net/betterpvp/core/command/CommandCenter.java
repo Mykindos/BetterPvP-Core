@@ -86,7 +86,7 @@ public class CommandCenter extends BPVPListener<Core> {
         if(cmd != null){
             if(cmd instanceof IServerCommand){
                 IServerCommand serverCommand = (IServerCommand) cmd;
-                serverCommand.execute(event.getSender(), args);
+                serverCommand.serverCmdExecute(event.getSender(), args);
                 event.setCancelled(true);
             }
         }

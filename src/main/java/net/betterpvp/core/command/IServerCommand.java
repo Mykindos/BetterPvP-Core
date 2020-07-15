@@ -4,5 +4,5 @@ import org.bukkit.command.CommandSender;
 
 public interface IServerCommand {
 
-    void execute(CommandSender sender, String[] args);
+    void serverCmdExecute(CommandSender sender, String[] args);
 }

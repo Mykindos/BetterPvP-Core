@@ -8,12 +8,13 @@ public class Donation {
     private String name;
     private long expiry;
     private boolean claimed;
+    private long timestamp;
 
-    public Donation(String name, long expiry, boolean claimed){
+    public Donation(String name, long expiry, boolean claimed, long timestamp){
         this.name = name;
         this.expiry = expiry;
         this.claimed = claimed;
-
+        this.timestamp = timestamp;
     }
 
     public String getName(){
@@ -34,5 +35,9 @@ public class Donation {
 
     public boolean hasExpired(){
         return expiry - System.currentTimeMillis() <= 0 && expiry != 0;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

@@ -49,7 +49,7 @@ public class UtilTime {
             return trim(d / 3600000.0D, decPoint);
         }
         if (unit == TimeUnit.DAYS) {
-            return trim(d / 86400000, decPoint);
+            return trim(d / 86400000.0D, decPoint);
         }
         if (unit == TimeUnit.YEARS) {
             return trim(d / 31536000000.0D, decPoint);

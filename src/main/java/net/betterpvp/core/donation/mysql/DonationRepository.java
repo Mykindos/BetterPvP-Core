@@ -41,11 +41,12 @@ public class DonationRepository implements Repository<Core> {
 
                 while (result.next()) {
 
-                    String donation = result.getString(3);
-                    long expiry = result.getLong(4);
-                    boolean claimed = result.getBoolean(5);
+                    String donation = result.getString(2);
+                    long expiry = result.getLong(3);
+                    boolean claimed = result.getBoolean(4);
+                    long timestamp = result.getLong(5);
 
-                    Donation d = new Donation(donation, expiry, claimed);
+                    Donation d = new Donation(donation, expiry, claimed, timestamp);
                     client.getDonations().add(d);
                 }
 
@@ -60,7 +61,8 @@ public class DonationRepository implements Repository<Core> {
 
 
     public static void saveDonation(UUID uuid, Donation donation) {
-        String query = "INSERT IGNORE INTO " + TABLE_NAME + "(UUID, Name, Expiry, Claimed) VALUES('" + uuid.toString() + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + donation.isClaimed() + "');";
+        String query = "INSERT IGNORE INTO " + TABLE_NAME + "(UUID, Name, Expiry, Claimed, Timestamp) VALUES('" + uuid.toString()
+                + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + donation.isClaimed() + "'," + donation.getTimestamp() + ");";
         QueryFactory.runQuery(query);
     }
 

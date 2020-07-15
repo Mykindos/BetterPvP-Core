@@ -86,8 +86,8 @@ public class ClientUtilities {
 
     public static Client getOrCreateClient(String[] string) {
         for (Client client : clients) {
-            if (client.getName().equalsIgnoreCase(string[1])
-                    || client.getUUID().toString().equalsIgnoreCase(string[0])) {
+            if ((client.getName() != null && client.getName().equalsIgnoreCase(string[1]))
+                    || (client.getUUID() != null && client.getUUID().toString().equalsIgnoreCase(string[0]))) {
                 return client;
             }
         }
@@ -263,10 +263,11 @@ public class ClientUtilities {
                 if (clients.getUUID().equals(client.getUUID())) {
                     continue;
                 }
+                String prefix = clients.isDiscordLinked() ? "(L) " : "";
                 //  String name = PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED
                 alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
-                        .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
-                                true/*MAHManager.isForced(clients.getUUID())*/ ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
+                        .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + prefix + clients.getName() :
+                                true/*MAHManager.isForced(clients.getUUID())*/ ? ChatColor.AQUA + prefix + clients.getName() : ChatColor.GRAY + prefix + clients.getName());
             }
         }
         return alias.toString();
@@ -281,9 +282,11 @@ public class ClientUtilities {
                     if (clients.getUUID().equals(client.getUUID())) {
                         continue;
                     }
+
+                    String prefix = clients.isDiscordLinked() ? "(L) " : "";
+
                     alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
-                            .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + clients.getName() :
-                                    true ? ChatColor.AQUA + clients.getName() : ChatColor.GRAY + clients.getName());
+                            .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + prefix + clients.getName() : ChatColor.GRAY +  prefix + clients.getName());
                 }
             }
         }

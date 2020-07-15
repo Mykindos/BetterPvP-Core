@@ -15,6 +15,7 @@ public class ClientSearchEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Player player;
     private List<String> result;
+    private Client target;
 
 
     public static HandlerList getHandlerList() {
@@ -36,5 +37,13 @@ public class ClientSearchEvent extends Event {
 
     public List<String> getResult() {
         return result;
+    }
+
+    public Client getTarget() {
+        return target;
+    }
+
+    public void setTarget(Client target) {
+        this.target = target;
     }
 }

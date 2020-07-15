@@ -1,6 +1,7 @@
 package net.betterpvp.core.command;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.reflections.Reflections;
@@ -45,6 +46,9 @@ public class CommandManager {
                 if (Listener.class.isAssignableFrom(c)) {
                     Command command = c.newInstance();
                     Bukkit.getPluginManager().registerEvents((Listener) command, instance);
+                    if(CommandExecutor.class.isAssignableFrom(c)){
+                        Bukkit.getPluginCommand("donation").setExecutor((CommandExecutor) command);
+                    }
                     CommandManager.addCommand(command);
                     System.out.println("Registered command + event listener");
 

@@ -97,6 +97,7 @@ public class ClientCommand extends Command implements Listener {
         event.getResult().add(ChatColor.YELLOW + "Rank: " + ChatColor.GRAY + UtilFormat.cleanString(target.getRank().toString()));
         event.getResult().add(ChatColor.YELLOW + "Discord Linked: " + ChatColor.GRAY + target.isDiscordLinked());
         event.getResult().add(ChatColor.YELLOW + "Punishments: " + ChatColor.GRAY + punishments);
+        event.setTarget(target);
 
         Bukkit.getPluginManager().callEvent(event);
     }
