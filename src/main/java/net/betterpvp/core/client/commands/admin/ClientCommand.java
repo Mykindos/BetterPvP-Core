@@ -7,6 +7,8 @@ import net.betterpvp.core.client.commands.admin.events.ClientSearchEvent;
 import net.betterpvp.core.client.mysql.ClientRepository;
 import net.betterpvp.core.command.Command;
 import net.betterpvp.core.database.Log;
+import net.betterpvp.core.networking.NetworkReceiver;
+import net.betterpvp.core.networking.events.NetworkMessageEvent;
 import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.utility.UtilFormat;
@@ -52,10 +54,17 @@ public class ClientCommand extends Command implements Listener {
                     UtilMessage.message(player, "Client", "Admin Mode: " + ChatColor.GREEN + "Enabled");
                 }
             }
+        } else if (args[0].equalsIgnoreCase("allowvpn")) {
+            NetworkReceiver.sendGlobalNetworkMessage("Client", "AllowVPN-!-" + args[1]);
+            UtilMessage.message(player, "Client", "Updated " + ChatColor.GREEN + args[1]);
+        } else if (args[0].equalsIgnoreCase("blockvpn")) {
+            NetworkReceiver.sendGlobalNetworkMessage("Client", "BlockVPN-!-" + args[1]);
+            UtilMessage.message(player, "Client", "Updated " + ChatColor.GREEN + args[1]);
         } else {
             help(player);
         }
     }
+
 
     @Override
     public void help(Player player) {
@@ -63,6 +72,30 @@ public class ClientCommand extends Command implements Listener {
         UtilMessage.message(player, "/client search <player>", "Search client details", Rank.MODERATOR);
         UtilMessage.message(player, "/client promote <player>", "Promote a player", Rank.ADMIN);
         UtilMessage.message(player, "/client demote <player>", "Demote a player", Rank.ADMIN);
+    }
+
+    @EventHandler
+    public void onNetworkMessage(NetworkMessageEvent e) {
+        if (e.getChannel().equals("Client")) {
+            if (e.getMessage().startsWith("AllowVPN")) {
+                String[] data = e.getMessage().split("-!-");
+                updateVPNStatus(data[1], true);
+            } else if (e.getMessage().startsWith("BlockVPN")) {
+
+                String[] data = e.getMessage().split("-!-");
+                updateVPNStatus(data[1], false);
+            }
+        }
+    }
+
+    private void updateVPNStatus(String client, boolean status) {
+        Client target = ClientUtilities.getClient(client);
+        if (target == null) {
+            return;
+        }
+
+        target.setAllowVPN(status);
+        ClientRepository.updateAllowVPN(target);
     }
 
     public void searchCommand(Player player, String[] args) {
@@ -84,16 +117,18 @@ public class ClientCommand extends Command implements Listener {
 
         String punishments = "";
         for (Punish punish : PunishManager.getPunishments(target.getUUID())) {
-            punishments += punish.getPunishType().name() + " (" + punish.getRemaining() + ")" + ChatColor.WHITE + ", " + ChatColor.GRAY;
+            punishments += punish.getPunishType().name() + " (" + punish.getRemaining() + "," + ClientUtilities.getClient(punish.getPunisher()).getName() + ") " + ChatColor.WHITE + ", " + ChatColor.GRAY;
         }
 
 
+        Client client = ClientUtilities.getOnlineClient(player);
         ClientSearchEvent event = new ClientSearchEvent(player);
         event.getResult().add(ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " Client Details:");
         event.getResult().add(ChatColor.YELLOW + "IP Address: "
-                + (ClientUtilities.getOnlineClient(player).hasRank(Rank.ADMIN, false) ? ChatColor.GRAY + target.getIP() : ChatColor.RED + "N/A"));
+                + (client.hasRank(Rank.ADMIN, false) ? ChatColor.GRAY + target.getIP() : ChatColor.RED + "N/A"));
         event.getResult().add(ChatColor.YELLOW + "Previous Name: " + ChatColor.GRAY + target.getOldName());
-        event.getResult().add(ChatColor.YELLOW + "IP Alias: " + ChatColor.GRAY + ClientUtilities.getDetailedIPAlias(target));
+        event.getResult().add(ChatColor.YELLOW + "IP Alias: " + ChatColor.GRAY + (client.hasRank(Rank.ADMIN, false)
+                ? ClientUtilities.getDetailedIPAlias(target, false) : ClientUtilities.getDetailedIPAlias(target, true)));
         event.getResult().add(ChatColor.YELLOW + "Rank: " + ChatColor.GRAY + UtilFormat.cleanString(target.getRank().toString()));
         event.getResult().add(ChatColor.YELLOW + "Discord Linked: " + ChatColor.GRAY + target.isDiscordLinked());
         event.getResult().add(ChatColor.YELLOW + "Punishments: " + ChatColor.GRAY + punishments);
@@ -102,9 +137,9 @@ public class ClientCommand extends Command implements Listener {
         Bukkit.getPluginManager().callEvent(event);
     }
 
-    @EventHandler (priority = EventPriority.MONITOR)
-    public void onClientSearch(ClientSearchEvent e){
-        for(String msg : e.getResult()){
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onClientSearch(ClientSearchEvent e) {
+        for (String msg : e.getResult()) {
             UtilMessage.message(e.getPlayer(), msg);
         }
     }

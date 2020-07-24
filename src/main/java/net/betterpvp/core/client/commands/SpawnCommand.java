@@ -36,67 +36,15 @@ public class SpawnCommand extends Command implements Listener {
     public void execute(Player player, String[] args) {
 
         if (args == null || args.length == 0) {
+
+            if (ClientUtilities.getOnlineClient(player).hasRank(Rank.ADMIN, false)) {
+                player.teleport(Bukkit.getWorld("world").getSpawnLocation());
+                return;
+            }
             Bukkit.getPluginManager().callEvent(new SpawnTeleportEvent(player));
 
         }
     }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onTeleport(SpawnTeleportEvent e) {
-        if (spawns.containsKey(e.getPlayer())) {
-            UtilMessage.message(e.getPlayer(), "Spawn", "You are already teleporting to spawn.");
-            return;
-        }
-
-        if (e.isCancelled()) {
-            return;
-        }
-
-        if (ClientUtilities.getOnlineClient(e.getPlayer()).hasRank(Rank.ADMIN, false)) {
-            e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
-        } else {
-            UtilMessage.message(e.getPlayer(), "Spawn", "Teleporting to spawn in " + ChatColor.GREEN + "15 seconds, " + ChatColor.GRAY + "do not move!");
-            spawns.put(e.getPlayer(), System.currentTimeMillis());
-        }
-    }
-
-    @EventHandler
-    public void onMove(PlayerMoveEvent e) {
-        if (spawns.containsKey(e.getPlayer())) {
-            if (e.getFrom().getX() != e.getTo().getX() || e.getFrom().getZ() != e.getTo().getZ()
-                    || e.getFrom().getY() != e.getTo().getY()) {
-
-                UtilMessage.message(e.getPlayer(), "Spawn", "Teleport cancelled.");
-                spawns.remove(e.getPlayer());
-            }
-
-        }
-    }
-
-	@EventHandler
-	public void onUpdate(UpdateEvent e){
-		if(e.getType() == UpdateEvent.UpdateType.SEC){
-			Iterator<Map.Entry<Player, Long>> it = spawns.entrySet().iterator();
-			while(it.hasNext()){
-				Map.Entry<Player, Long> next = it.next();
-				if(next.getKey() == null){
-					it.remove();
-					continue;
-				}
-
-
-				if(UtilTime.elapsed(next.getValue(), 15000)){
-					if(RechargeManager.getInstance().add(next.getKey(), "Spawn", 900, true, false)){
-						next.getKey().teleport(Bukkit.getWorld("world").getSpawnLocation());
-						UtilMessage.message(next.getKey(), "Spawn", "You teleported to spawn.");
-						it.remove();
-					}
-				}
-			}
-		}
-	}
-
-
 
     @Override
     public void help(Player player) {

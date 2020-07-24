@@ -203,7 +203,7 @@ public class ClientUtilities {
                     if (Bukkit.getPlayer(c.getUUID()) != null) {
 
                         new FancyMessage(ChatColor.BLUE + prefix + "> " + message).then(" " + ChatColor.RED.toString() + ChatColor.UNDERLINE + "Force")
-                                .command("/mah add " + target.getName() + " 7 d").send(p);
+                                .command("/mah force " + target.getName() + " 7 d").send(p);
                     }
                 }
             }
@@ -273,20 +273,26 @@ public class ClientUtilities {
         return alias.toString();
     }
 
-    public static String getDetailedIPAlias(Client client) {
+    public static String getDetailedIPAlias(Client client, boolean hide) {
         StringBuilder alias = new StringBuilder();
 
+        if(hide) {
+            if (client.hasRank(Rank.MODERATOR, false)) return alias.toString();
+        }
         for (Client clients : clients) {
-            if(client.getIP() != null) {
+            if (client.getIP() != null) {
                 if (client.getIP().equals(clients.getIP())) {
                     if (clients.getUUID().equals(client.getUUID())) {
                         continue;
+                    }
+                    if(hide){
+                        if (clients.hasRank(Rank.MODERATOR, false)) continue;
                     }
 
                     String prefix = clients.isDiscordLinked() ? "(L) " : "";
 
                     alias.append(alias.length() != 0 ? ChatColor.DARK_GRAY + ", " : "")
-                            .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + prefix + clients.getName() : ChatColor.GRAY +  prefix + clients.getName());
+                            .append(PunishManager.isBanned(clients.getUUID()) ? ChatColor.RED + prefix + clients.getName() : ChatColor.GRAY + prefix + clients.getName());
                 }
             }
         }

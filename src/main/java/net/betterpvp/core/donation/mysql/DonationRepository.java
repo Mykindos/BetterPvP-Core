@@ -8,6 +8,7 @@ import net.betterpvp.core.database.LoadPriority;
 import net.betterpvp.core.database.QueryFactory;
 import net.betterpvp.core.database.Repository;
 import net.betterpvp.core.donation.Donation;
+import net.betterpvp.core.utility.UtilFormat;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,7 +63,7 @@ public class DonationRepository implements Repository<Core> {
 
     public static void saveDonation(UUID uuid, Donation donation) {
         String query = "INSERT IGNORE INTO " + TABLE_NAME + "(UUID, Name, Expiry, Claimed, Timestamp) VALUES('" + uuid.toString()
-                + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + donation.isClaimed() + "'," + donation.getTimestamp() + ");";
+                + "', '" + donation.getName() + "', '" + donation.getExpiry() + "', '" + UtilFormat.toTinyInt(donation.isClaimed()) + "'," + donation.getTimestamp() + ");";
         QueryFactory.runQuery(query);
     }
 
@@ -73,7 +74,7 @@ public class DonationRepository implements Repository<Core> {
 
     public static void setClaimed(UUID uuid, String perk) {
         String query = "UPDATE `" + TABLE_NAME + "` SET Claimed = 1 WHERE Claimed = 0 AND Name ='" + perk
-                + "' AND UUID = '" + uuid.toString() + "' ORDER BY id ASC LIMIT 1";
+                + "' AND UUID = '" + uuid.toString() + "' ORDER BY Timestamp ASC LIMIT 1";
         QueryFactory.runQuery(query);
     }
 

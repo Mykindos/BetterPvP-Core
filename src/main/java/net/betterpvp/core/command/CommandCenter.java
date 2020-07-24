@@ -83,8 +83,8 @@ public class CommandCenter extends BPVPListener<Core> {
         }
 
         Command cmd = CommandManager.getCommand(command);
-        if(cmd != null){
-            if(cmd instanceof IServerCommand){
+        if (cmd != null) {
+            if (cmd instanceof IServerCommand) {
                 IServerCommand serverCommand = (IServerCommand) cmd;
                 serverCommand.serverCmdExecute(event.getSender(), args);
                 event.setCancelled(true);
@@ -103,7 +103,9 @@ public class CommandCenter extends BPVPListener<Core> {
                     || event.getMessage().toLowerCase().startsWith("/minecraft")
                     || event.getMessage().toLowerCase().contains("bukkit")
                     || event.getMessage().toLowerCase().contains("massivecore") || event.getMessage().toLowerCase().contains("mcore")
-                    || event.getMessage().toLowerCase().contains("minecraft:")) {
+                    || event.getMessage().toLowerCase().contains("minecraft:")
+                    || event.getMessage().toLowerCase().contains("tell")
+                    || event.getMessage().toLowerCase().contains("whisper")) {
 
                 UtilMessage.message(event.getPlayer(), "Unknown command. Type \"/help\" for help.");
                 event.setCancelled(true);
@@ -115,17 +117,19 @@ public class CommandCenter extends BPVPListener<Core> {
                 Player p = event.getPlayer();
                 UtilMessage.message(p, ChatColor.YELLOW + "----- Help [1 / 1] -----");
                 UtilMessage.message(p, ChatColor.AQUA + "/c help" + ChatColor.GRAY + " - View a list of Clan related commands");
-                UtilMessage.message(p, ChatColor.AQUA + "/kit starter" + ChatColor.GRAY + " - Claim a free kit");
+                UtilMessage.message(p, ChatColor.AQUA + "/kit" + ChatColor.GRAY + " - Claim a free starter kit (must have your discord linked)");
                 UtilMessage.message(p, ChatColor.AQUA + "/settings" + ChatColor.GRAY + " - Change some settings for your account");
                 UtilMessage.message(p, ChatColor.AQUA + "/coords" + ChatColor.GRAY + " - Display the coordinates to common locations");
                 UtilMessage.message(p, ChatColor.AQUA + "/log or /quit" + ChatColor.GRAY + " - Attempt to log out safely");
                 UtilMessage.message(p, ChatColor.AQUA + "/info <player>" + ChatColor.GRAY + " - View a players general information");
                 UtilMessage.message(p, ChatColor.AQUA + "/scan request <player>" + ChatColor.GRAY + " - Request to see a players current build");
                 UtilMessage.message(p, ChatColor.AQUA + "/bal" + ChatColor.GRAY + " - View your currency balances");
+                UtilMessage.message(p, ChatColor.AQUA + "/money pay <player> <amount> " + ChatColor.GRAY + "Pay a player an amount of coins");
                 UtilMessage.message(p, ChatColor.AQUA + "/daily" + ChatColor.GRAY + " - View today's daily quests");
                 UtilMessage.message(p, ChatColor.AQUA + "/buy" + ChatColor.GRAY + " - View BetterPvP's donation options");
-                UtilMessage.message(p, ChatColor.AQUA + "/cosmetic" + ChatColor.GRAY + " - Opens the cosmetic interface");
-                UtilMessage.message(p, ChatColor.AQUA + "/gambling" + ChatColor.GRAY + " - View a list gambling commands");
+                UtilMessage.message(p, ChatColor.AQUA + "/dye <colour>" + ChatColor.GRAY + " - Dye wool, concrete or glass any colour you like");
+                //UtilMessage.message(p, ChatColor.AQUA + "/cosmetic" + ChatColor.GRAY + " - Opens the cosmetic interface");
+                //UtilMessage.message(p, ChatColor.AQUA + "/gambling" + ChatColor.GRAY + " - View a list gambling commands");
 
 
             }

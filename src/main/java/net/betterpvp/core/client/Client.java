@@ -31,6 +31,7 @@ public class Client {
     private long lastClick = 0;
     private List<Donation> donations;
     private boolean discordLinked;
+    private boolean allowVPN;
 
     private HashMap<String, Integer> settings;
 
@@ -47,20 +48,22 @@ public class Client {
         this.donations = new ArrayList<>();
 
         this.settings = new HashMap<>();
+        this.allowVPN = false;
 
 
     }
 
-    public List<Donation> getDonations(){
+    public List<Donation> getDonations() {
         return donations;
     }
 
     /**
      * Check if player owns a donation
+     *
      * @param name Name of donation
      * @return True if the player owns that donation
      */
-    public boolean hasDonation(String name){
+    public boolean hasDonation(String name) {
         return donations.stream().filter(d -> d.getName().equalsIgnoreCase(name) && !d.hasExpired()).findAny().isPresent();
     }
 
@@ -192,7 +195,7 @@ public class Client {
         return false;
     }
 
-    public int getSettingAsInt(String key){
+    public int getSettingAsInt(String key) {
 
         try {
             if (!settings.containsKey(key)) {
@@ -200,18 +203,19 @@ public class Client {
                 SettingsRepository.saveSetting(uuid, key, 0);
                 return 0;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         return settings.get(key);
 
     }
-    public boolean getSettingAsBoolean(String key){
-       return getSettingAsInt(key) != 0;
+
+    public boolean getSettingAsBoolean(String key) {
+        return getSettingAsInt(key) != 0;
     }
 
-    public HashMap<String, Integer> getSettings(){
+    public HashMap<String, Integer> getSettings() {
         return settings;
     }
 
@@ -221,5 +225,13 @@ public class Client {
 
     public void setDiscordLinked(boolean discordLinked) {
         this.discordLinked = discordLinked;
+    }
+
+    public boolean isAllowVPN() {
+        return allowVPN;
+    }
+
+    public void setAllowVPN(boolean allowVPN) {
+        this.allowVPN = allowVPN;
     }
 }

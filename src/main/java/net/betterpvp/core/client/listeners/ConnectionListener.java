@@ -181,16 +181,6 @@ public class ConnectionListener extends BPVPListener<Core> {
 
         Bukkit.getPluginManager().callEvent(cle);
 
-        new Thread(() -> {
-            if (UtilProxy.isUsingProxy(player)) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        ClientUtilities.messageStaff("Proxy", player.getName() + " may be using a VPN / Proxy", Rank.ADMIN);
-                    }
-                }.runTask(getInstance());
-            }
-        }).start();
     }
 
     @EventHandler

@@ -157,6 +157,7 @@ public class ClientRepository implements Repository<Core> {
                         String password = result.getString(8);
                         int timePlayed = result.getInt(9);
                         boolean discordLinked = result.getBoolean(10);
+                        boolean allowVPN = result.getBoolean(11);
 
                         Client client = ClientUtilities.getOnlineClient(uuid);
                         if (client != null) {
@@ -170,6 +171,7 @@ public class ClientRepository implements Repository<Core> {
                             client.setPassword(password);
                             client.setTimePlayed(timePlayed);
                             client.setDiscordLinked(discordLinked);
+                            client.setAllowVPN(allowVPN);
 
                         }
 
@@ -234,6 +236,11 @@ public class ClientRepository implements Repository<Core> {
 
     public static void updateDiscordLink(Client client) {
         String query = "UPDATE clients SET DiscordLinked=" + client.isDiscordLinked() + " WHERE UUID='" + client.getUUID().toString() + "'";
+        QueryFactory.runQuery(query);
+    }
+
+    public static void updateAllowVPN(Client client) {
+        String query = "UPDATE clients SET AllowVPN=" + client.isAllowVPN() + " WHERE UUID='" + client.getUUID().toString() + "'";
         QueryFactory.runQuery(query);
     }
 

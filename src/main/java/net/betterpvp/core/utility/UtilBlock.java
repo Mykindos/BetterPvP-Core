@@ -478,6 +478,8 @@ public class UtilBlock {
                     blockUseSet.add(m);
                 }else if(m.name().contains("DOOR")){
                     blockUseSet.add(m);
+                }else if(m.name().contains("GATE")){
+                    blockUseSet.add(m);
                 }
             }
 

@@ -76,6 +76,6 @@ public class ReservedSlot implements IDonation, Listener {
 
     @Override
     public long getExpiryTime() {
-        return DonationExpiryTimes.DAY * 30;
+        return DonationExpiryTimes.DAY * 31;
     }
 }

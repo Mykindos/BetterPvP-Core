@@ -18,7 +18,7 @@ public class MessageCommand extends Command {
     public static HashMap<String, String> messages = new HashMap<>();
 
     public MessageCommand() {
-        super("m", new String[]{"msg", "tell", "message"}, Rank.PLAYER);
+        super("m", new String[]{"msg", "tell", "message", "whisper", "w"}, Rank.PLAYER);
     }
 
     @Override
