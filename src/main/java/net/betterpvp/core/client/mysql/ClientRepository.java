@@ -52,7 +52,7 @@ public class ClientRepository implements Repository<Core> {
                 + "'" + System.currentTimeMillis() + "', "
                 + "'" + 0 + "', "
                 + "'', "
-                + "0)";
+                + "0, 0)";
 
         System.out.println(query);
         Log.write("Clans", "Saved Client [" + client.getName() + "]");

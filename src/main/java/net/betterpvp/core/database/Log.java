@@ -1,6 +1,7 @@
 package net.betterpvp.core.database;
 
 import net.betterpvp.core.Core;
+import org.bukkit.ChatColor;
 
 public class Log implements Repository<Core> {
 
@@ -19,7 +20,7 @@ public class Log implements Repository<Core> {
         String query = "INSERT INTO " + TABLE_NAME + " (Time, Type, Message, SystemTime) VALUES "
                 + "(NOW(), "
                 + "'" + type + "', "
-                + "'" + message + "', "
+                + "'" + ChatColor.stripColor(message) + "', "
                 + "'" + System.currentTimeMillis() + "') ";
         debug("Log", message);
         QueryFactory.runQuery(query);

@@ -277,7 +277,7 @@ public class ClientUtilities {
         StringBuilder alias = new StringBuilder();
 
         if(hide) {
-            if (client.hasRank(Rank.MODERATOR, false)) return alias.toString();
+            if (client.hasRank(Rank.MODERATOR, false)) return "";
         }
         for (Client clients : clients) {
             if (client.getIP() != null) {

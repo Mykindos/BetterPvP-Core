@@ -67,8 +67,7 @@ public class KillCommand extends Command implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if (kills.containsKey(e.getPlayer())) {
-            if (e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ()
-            ) {
+            if (e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockZ() != e.getTo().getBlockZ()) {
 
                 UtilMessage.message(e.getPlayer(), "Suicide", "Suicide cancelled.");
                 kills.remove(e.getPlayer());
@@ -84,6 +83,11 @@ public class KillCommand extends Command implements Listener {
             while (it.hasNext()) {
                 Entry<Player, Long> next = it.next();
                 if (next.getKey() == null) {
+                    it.remove();
+                    continue;
+                }
+
+                if (next.getKey().isDead()) {
                     it.remove();
                     continue;
                 }

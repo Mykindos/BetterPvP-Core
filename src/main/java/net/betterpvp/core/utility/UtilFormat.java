@@ -1,10 +1,7 @@
 package net.betterpvp.core.utility;
 
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
+import org.bukkit.*;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -129,20 +126,27 @@ public class UtilFormat {
     public static Chunk stringToChunk(String string) {
         try {
             String[] tokens = string.split("/ ");
-            Chunk chunk = Bukkit.getWorld(tokens[0]).getChunkAt(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
-            return chunk;
+            World world = Bukkit.getWorld(tokens[0]);
+            if (world != null) {
+                Chunk chunk = world.getChunkAt(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                return chunk;
+            }
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
     }
 
+
+
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+                    + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }

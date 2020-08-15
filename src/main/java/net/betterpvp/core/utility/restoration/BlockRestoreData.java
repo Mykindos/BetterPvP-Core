@@ -2,6 +2,7 @@ package net.betterpvp.core.utility.restoration;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public final class BlockRestoreData {
     private Block block;
     private Material material;
     private Material oldMaterial;
-    private byte data;
+    private BlockData data;
     private byte oldData;
     private long expire;
     private int blocklevel = 0;
@@ -24,10 +25,10 @@ public final class BlockRestoreData {
         this.block = block;
         this.material = mat;
         this.oldMaterial = block.getType();
-        this.data = data;
+        this.data = block.getBlockData();
         this.oldData = block.getData();
         this.expire = System.currentTimeMillis() + expire;
-        if(block.getBlockData() instanceof Levelled){
+        if (block.getBlockData() instanceof Levelled) {
             Levelled levelled = (Levelled) block.getBlockData();
             this.blocklevel = levelled.getLevel();
 
@@ -62,11 +63,11 @@ public final class BlockRestoreData {
         this.oldMaterial = mat;
     }
 
-    public byte getData() {
+    public BlockData getData() {
         return data;
     }
 
-    public void setData(byte data) {
+    public void setData(BlockData data) {
         this.data = data;
     }
 
@@ -94,17 +95,20 @@ public final class BlockRestoreData {
     @SuppressWarnings("deprecation")
     public void restore() {
         getBlock().setType(getOldID());
-        if(getBlock().getBlockData() instanceof Levelled){
+
+        if (getBlock().getBlockData() instanceof Levelled) {
             Levelled levelled = (Levelled) getBlock().getBlockData();
             levelled.setLevel(blocklevel);
             getBlock().setBlockData(levelled);
+        } else {
+            getBlock().setBlockData(getData());
         }
     }
 
     public void update(Block block, Material mat, byte data, long expire) {
         setBlock(block);
         setMaterial(mat);
-        setData(data);
+        setData(block.getBlockData());
         setExpire(expire);
 
 
