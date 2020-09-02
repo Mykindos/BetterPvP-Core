@@ -4,6 +4,7 @@ import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
+import net.betterpvp.core.database.Log;
 import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.punish.Punish.PunishType;
 import net.betterpvp.core.punish.PunishManager;
@@ -46,6 +47,8 @@ public class UnmuteCommand extends Command {
             PunishRepository.removePunishment(punish);
             PunishManager.removePunishment(punish);
             UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " unmuted " + ChatColor.YELLOW + target.getName()
+                    + ChatColor.GRAY + ".");
+            Log.write("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " unmuted " + ChatColor.YELLOW + target.getName()
                     + ChatColor.GRAY + ".");
 
 

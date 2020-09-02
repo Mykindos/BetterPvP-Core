@@ -35,7 +35,7 @@ public class ReservedSlot implements IDonation, Listener {
             return;
         }
 
-        if(client.hasDonation(getName()) || client.hasRank(Rank.TRIAL_MOD, false)){
+        if(client.hasDonation(getName()) || client.hasDonation("VIP") || client.hasRank(Rank.TRIAL_MOD, false)){
             e.setResult(PlayerLoginEvent.Result.ALLOWED);
             return;
         }
@@ -44,7 +44,7 @@ public class ReservedSlot implements IDonation, Listener {
         for(Player p : Bukkit.getOnlinePlayers()){
             Client pClient = ClientUtilities.getOnlineClient(p);
             if(pClient != null){
-                if(pClient.hasDonation(getName()) || pClient.hasRank(Rank.TRIAL_MOD, false)){
+                if(pClient.hasDonation(getName()) || pClient.hasDonation("VIP") || pClient.hasRank(Rank.TRIAL_MOD, false)){
                     count++;
                 }
             }
