@@ -18,8 +18,8 @@ public class SubSettingsMenu extends Menu {
 
     private String sub;
 
-    public SubSettingsMenu(Player player, String sub) {
-        super(player, 9, ChatColor.YELLOW + sub, new Button[]{});
+    public SubSettingsMenu(Player player, String sub, int size) {
+        super(player, size, ChatColor.YELLOW + sub, new Button[]{});
         this.sub = sub;
 
         buildPage(player);

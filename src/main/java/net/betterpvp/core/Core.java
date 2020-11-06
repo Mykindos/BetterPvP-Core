@@ -16,6 +16,7 @@ import net.betterpvp.core.framework.Updater;
 import net.betterpvp.core.interfaces.MenuManager;
 import net.betterpvp.core.networking.NetworkReceiver;
 import net.betterpvp.core.networking.commands.HubCommand;
+import net.betterpvp.core.networking.discord.DiscordCommandListener;
 import net.betterpvp.core.proxy.ProxyDetector;
 import net.betterpvp.core.punish.PunishManager;
 import net.betterpvp.core.punish.listeners.GriefListener;
@@ -116,6 +117,7 @@ public class Core extends JavaPlugin {
         new GriefListener(this);
         new MenuManager(this);
         new DonationMenuListener(this);
+        new DiscordCommandListener(this);
     }
 
     private void loadCommands(){

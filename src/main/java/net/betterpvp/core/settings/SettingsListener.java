@@ -30,7 +30,7 @@ public class SettingsListener extends BPVPListener<Core> {
         if (e.getMenu() instanceof MainSettingsMenu) {
             if (e.getButton() instanceof SettingCategoryButton) {
                 String category = ChatColor.stripColor(e.getButton().getName());
-                e.getPlayer().openInventory(new SubSettingsMenu(e.getPlayer(), category).getInventory());
+                e.getPlayer().openInventory(new SubSettingsMenu(e.getPlayer(), category, 9).getInventory());
             }
         } else if (e.getMenu() instanceof SubSettingsMenu) {
             SubSettingsMenu subMenu = (SubSettingsMenu) e.getMenu();

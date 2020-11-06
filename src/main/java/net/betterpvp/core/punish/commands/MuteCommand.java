@@ -4,6 +4,7 @@ import net.betterpvp.core.client.Client;
 import net.betterpvp.core.client.ClientUtilities;
 import net.betterpvp.core.client.Rank;
 import net.betterpvp.core.command.Command;
+import net.betterpvp.core.command.IServerCommand;
 import net.betterpvp.core.database.Log;
 import net.betterpvp.core.punish.Punish;
 import net.betterpvp.core.punish.Punish.PunishType;
@@ -14,35 +15,48 @@ import net.betterpvp.core.utility.UtilMessage;
 import net.betterpvp.core.utility.UtilTime;
 import net.betterpvp.core.utility.UtilTime.TimeUnit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MuteCommand extends Command {
+import java.util.UUID;
+
+public class MuteCommand extends Command implements IServerCommand {
 
     public MuteCommand() {
         super("mute", new String[]{}, Rank.TRIAL_MOD);
     }
 
-    @Override
-    public void execute(Player player, String[] args) {
-        if (args == null || args.length == 0) {
-            help(player);
-            return;
-        }
 
-        Client target = ClientUtilities.searchClient(player, args[0], false);
-        if (target == null) {
-            ClientUtilities.searchClient(player, args[0], true);
-            return;
-        }
-        if (args.length >= 3) {
-            if (PunishManager.getPunish(target.getUUID(), PunishType.MUTE) != null) {
-                UtilMessage.message(player, "Punish", ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " is already muted.");
+    @Override
+    public void serverCmdExecute(CommandSender sender, String[] args) {
+
+        Client target = null;
+        if(sender instanceof Player) {
+            Player player = (Player) sender;
+            if (args == null || args.length == 0) {
+                help(player);
                 return;
             }
 
-            if (target.getRank().toInt() >= ClientUtilities.getClient(player).getRank().toInt()) {
-                UtilMessage.message(player, "Client", "You must outrank " + ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " to Punish.");
+             target = ClientUtilities.searchClient(player, args[0], false);
+            if (target == null) {
+                ClientUtilities.searchClient(player, args[0], true);
                 return;
+            }
+        }else{
+            target = ClientUtilities.getClient(args[0]);
+        }
+        if (args.length >= 3) {
+            if (PunishManager.getPunish(target.getUUID(), PunishType.MUTE) != null) {
+                UtilMessage.message(sender, "Punish", ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " is already muted.");
+                return;
+            }
+
+            if(sender instanceof Player) {
+                if (target.getRank().toInt() >= ClientUtilities.getClient((Player) sender).getRank().toInt()) {
+                    UtilMessage.message(sender, "Client", "You must outrank " + ChatColor.YELLOW + target.getName() + ChatColor.GRAY + " to Punish.");
+                    return;
+                }
             }
 
 
@@ -58,28 +72,40 @@ public class MuteCommand extends Command {
             }
 
 
-            UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " muted " + ChatColor.YELLOW
+            UtilMessage.broadcast("Punish", ChatColor.YELLOW + sender.getName() + ChatColor.GRAY + " muted " + ChatColor.YELLOW
                     + target.getName() + ChatColor.GRAY + " for " + ChatColor.GREEN +
                     UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
                     + " " + UtilTime.getTimeUnit(unit) + (msg.equals("") ? "" : ChatColor.GRAY + " for "
                     + ChatColor.YELLOW + msg));
-            Log.write("Punish", player.getName() + " muted " +
+            Log.write("Punish", sender.getName() + " muted " +
                     target.getName() + " for " +
                     UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
                     + " " + UtilTime.getTimeUnit(unit) + " for "
                     + msg);
 
+            UUID senderUUID;
+            if(!(sender instanceof Player)){
+                senderUUID = UUID.fromString("e1f5d06b-685b-46a0-b22c-176d6aefffff");
+            }else{
+                senderUUID = ((Player) sender).getUniqueId();
+            }
 
-            Punish punish = new Punish(target.getUUID(), player.getUniqueId(), PunishType.MUTE,
+            Punish punish = new Punish(target.getUUID(), senderUUID, PunishType.MUTE,
                     PunishUtilities.getProperLength(time, unit) + System.currentTimeMillis(), msg);
             PunishManager.addPunishment(punish);
             PunishRepository.savePunishment(punish);
 
             return;
         } else {
-            UtilMessage.message(player, "Punish", "Correct Usage: /mute {name} {time} {unit} {reason}");
+            UtilMessage.message(sender, "Punish", "Correct Usage: /mute {name} {time} {unit} {reason}");
             return;
         }
+
+    }
+
+    @Override
+    public void execute(Player player, String[] args) {
+        serverCmdExecute(player, args);
 
 
     }
@@ -93,4 +119,5 @@ public class MuteCommand extends Command {
         UtilMessage.message(player, "/unban <player>", "Unban a player.", Rank.MODERATOR);
         UtilMessage.message(player, "/unmute <player>", "Unmute a player.", Rank.MODERATOR);
     }
+
 }

@@ -55,7 +55,7 @@
 
                         </excludes>
                     </artifactSet>
-                    <outputFile>F:\BetterPvP\Output\BetterPvP-Core.jar</outputFile>
+                    <outputFile>C:\F\BetterPvP\Output\BetterPvP-Core.jar</outputFile>
 
                 </configuration>
             </plugin>
@@ -85,28 +85,13 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--This adds the Bukkit API artifact to the build -->
-        <!-- Do not include this in the pom.xml file if the Spigot API is already added -->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
         </dependency>
 
-        <!--Bukkit API-->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
         <dependency>

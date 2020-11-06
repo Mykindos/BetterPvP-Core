@@ -59,7 +59,9 @@ public class UtilBlock {
      */
     public static boolean isInWater(Player p) {
 
-        return p.getLocation().getBlock().getType() == Material.WATER;
+        Block block = p.getLocation().getBlock();
+        return block.getType() == Material.WATER
+                || block.getType() == Material.BUBBLE_COLUMN;
     }
 
     /**

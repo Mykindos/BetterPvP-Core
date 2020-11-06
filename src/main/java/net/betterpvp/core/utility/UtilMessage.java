@@ -1,6 +1,7 @@
 package net.betterpvp.core.utility;
 
 import net.betterpvp.core.client.Rank;
+import net.betterpvp.core.utility.fancymessage.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -19,6 +20,15 @@ public class UtilMessage {
      */
     public static void message(Player player, String prefix, String message) {
         player.sendMessage(ChatColor.BLUE + prefix + "> " + ChatColor.GRAY + message);
+    }
+
+    public static void fancyMessage(Player player, String prefix, String message, String tooltip){
+        FancyMessage msg = new FancyMessage(ChatColor.BLUE + prefix + "> " + ChatColor.GRAY + message);
+        if(tooltip != null){
+            msg.tooltip(tooltip);
+        }
+
+        msg.send(player);
     }
 
     /**

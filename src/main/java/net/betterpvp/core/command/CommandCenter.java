@@ -82,9 +82,11 @@ public class CommandCenter extends BPVPListener<Core> {
             args = event.getCommand().substring(event.getCommand().indexOf(' ') + 1).split(" ");
         }
 
+        System.out.println("Server command ran: " + command);
         Command cmd = CommandManager.getCommand(command);
         if (cmd != null) {
             if (cmd instanceof IServerCommand) {
+
                 IServerCommand serverCommand = (IServerCommand) cmd;
                 serverCommand.serverCmdExecute(event.getSender(), args);
                 event.setCancelled(true);

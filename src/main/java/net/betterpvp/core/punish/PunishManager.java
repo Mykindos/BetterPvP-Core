@@ -1,6 +1,7 @@
 package net.betterpvp.core.punish;
 
 import net.betterpvp.core.Core;
+import net.betterpvp.core.database.Log;
 import net.betterpvp.core.framework.BPVPListener;
 import net.betterpvp.core.punish.Punish.PunishType;
 import net.betterpvp.core.punish.mysql.PunishRepository;
@@ -91,6 +92,7 @@ public class PunishManager extends BPVPListener<Core> {
                     UtilMessage.message(p, "Punish", "Your punishment has been lifted!");
 
                 }
+                Log.write("Punishment", next.getPunished() + " mute has expired. " + next.getTime() + " vs " + System.currentTimeMillis());
                 PunishRepository.removePunishment(next);
                 iterator.remove();
             }
