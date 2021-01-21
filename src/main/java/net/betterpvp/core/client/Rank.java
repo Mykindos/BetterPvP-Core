@@ -6,7 +6,7 @@ public enum Rank {
 
     PLAYER("Player", ChatColor.YELLOW, 0),
     GRIEF("Vacuum Cleaner", ChatColor.WHITE, 1),
-    MEDIA("Y&4&T", ChatColor.WHITE, 2),
+    MEDIA("Y&4&lT", ChatColor.WHITE, 2),
     BUILDER("Builder", ChatColor.GREEN, 3),
     HELPER("Helper", ChatColor.DARK_GREEN, 4),
     TRIAL_MOD("Trial Mod", ChatColor.DARK_AQUA, 5),

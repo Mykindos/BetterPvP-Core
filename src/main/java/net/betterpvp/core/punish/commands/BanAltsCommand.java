@@ -59,30 +59,37 @@ public class BanAltsCommand extends Command {
             if (!target.getName().equals("Mykindos")) {
                 String[] alts = ChatColor.stripColor(ClientUtilities.getIPAlias(target)).split(", ");
                 for (String s : alts) {
-                    Client alt = ClientUtilities.getClient(s);
-                    UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " banned " + ChatColor.YELLOW
-                            + alt.getName() + ChatColor.GRAY + " for " + ChatColor.GREEN +
-                            UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
-                            + " " + UtilTime.getTimeUnit(unit) + (msg.equals("") ? "." : ChatColor.GRAY + " for "
-                            + ChatColor.YELLOW + msg));
-                    Log.write("Punish", player.getName() + " banned " +
-                            alt.getName() + " for " +
-                            UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
-                            + " " + UtilTime.getTimeUnit(unit) + " for "
-                            + msg);
+                    Client alt = ClientUtilities.getClient(s.replace("(L) ", ""));
+                    if(alt != null) {
 
 
-                    Punish punish = new Punish(alt.getUUID(), player.getUniqueId(), PunishType.BAN,
-                            PunishUtilities.getProperLength(time, unit) + System.currentTimeMillis(), msg);
-                    PunishManager.addPunishment(punish);
-                    PunishRepository.savePunishment(punish);
+                        Punish punish = new Punish(alt.getUUID(), player.getUniqueId(), PunishType.BAN,
+                                PunishUtilities.getProperLength(time, unit) + System.currentTimeMillis(), msg);
+                        PunishManager.addPunishment(punish);
+                        PunishRepository.savePunishment(punish);
 
 
-                    if (Bukkit.getPlayer(alt.getUUID()) != null) {
-                        Bukkit.getPlayer(alt.getUUID()).kickPlayer(ChatColor.YELLOW + "You have been banned! \n " + ChatColor.YELLOW
-                                + "Remaining: " + ChatColor.GRAY + punish.getRemaining() + " \n"
-                                + ChatColor.YELLOW + "Reason: " + ChatColor.GRAY + msg + "\n  \n "
-                                + ChatColor.AQUA + "Appeal at www.betterpvp.net");
+                        if (Bukkit.getPlayer(alt.getUUID()) != null) {
+                            Bukkit.getPlayer(alt.getUUID()).kickPlayer(ChatColor.YELLOW + "You have been banned! \n " + ChatColor.YELLOW
+                                    + "Remaining: " + ChatColor.GRAY + punish.getRemaining() + " \n"
+                                    + ChatColor.YELLOW + "Reason: " + ChatColor.GRAY + msg + "\n  \n "
+                                    + ChatColor.AQUA + "Appeal at www.betterpvp.net");
+                        }
+
+                        try {
+                            UtilMessage.broadcast("Punish", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " banned " + ChatColor.YELLOW
+                                    + alt.getName() + ChatColor.GRAY + " for " + ChatColor.GREEN +
+                                    UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
+                                    + " " + UtilTime.getTimeUnit(unit) + (msg.equals("") ? "." : ChatColor.GRAY + " for "
+                                    + ChatColor.YELLOW + msg));
+                            Log.write("Punish", player.getName() + " banned " +
+                                    alt.getName() + " for " +
+                                    UtilTime.convert(PunishUtilities.getProperLength(time, unit), TimeUnit.BEST, 1)
+                                    + " " + UtilTime.getTimeUnit(unit) + " for "
+                                    + msg);
+                        } catch (Exception ex) {
+
+                        }
                     }
                 }
 

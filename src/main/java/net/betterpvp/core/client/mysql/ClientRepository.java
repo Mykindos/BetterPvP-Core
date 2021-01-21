@@ -32,6 +32,7 @@ public class ClientRepository implements Repository<Core> {
             "  `TimePlayed` bigint(255)," +
             "  `Password` varchar(255)," +
             "  `DiscordLinked` tinyint," +
+            "  `AllowVPN` tinyint," +
             "  PRIMARY KEY (`UUID`)" +
             ");";
 
