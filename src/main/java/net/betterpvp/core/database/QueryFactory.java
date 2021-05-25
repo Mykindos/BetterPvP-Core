@@ -57,7 +57,7 @@ public class QueryFactory extends BPVPListener<Core> {
         queries.add(new Query(query));
     }
 
-    public static void runTransaction(List<String> statements) {
+    public static void runTransaction(List<Statement> statements) {
 
         queries.add(new Transaction(statements));
     }
