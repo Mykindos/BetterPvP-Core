@@ -1,7 +1,7 @@
 package net.betterpvp.core.utility;
 
-import net.minecraft.server.v1_16_R1.Packet;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
+import net.minecraft.network.protocol.Packet;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class UtilPacket {
@@ -16,6 +16,7 @@ public class UtilPacket {
         if ((player == null) || (packet == null)) {
             return;
         }
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+        // b = playerConnection
+        ((CraftPlayer) player).getHandle().b.sendPacket(packet);
     }
 }

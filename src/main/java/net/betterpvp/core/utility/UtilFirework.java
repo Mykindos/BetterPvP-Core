@@ -1,13 +1,15 @@
 package net.betterpvp.core.utility;
 
-import net.minecraft.server.v1_16_R1.EntityFireworks;
-import net.minecraft.server.v1_16_R1.EntityTypes;
-import net.minecraft.server.v1_16_R1.PacketPlayOutEntityStatus;
-import net.minecraft.server.v1_16_R1.World;
+
+import net.minecraft.network.protocol.game.PacketPlayOutEntityStatus;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.projectile.EntityFireworks;
+import net.minecraft.world.level.World;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
+
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -17,7 +19,7 @@ public class UtilFirework extends EntityFireworks {
     Player[] players = null;
 
     public UtilFirework(World world, Player... p) {
-        super(EntityTypes.FIREWORK_ROCKET, world);
+        super(EntityTypes.D, world);
         players = p;
         this.a(0.25F, 0.25F);
     }
@@ -30,16 +32,18 @@ public class UtilFirework extends EntityFireworks {
             return;
         }
 
-        if (!this.world.isClientSide) {
+        // t = world
+        if (!this.t.isClientSide()) {
             gone = true;
 
             if (players != null)
                 if (players.length > 0)
                     for (Player p : players) {
-                        (((CraftPlayer) p).getHandle()).playerConnection.sendPacket(new PacketPlayOutEntityStatus(this, (byte) 17));
+                        // b = playerConnection
+                        (((CraftPlayer) p).getHandle()).b.sendPacket(new PacketPlayOutEntityStatus(this, (byte) 17));
                     }
                 else
-                    world.broadcastEntityEffect(this, (byte) 17);
+                    t.broadcastEntityEffect(this, (byte) 17);
             this.die();
         }
     }

@@ -23,7 +23,8 @@ public class DonationRepository implements Repository<Core> {
             + "UUID varchar(255) not null,"
             + "Name varchar(255) not null,"
             + "Expiry long null,"
-            + "Claimed tinyint(1) default 0 null)";
+            + "Claimed tinyint(1) default 0 null,"
+            + "Timestamp timestamp default CURRENT_TIMESTAMP);";
 
 
     @Override
@@ -42,10 +43,10 @@ public class DonationRepository implements Repository<Core> {
 
                 while (result.next()) {
 
-                    String donation = result.getString(2);
-                    long expiry = result.getLong(3);
-                    boolean claimed = result.getBoolean(4);
-                    long timestamp = result.getLong(5);
+                    String donation = result.getString(3);
+                    long expiry = result.getLong(4);
+                    boolean claimed = result.getBoolean(5);
+                    long timestamp = result.getTimestamp(6).getTime();
 
                     Donation d = new Donation(donation, expiry, claimed, timestamp);
                     client.getDonations().add(d);

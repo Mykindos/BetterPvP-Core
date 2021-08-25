@@ -1,16 +1,15 @@
 package net.betterpvp.core.utility;
 
 import com.comphenix.protocol.wrappers.BlockPosition;
-import net.minecraft.server.v1_16_R1.EntityArrow;
-import net.minecraft.server.v1_16_R1.IBlockData;
+
+import net.minecraft.world.entity.projectile.EntityArrow;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftArrow;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftArrow;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
