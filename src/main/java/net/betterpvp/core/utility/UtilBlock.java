@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftArrow;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftArrow;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -91,7 +91,7 @@ public class UtilBlock {
      */
     public static boolean isGrounded(Entity ent) {
         if ((ent instanceof CraftEntity)) {
-            return ((CraftEntity) ent).getHandle().isOnGround();
+            return ent.isOnGround();
         }
         return !airFoliage(ent.getLocation().add(0, -1, 0).getBlock());
     }

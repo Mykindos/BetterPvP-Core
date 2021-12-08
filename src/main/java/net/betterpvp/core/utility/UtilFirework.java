@@ -1,74 +1,30 @@
 package net.betterpvp.core.utility;
 
-
-import net.minecraft.network.protocol.game.PacketPlayOutEntityStatus;
-import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.projectile.EntityFireworks;
-import net.minecraft.world.level.World;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
-
-import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
-
-public class UtilFirework extends EntityFireworks {
-    Player[] players = null;
-
-    public UtilFirework(World world, Player... p) {
-        super(EntityTypes.D, world);
-        players = p;
-        this.a(0.25F, 0.25F);
-    }
-
-    boolean gone = false;
-
-    @Override
-    public void tick() {
-        if (gone) {
-            return;
-        }
-
-        // t = world
-        if (!this.t.isClientSide()) {
-            gone = true;
-
-            if (players != null)
-                if (players.length > 0)
-                    for (Player p : players) {
-                        // b = playerConnection
-                        (((CraftPlayer) p).getHandle()).b.sendPacket(new PacketPlayOutEntityStatus(this, (byte) 17));
-                    }
-                else
-                    t.broadcastEntityEffect(this, (byte) 17);
-            this.die();
-        }
-    }
+public class UtilFirework {
 
     /**
-     * Spawns a firework at a specific location
-     *
-     * @param location Location to spawn the firework
-     * @param effect   Effect the firework has
-     * @param players  Players that can see the firework
+     * Spawn a firework at a location
+     * @param plugin The plugin instance
+     * @param effect The effect to apply to the firework
+     * @param loc The location of the firework
      */
-    public static void spawn(Location location, FireworkEffect effect, Player... players) {
-        try {
-            UtilFirework firework = new UtilFirework(((CraftWorld) location.getWorld()).getHandle(), players);
-            FireworkMeta meta = ((Firework) firework.getBukkitEntity()).getFireworkMeta();
-            meta.addEffect(effect);
-            ((Firework) firework.getBukkitEntity()).setFireworkMeta(meta);
-            firework.setPosition(location.getX(), location.getY(), location.getZ());
-
-            if ((((CraftWorld) location.getWorld()).getHandle()).addEntity(firework)) {
-                firework.setInvisible(true);
+    public static void spawnFireworkWithEffects(Plugin plugin, FireworkEffect effect, Location loc){
+        Firework firework = loc.getWorld().spawn(loc, Firework.class);
+        FireworkMeta fwm = firework.getFireworkMeta();
+        fwm.clearEffects();
+        fwm.addEffect(effect);
+        firework.setFireworkMeta(fwm);
+        new BukkitRunnable() {
+            public void run() {
+                firework.detonate();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }.runTaskLater(plugin, 1);
     }
 }
-

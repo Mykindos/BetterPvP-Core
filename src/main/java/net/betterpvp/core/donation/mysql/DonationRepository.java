@@ -38,7 +38,8 @@ public class DonationRepository implements Repository<Core> {
 
             for (Client client : ClientUtilities.getClients()) {
                 PreparedStatement statement = Connect.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME
-                        + " WHERE UUID='" + client.getUUID() + "'");
+                        + " WHERE UUID = ?");
+                statement.setString(1, client.getUUID().toString());
                 ResultSet result = statement.executeQuery();
 
                 while (result.next()) {
