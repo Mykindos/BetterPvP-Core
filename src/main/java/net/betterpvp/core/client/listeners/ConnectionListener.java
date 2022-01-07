@@ -117,8 +117,8 @@ public class ConnectionListener extends BPVPListener<Core> {
        // if(attribute != null) {
             double baseValue = attribute.getBaseValue();
 
-            if (baseValue != 16) {
-                attribute.setBaseValue(16);
+            if (baseValue != 100000000) {
+                attribute.setBaseValue(100000000);
                 player.saveData();
 
             }
